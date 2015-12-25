@@ -185,11 +185,11 @@
 }
 -(void)ColorNavigation{
     
-    self.navigationController.navigationBar.barTintColor =       AppCOLOR;
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    self.navigationController.navigationBar.barTintColor =       [UIColor whiteColor];
+    [self.navigationController.navigationBar setTintColor:RGBCOLOR(127, 125, 147)];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                     [UIColor whiteColor], NSForegroundColorAttributeName,
-                                                                     [UIFont fontWithName:@"Arial-Bold" size:40.0], NSFontAttributeName,
+                                                                     RGBCOLOR(127, 125, 147), NSForegroundColorAttributeName,
+                                                                     [UIFont fontWithName:@"CourierNewPSMT" size:20.0], NSFontAttributeName,
                                                                      nil]];
     
 }

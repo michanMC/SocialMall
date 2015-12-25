@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface FaxianViewController : BaseViewController
+@property(nonatomic,strong)UIScrollView *mainScroll;
 
 @end

@@ -74,6 +74,8 @@
 
 @property(nonatomic,strong)NSMutableArray * messageContents;
 
+@property(nonatomic,assign)NSInteger  tabIndex;
+
 +(MCUser *)sharedInstance;
 
 

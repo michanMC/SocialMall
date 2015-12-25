@@ -34,28 +34,47 @@
 }
 - (void)setupViews
 {
+    MCUser * mc = [MCUser sharedInstance];
+    mc.tabIndex = 0;
+
     GuanzhuViewController *loan = [[GuanzhuViewController alloc]init];
-    [self setUpChildController:loan title:@"关注" imageName:@"focus_normal" selectedImageName:@"focus_pressed"];
+    [self setUpChildController:loan title:@"关注" imageName:@"focus_normal" selectedImageName:@"focus_pressed" Tag:90000];
     
     ////    _contasctsVC = [[ContactsViewController alloc]init];
     //
-    GuanzhuViewController *chatList= [[GuanzhuViewController alloc] init];
+    FaxianViewController *chatList= [[FaxianViewController alloc] init];
     //    [_chatListVC networkChanged:_connectionState];
-    [self setUpChildController:chatList title:@"发现" imageName:@"detection_normal" selectedImageName:@"detection_pressed"];
+    [self setUpChildController:chatList title:@"发现" imageName:@"detection_normal" selectedImageName:@"detection_pressed" Tag:90001];
 
+    
+    
     FabuViewController *catact = [[FabuViewController alloc]init];
-    [self setUpChildController:catact title:nil imageName:@"add" selectedImageName:@"add"];
+    [self setUpChildController:catact title:nil imageName:@"add" selectedImageName:@"add" Tag:90002];
+    
+    
+    
     
     MallViewController *mall = [[MallViewController alloc]init];
-    [self setUpChildController:mall title:@"商城" imageName:@"mine_normal" selectedImageName:@"mine_pressed"];
+    [self setUpChildController:mall title:@"商城" imageName:@"mine_normal" selectedImageName:@"mine_pressed" Tag:90003];
 
     MeViewController *me = [[MeViewController alloc]init];
     
-    [self setUpChildController:me title:@"我" imageName:@"mall_normal" selectedImageName:@"mall_pressed"];
+    [self setUpChildController:me title:@"我" imageName:@"mall_normal" selectedImageName:@"mall_pressed" Tag:90004];
     //
 }
-
-- (void)setUpChildController:(UIViewController *)controller title:(NSString *)title imageName:(NSString *)image selectedImageName:(NSString *)selectedImage
+-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    if (item.tag == 90002) {
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFBNotification" object:@""];
+    }
+    else
+    {
+        MCUser * mc = [MCUser sharedInstance];
+        mc.tabIndex = item.tag -90000;
+    }
+}
+- (void)setUpChildController:(UIViewController *)controller title:(NSString *)title imageName:(NSString *)image selectedImageName:(NSString *)selectedImage Tag:(NSInteger)tag
 {
     controller.title = title;
     // 底部字体颜色
@@ -69,7 +88,13 @@
    /// controller.tabBarItem.selectedImage = [UIImage imageNamed:selectedImage];
     if (title == nil) {
         controller.tabBarItem.imageInsets=UIEdgeInsetsMake(6, 0,-6, 0);
+        controller.tabBarItem.tag = 90002;
 
+    }
+    else
+    {
+        controller.tabBarItem.tag = tag;
+ 
     }
     MCNavViewController *nav = [[MCNavViewController alloc]initWithRootViewController:controller];
     [self addChildViewController:nav];

@@ -8,6 +8,9 @@
 
 #import "loginViewController.h"
 #import "loginTextTableViewCell.h"
+#import "zhuceViewController.h"
+#import "wangjiViewController.h"
+
 @interface loginViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
     UITableView * _tableView;
@@ -61,8 +64,8 @@
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, 100)];
     
     
-    UIImageView * imgview = [[UIImageView alloc]initWithFrame:CGRectMake((Main_Screen_Width - 100) / 2, (100 - 100)/2, 100, 100)];
-    imgview.image =[ UIImage imageNamed:@"share_friends"];
+    UIImageView * imgview = [[UIImageView alloc]initWithFrame:CGRectMake((Main_Screen_Width - 150) / 2, (100 - 100)/2, 150, 100)];
+    imgview.image =[ UIImage imageNamed:@"logo"];
     [view addSubview:imgview];
     return view;
     
@@ -79,6 +82,7 @@
     [btn setBackgroundImage:[UIImage imageNamed:@"login_btn_bg"] forState:0];
     [btn setTitle:@"登录" forState:0];
     btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    btn.tag = 200;
     [btn addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitleColor:[UIColor whiteColor] forState:0];
     [view addSubview:btn];
@@ -87,6 +91,9 @@
     height = 25;
     UIButton * btn2 = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
     [btn2 setTitle:@"忘记密码？" forState:0];
+    [btn2 addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
+    btn2.tag = 201;
+
     btn2.titleLabel.font = [UIFont systemFontOfSize:13];
     [btn2 setTitleColor:[UIColor grayColor] forState:0];
     [view addSubview:btn2];
@@ -95,6 +102,10 @@
     x = Main_Screen_Width - 40 - width;
     UIButton * btn3 = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
     [btn3 setTitle:@"注册" forState:0];
+    btn3.tag = 202;
+
+    [btn3 addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
+
     btn3.titleLabel.textAlignment = NSTextAlignmentRight;
 
     btn3.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -112,7 +123,17 @@
 -(void)actionBtn:(UIButton*)btn{
     [self shoujianpan];
     NSLog(@"%@ - %@",_phoneStr,_pwdStr);
-    
+    if (btn.tag == 200) {
+        //登录
+    } else if(btn.tag == 201){
+        wangjiViewController * ctl = [[wangjiViewController alloc]init];
+        [self pushNewViewController:ctl];
+    }
+    else if(btn.tag == 202){
+        
+        zhuceViewController * ctl = [[zhuceViewController alloc]init];
+        [self pushNewViewController:ctl];
+    }
     
 }
 -(void)shoujianpan{

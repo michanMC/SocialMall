@@ -60,6 +60,7 @@ typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
 
 
 -(void)ColorNavigation;
+-(void)appColorNavigation;
 
 /**
  *  统一设置背景图片

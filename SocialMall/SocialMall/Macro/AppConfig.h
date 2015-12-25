@@ -29,7 +29,9 @@
 
 //RGBCOLOR(232, 48, 17)
 //#define AppCOLOR      RGBACOLOR(255, 68, 76, 1);
-#define AppCOLOR      RGBCOLOR(43, 72, 123);
+
+
+#define AppCOLOR      UIColorFromRGB(0x29477d);//RGBCOLOR(43, 72, 123);
 
 #define AppTextCOLOR      RGBCOLOR(127, 125, 147);
 #define AppFont     [UIFont systemFontOfSize:14]
