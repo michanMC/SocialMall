@@ -10,4 +10,5 @@
 
 @interface Fabu2ViewController : BaseViewController
 @property(nonatomic,strong)UIImage * image;
+
 @end

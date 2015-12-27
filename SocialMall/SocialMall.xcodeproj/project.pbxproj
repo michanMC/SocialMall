@@ -324,6 +324,12 @@
 		4CA6D7EC1C2D3BA1007B70AE /* zhizuoText2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6D7EB1C2D3BA1007B70AE /* zhizuoText2TableViewCell.m */; };
 		4CA6D7EF1C2D4532007B70AE /* Fabu3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6D7EE1C2D4532007B70AE /* Fabu3ViewController.m */; };
 		4CB99F691C2FF57700ED9F54 /* liebiaoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F681C2FF57700ED9F54 /* liebiaoTableViewCell.m */; };
+		4CB99F6C1C30046E00ED9F54 /* fabu4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F6B1C30046E00ED9F54 /* fabu4ViewController.m */; };
+		4CB99F6F1C30134B00ED9F54 /* fabu5ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F6E1C30134B00ED9F54 /* fabu5ViewController.m */; };
+		4CB99F721C30159400ED9F54 /* titleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F711C30159400ED9F54 /* titleTableViewCell.m */; };
+		4CB99F771C3019E700ED9F54 /* fabu5TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F761C3019E700ED9F54 /* fabu5TableViewCell.m */; };
+		4CB99F7A1C30217200ED9F54 /* fabu6TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F791C30217200ED9F54 /* fabu6TableViewCell.m */; };
+		4CB99F7C1C30218100ED9F54 /* fabu6TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CB99F7B1C30218100ED9F54 /* fabu6TableViewCell.xib */; };
 		4CD3E3551C22C2C600A56EE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3E3541C22C2C600A56EE0 /* main.m */; };
 		4CD3E3581C22C2C600A56EE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3E3571C22C2C600A56EE0 /* AppDelegate.m */; };
 		4CD3E35B1C22C2C600A56EE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3E35A1C22C2C600A56EE0 /* ViewController.m */; };
@@ -799,6 +805,17 @@
 		4CA6D7EE1C2D4532007B70AE /* Fabu3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fabu3ViewController.m; sourceTree = "<group>"; };
 		4CB99F671C2FF57700ED9F54 /* liebiaoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = liebiaoTableViewCell.h; sourceTree = "<group>"; };
 		4CB99F681C2FF57700ED9F54 /* liebiaoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = liebiaoTableViewCell.m; sourceTree = "<group>"; };
+		4CB99F6A1C30046E00ED9F54 /* fabu4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fabu4ViewController.h; sourceTree = "<group>"; };
+		4CB99F6B1C30046E00ED9F54 /* fabu4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fabu4ViewController.m; sourceTree = "<group>"; };
+		4CB99F6D1C30134B00ED9F54 /* fabu5ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fabu5ViewController.h; sourceTree = "<group>"; };
+		4CB99F6E1C30134B00ED9F54 /* fabu5ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fabu5ViewController.m; sourceTree = "<group>"; };
+		4CB99F701C30159400ED9F54 /* titleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = titleTableViewCell.h; sourceTree = "<group>"; };
+		4CB99F711C30159400ED9F54 /* titleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = titleTableViewCell.m; sourceTree = "<group>"; };
+		4CB99F751C3019E700ED9F54 /* fabu5TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fabu5TableViewCell.h; sourceTree = "<group>"; };
+		4CB99F761C3019E700ED9F54 /* fabu5TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fabu5TableViewCell.m; sourceTree = "<group>"; };
+		4CB99F781C30217200ED9F54 /* fabu6TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fabu6TableViewCell.h; sourceTree = "<group>"; };
+		4CB99F791C30217200ED9F54 /* fabu6TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fabu6TableViewCell.m; sourceTree = "<group>"; };
+		4CB99F7B1C30218100ED9F54 /* fabu6TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = fabu6TableViewCell.xib; sourceTree = "<group>"; };
 		4CD3E3501C22C2C600A56EE0 /* SocialMall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialMall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD3E3541C22C2C600A56EE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4CD3E3561C22C2C600A56EE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1662,6 +1679,10 @@
 				4CA6D7E41C2D2CE3007B70AE /* Fabu2ViewController.m */,
 				4CA6D7ED1C2D4532007B70AE /* Fabu3ViewController.h */,
 				4CA6D7EE1C2D4532007B70AE /* Fabu3ViewController.m */,
+				4CB99F6A1C30046E00ED9F54 /* fabu4ViewController.h */,
+				4CB99F6B1C30046E00ED9F54 /* fabu4ViewController.m */,
+				4CB99F6D1C30134B00ED9F54 /* fabu5ViewController.h */,
+				4CB99F6E1C30134B00ED9F54 /* fabu5ViewController.m */,
 			);
 			path = "发布";
 			sourceTree = "<group>";
@@ -1684,6 +1705,13 @@
 				4C9D680F1C2DAB1600D8558D /* Fabu3TableViewCell.m */,
 				4CB99F671C2FF57700ED9F54 /* liebiaoTableViewCell.h */,
 				4CB99F681C2FF57700ED9F54 /* liebiaoTableViewCell.m */,
+				4CB99F701C30159400ED9F54 /* titleTableViewCell.h */,
+				4CB99F711C30159400ED9F54 /* titleTableViewCell.m */,
+				4CB99F751C3019E700ED9F54 /* fabu5TableViewCell.h */,
+				4CB99F761C3019E700ED9F54 /* fabu5TableViewCell.m */,
+				4CB99F781C30217200ED9F54 /* fabu6TableViewCell.h */,
+				4CB99F791C30217200ED9F54 /* fabu6TableViewCell.m */,
+				4CB99F7B1C30218100ED9F54 /* fabu6TableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1992,6 +2020,7 @@
 				4C80A0F11C299C9E00777BA6 /* mine_address_icon@3x.png in Resources */,
 				4C80A0A51C299C9E00777BA6 /* model_icon@3x.png in Resources */,
 				4C80A0CA1C299C9E00777BA6 /* Avatar_42@2x.png in Resources */,
+				4CB99F7C1C30218100ED9F54 /* fabu6TableViewCell.xib in Resources */,
 				4C80A0AD1C299C9E00777BA6 /* Radio-buttons@3x.png in Resources */,
 				4C80A0CD1C299C9E00777BA6 /* Avatar_46@3x.png in Resources */,
 				4C80A0E51C299C9E00777BA6 /* dot_icon@3x.png in Resources */,
@@ -2210,8 +2239,10 @@
 				4C9AFB9C1C22F72A0096754F /* AFHTTPRequestOperation.m in Sources */,
 				4C9AFBE41C22F72A0096754F /* UIView+REFrostedViewController.m in Sources */,
 				4C9AFBDB1C22F72A0096754F /* MCplaceholderText.m in Sources */,
+				4CB99F771C3019E700ED9F54 /* fabu5TableViewCell.m in Sources */,
 				4C5147841C2ACDCA00C8FB87 /* zuixinViewController.m in Sources */,
 				4C80A1191C29A41200777BA6 /* loginTextTableViewCell.m in Sources */,
+				4CB99F7A1C30217200ED9F54 /* fabu6TableViewCell.m in Sources */,
 				4C9AFBD31C22F72A0096754F /* WMLabelAlertView.m in Sources */,
 				4C9AFBB71C22F72A0096754F /* NetworkManager.m in Sources */,
 				4C9AFBC01C22F72A0096754F /* SDWebImageManager.m in Sources */,
@@ -2275,10 +2306,12 @@
 				4C9AFBDE1C22F72A0096754F /* UIViewController+HUD.m in Sources */,
 				4C9AFBC81C22F72A0096754F /* BUIControl.m in Sources */,
 				4C9AFBB31C22F72A0096754F /* IQTitleBarButtonItem.m in Sources */,
+				4CB99F6F1C30134B00ED9F54 /* fabu5ViewController.m in Sources */,
 				4C51477E1C2ACDB900C8FB87 /* tuijianViewController.m in Sources */,
 				4C9AFBE51C22F72A0096754F /* UIViewController+REFrostedViewController.m in Sources */,
 				4C9AFBA01C22F72A0096754F /* AFSecurityPolicy.m in Sources */,
 				4C9AFBC61C22F72A0096754F /* UIImageView+WebCache.m in Sources */,
+				4CB99F6C1C30046E00ED9F54 /* fabu4ViewController.m in Sources */,
 				4C9AFBC21C22F72A0096754F /* UIButton+WebCache.m in Sources */,
 				4C9AFBCC1C22F72A0096754F /* MCUser.m in Sources */,
 				4C9AFC2F1C22FC440096754F /* MJFoundation.m in Sources */,
@@ -2297,6 +2330,7 @@
 				4C9AFC361C22FC440096754F /* NSObject+MJProperty.m in Sources */,
 				4C9AFBA21C22F72A0096754F /* AFURLRequestSerialization.m in Sources */,
 				4CA6D7E51C2D2CE3007B70AE /* Fabu2ViewController.m in Sources */,
+				4CB99F721C30159400ED9F54 /* titleTableViewCell.m in Sources */,
 				4C9AFBBC1C22F72A0096754F /* SDWebImageCompat.m in Sources */,
 				4CB99F691C2FF57700ED9F54 /* liebiaoTableViewCell.m in Sources */,
 				4C9AFBA81C22F72A0096754F /* HZPhotoBrowser.m in Sources */,

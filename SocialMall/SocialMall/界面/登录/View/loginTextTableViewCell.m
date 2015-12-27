@@ -43,9 +43,9 @@
         [self.contentView addSubview:_textField];
 
         
-        UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(40, 43.5, Main_Screen_Width - 80, 0.5)];
-        lineView.backgroundColor = [UIColor grayColor];
-        [self.contentView addSubview:lineView];
+       _lineView = [[UIView alloc]initWithFrame:CGRectMake(40, 43.5, Main_Screen_Width - 80, 0.5)];
+        _lineView.backgroundColor = [UIColor grayColor];
+        [self.contentView addSubview:_lineView];
         
         
     }

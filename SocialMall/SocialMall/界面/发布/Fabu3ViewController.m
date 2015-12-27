@@ -7,10 +7,12 @@
 //
 
 #import "Fabu3ViewController.h"
+#import "Fabu4ViewController.h"
+#import "Fabu5ViewController.h"
 #import "ItemView.h"
 #import "Fabu3TableViewCell.h"
 #import "liebiaoTableViewCell.h"
-@interface Fabu3ViewController ()<UITableViewDataSource,UITableViewDelegate,ItemViewDelegate>
+@interface Fabu3ViewController ()<UITableViewDataSource,UITableViewDelegate,fabu4Viewdelegate,ItemViewDelegate,Fabu3ViewDelegate>
 {
     
     UITableView *_tableView;
@@ -19,6 +21,7 @@
     NSInteger _xuanzheIndedx;
     
 }
+@property(nonatomic,strong)NSMutableDictionary *dataDic;
 
 @end
 
@@ -26,7 +29,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _dataDic = [NSMutableDictionary dictionary];
     self.title = @"搭配列表";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonBaocun)];
+
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
@@ -74,6 +80,18 @@
 //        weakTableView.tableHeaderView =weakview;// [self headView];
 //
 //    }];
+    
+    
+    
+}
+#pragma mark-保存
+-(void)rightBarButtonBaocun{
+    
+    fabu5ViewController * ctl = [[fabu5ViewController alloc]init];
+    [_dataDic setObject:_image forKey:@"img"];
+    [_dataDic setObject:_titleStr forKey:@"title"];
+    ctl.dataDic = _dataDic;
+    [self pushNewViewController:ctl];
     
     
     
@@ -134,7 +152,7 @@
         cell = [[Fabu3TableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-
+        cell.delagate =self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell prepareUI:nil];
     return cell;
@@ -174,6 +192,17 @@
         NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
         [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+    
+}
+-(void)actionAdd
+{
+    fabu4ViewController * ctl = [[fabu4ViewController alloc]init];
+    ctl.delegate = self;
+    [self pushNewViewController:ctl];
+}
+-(void)backDic:(NSDictionary *)dic
+{
+    
     
 }
 -(void)ACtionDeleBtn:(UIButton*)btn{

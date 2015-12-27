@@ -119,6 +119,8 @@
     }
     
     Fabu3ViewController  * ctl = [[Fabu3ViewController alloc]init];
+    ctl.titleStr = _holderTextStr;
+    ctl.image = _image;
     [self pushNewViewController:ctl];
     
     

@@ -11,5 +11,5 @@
 @interface loginTextTableViewCell : UITableViewCell
 @property(nonatomic,strong)UIImageView * imgView;
 @property(nonatomic,strong)UITextField * textField;
-
+@property(nonatomic,strong) UIView * lineView;
 @end

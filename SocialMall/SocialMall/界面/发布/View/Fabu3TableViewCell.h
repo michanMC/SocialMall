@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol Fabu3ViewDelegate <NSObject>
+
+-(void)actionAdd;
+
+@end
 
 @interface Fabu3TableViewCell : UITableViewCell
 -(void)prepareUI:(NSArray*)photoArray;
+@property(weak,nonatomic)id<Fabu3ViewDelegate>delagate;
+
 @end

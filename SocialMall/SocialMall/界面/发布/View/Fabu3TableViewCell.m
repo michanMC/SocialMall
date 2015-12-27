@@ -61,12 +61,19 @@
     lbl2.font = [UIFont systemFontOfSize:13];
     [self.contentView addSubview:lbl2];
     UIButton * btn2 = [[UIButton alloc]initWithFrame:CGRectMake(0, y+ height, Main_Screen_Width, 40)];
+    [btn2 addTarget:self action:@selector(actionBtn2:) forControlEvents:UIControlEventTouchUpInside];
+
     [self.contentView addSubview:btn2];
     
     
     //y+height
     
     
+    
+}
+-(void)actionBtn2:(UIButton*)btn{
+    
+    [_delagate actionAdd];
     
 }
 -(void)actionBtn:(UIButton*)btn{
