@@ -9,13 +9,14 @@
 #import "Fabu3ViewController.h"
 #import "ItemView.h"
 #import "Fabu3TableViewCell.h"
+#import "liebiaoTableViewCell.h"
 @interface Fabu3ViewController ()<UITableViewDataSource,UITableViewDelegate,ItemViewDelegate>
 {
     
     UITableView *_tableView;
     UIView*_headView;
     ItemView*_itemView;
-
+    NSInteger _xuanzheIndedx;
     
 }
 
@@ -30,7 +31,7 @@
     // Do any additional setup after loading the view.
 }
 -(void)prepareUI{
-    
+    _xuanzheIndedx = -1;
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource= self;
@@ -87,10 +88,12 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (section == 0)
     return 1;
+    return 3;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
@@ -99,7 +102,8 @@
     return 0.01;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (indexPath.section == 0) {
+        
     CGFloat x = 5;
     CGFloat offx = 5;
     CGFloat y = 40;
@@ -118,18 +122,67 @@
 
     
     return y+height + 2 * 40;
+    }
+    return 60;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
     static NSString * cellid = @"mcq";
     Fabu3TableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (!cell) {
         cell = [[Fabu3TableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell prepareUI:nil];
     return cell;
+    }
+    else
+    {
+        static NSString * cellid2 = @"mcm";
+        liebiaoTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid2];
+        if (!cell) {
+            cell = [[liebiaoTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid2];
+        }
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        
+        cell.nameStr = @"xxxxxxxxx";
+        cell.mashuStr = @"GAP  M码";
+        cell.deleBtn.tag = 800 + indexPath.row;
+        [cell.deleBtn addTarget:self action:@selector(ACtionDeleBtn:) forControlEvents:UIControlEventTouchUpInside];
+        if (indexPath.row == _xuanzheIndedx) {
+            cell.bgView.backgroundColor = [UIColor lightGrayColor];
+        }
+        else
+        {
+            cell.bgView.backgroundColor = [UIColor whiteColor];
+ 
+        }
+        return cell;
+   
+    }
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section != 0) {
+        _xuanzheIndedx = indexPath.row;
+        //一个section刷新
+        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
+        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    
+}
+-(void)ACtionDeleBtn:(UIButton*)btn{
+    
+    
+    
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

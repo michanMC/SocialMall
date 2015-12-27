@@ -323,6 +323,7 @@
 		4CA6D7E91C2D3224007B70AE /* nav_icon_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CA6D7E71C2D3224007B70AE /* nav_icon_back@3x.png */; };
 		4CA6D7EC1C2D3BA1007B70AE /* zhizuoText2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6D7EB1C2D3BA1007B70AE /* zhizuoText2TableViewCell.m */; };
 		4CA6D7EF1C2D4532007B70AE /* Fabu3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA6D7EE1C2D4532007B70AE /* Fabu3ViewController.m */; };
+		4CB99F691C2FF57700ED9F54 /* liebiaoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F681C2FF57700ED9F54 /* liebiaoTableViewCell.m */; };
 		4CD3E3551C22C2C600A56EE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3E3541C22C2C600A56EE0 /* main.m */; };
 		4CD3E3581C22C2C600A56EE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3E3571C22C2C600A56EE0 /* AppDelegate.m */; };
 		4CD3E35B1C22C2C600A56EE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3E35A1C22C2C600A56EE0 /* ViewController.m */; };
@@ -796,6 +797,8 @@
 		4CA6D7EB1C2D3BA1007B70AE /* zhizuoText2TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhizuoText2TableViewCell.m; sourceTree = "<group>"; };
 		4CA6D7ED1C2D4532007B70AE /* Fabu3ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fabu3ViewController.h; sourceTree = "<group>"; };
 		4CA6D7EE1C2D4532007B70AE /* Fabu3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fabu3ViewController.m; sourceTree = "<group>"; };
+		4CB99F671C2FF57700ED9F54 /* liebiaoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = liebiaoTableViewCell.h; sourceTree = "<group>"; };
+		4CB99F681C2FF57700ED9F54 /* liebiaoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = liebiaoTableViewCell.m; sourceTree = "<group>"; };
 		4CD3E3501C22C2C600A56EE0 /* SocialMall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialMall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD3E3541C22C2C600A56EE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4CD3E3561C22C2C600A56EE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1679,6 +1682,8 @@
 				4CA6D7EB1C2D3BA1007B70AE /* zhizuoText2TableViewCell.m */,
 				4C9D680E1C2DAB1600D8558D /* Fabu3TableViewCell.h */,
 				4C9D680F1C2DAB1600D8558D /* Fabu3TableViewCell.m */,
+				4CB99F671C2FF57700ED9F54 /* liebiaoTableViewCell.h */,
+				4CB99F681C2FF57700ED9F54 /* liebiaoTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2293,6 +2298,7 @@
 				4C9AFBA21C22F72A0096754F /* AFURLRequestSerialization.m in Sources */,
 				4CA6D7E51C2D2CE3007B70AE /* Fabu2ViewController.m in Sources */,
 				4C9AFBBC1C22F72A0096754F /* SDWebImageCompat.m in Sources */,
+				4CB99F691C2FF57700ED9F54 /* liebiaoTableViewCell.m in Sources */,
 				4C9AFBA81C22F72A0096754F /* HZPhotoBrowser.m in Sources */,
 				4C9AFBBD1C22F72A0096754F /* SDWebImageDecoder.m in Sources */,
 				4C9AFBE61C22F72A0096754F /* ZZCarousel.m in Sources */,
