@@ -332,6 +332,14 @@
 		4CB99F771C3019E700ED9F54 /* fabu5TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F761C3019E700ED9F54 /* fabu5TableViewCell.m */; };
 		4CB99F7A1C30217200ED9F54 /* fabu6TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB99F791C30217200ED9F54 /* fabu6TableViewCell.m */; };
 		4CB99F7C1C30218100ED9F54 /* fabu6TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CB99F7B1C30218100ED9F54 /* fabu6TableViewCell.xib */; };
+		4CBAE59B1C3272580042F22C /* settgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBAE59A1C3272580042F22C /* settgViewController.m */; };
+		4CBAE59E1C32756A0042F22C /* yonghuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBAE59D1C32756A0042F22C /* yonghuViewController.m */; };
+		4CBAE5A11C3277090042F22C /* yonghuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBAE5A01C3277090042F22C /* yonghuTableViewCell.m */; };
+		4CBAE5A31C3277180042F22C /* yonghuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CBAE5A21C3277180042F22C /* yonghuTableViewCell.xib */; };
+		4CBAE5A61C327FA30042F22C /* xinxiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBAE5A51C327FA30042F22C /* xinxiViewController.m */; };
+		4CBAE5A91C3280400042F22C /* xinxiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBAE5A81C3280400042F22C /* xinxiTableViewCell.m */; };
+		4CBAE5AB1C32804C0042F22C /* xinxiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CBAE5AA1C32804C0042F22C /* xinxiTableViewCell.xib */; };
+		4CBAE5AE1C32867E0042F22C /* yijianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBAE5AD1C32867E0042F22C /* yijianViewController.m */; };
 		4CBC71D11C318C0400B233D7 /* me2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBC71D01C318C0400B233D7 /* me2TableViewCell.m */; };
 		4CBC71D31C318C1300B233D7 /* me2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC71D21C318C1300B233D7 /* me2TableViewCell.xib */; };
 		4CBC71D61C318F9600B233D7 /* me3TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBC71D51C318F9600B233D7 /* me3TableViewCell.m */; };
@@ -825,6 +833,20 @@
 		4CB99F781C30217200ED9F54 /* fabu6TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fabu6TableViewCell.h; sourceTree = "<group>"; };
 		4CB99F791C30217200ED9F54 /* fabu6TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fabu6TableViewCell.m; sourceTree = "<group>"; };
 		4CB99F7B1C30218100ED9F54 /* fabu6TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = fabu6TableViewCell.xib; sourceTree = "<group>"; };
+		4CBAE5991C3272580042F22C /* settgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settgViewController.h; sourceTree = "<group>"; };
+		4CBAE59A1C3272580042F22C /* settgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = settgViewController.m; sourceTree = "<group>"; };
+		4CBAE59C1C32756A0042F22C /* yonghuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yonghuViewController.h; sourceTree = "<group>"; };
+		4CBAE59D1C32756A0042F22C /* yonghuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = yonghuViewController.m; sourceTree = "<group>"; };
+		4CBAE59F1C3277090042F22C /* yonghuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yonghuTableViewCell.h; sourceTree = "<group>"; };
+		4CBAE5A01C3277090042F22C /* yonghuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = yonghuTableViewCell.m; sourceTree = "<group>"; };
+		4CBAE5A21C3277180042F22C /* yonghuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = yonghuTableViewCell.xib; sourceTree = "<group>"; };
+		4CBAE5A41C327FA30042F22C /* xinxiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xinxiViewController.h; sourceTree = "<group>"; };
+		4CBAE5A51C327FA30042F22C /* xinxiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xinxiViewController.m; sourceTree = "<group>"; };
+		4CBAE5A71C3280400042F22C /* xinxiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xinxiTableViewCell.h; sourceTree = "<group>"; };
+		4CBAE5A81C3280400042F22C /* xinxiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = xinxiTableViewCell.m; sourceTree = "<group>"; };
+		4CBAE5AA1C32804C0042F22C /* xinxiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = xinxiTableViewCell.xib; sourceTree = "<group>"; };
+		4CBAE5AC1C32867E0042F22C /* yijianViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yijianViewController.h; sourceTree = "<group>"; };
+		4CBAE5AD1C32867E0042F22C /* yijianViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = yijianViewController.m; sourceTree = "<group>"; };
 		4CBC71CF1C318C0400B233D7 /* me2TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = me2TableViewCell.h; sourceTree = "<group>"; };
 		4CBC71D01C318C0400B233D7 /* me2TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = me2TableViewCell.m; sourceTree = "<group>"; };
 		4CBC71D21C318C1300B233D7 /* me2TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = me2TableViewCell.xib; sourceTree = "<group>"; };
@@ -1790,10 +1812,13 @@
 		4C9AFC5F1C22FCE20096754F /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				4CBAE5981C3272460042F22C /* 设置 */,
 				4C9AFC601C22FCE20096754F /* model */,
 				4C9AFC611C22FCE20096754F /* View */,
 				4C9AFC681C22FD0C0096754F /* MeViewController.h */,
 				4C9AFC691C22FD0C0096754F /* MeViewController.m */,
+				4CBAE59C1C32756A0042F22C /* yonghuViewController.h */,
+				4CBAE59D1C32756A0042F22C /* yonghuViewController.m */,
 			);
 			path = "我的";
 			sourceTree = "<group>";
@@ -1817,6 +1842,12 @@
 				4CBC71D41C318F9600B233D7 /* me3TableViewCell.h */,
 				4CBC71D51C318F9600B233D7 /* me3TableViewCell.m */,
 				4CBC71D71C318FA000B233D7 /* me3TableViewCell.xib */,
+				4CBAE59F1C3277090042F22C /* yonghuTableViewCell.h */,
+				4CBAE5A01C3277090042F22C /* yonghuTableViewCell.m */,
+				4CBAE5A21C3277180042F22C /* yonghuTableViewCell.xib */,
+				4CBAE5A71C3280400042F22C /* xinxiTableViewCell.h */,
+				4CBAE5A81C3280400042F22C /* xinxiTableViewCell.m */,
+				4CBAE5AA1C32804C0042F22C /* xinxiTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1860,6 +1891,19 @@
 				4C809FA71C299C9E00777BA6 /* 【社交电商】UI_切图20151221 */,
 			);
 			path = image;
+			sourceTree = "<group>";
+		};
+		4CBAE5981C3272460042F22C /* 设置 */ = {
+			isa = PBXGroup;
+			children = (
+				4CBAE5AC1C32867E0042F22C /* yijianViewController.h */,
+				4CBAE5AD1C32867E0042F22C /* yijianViewController.m */,
+				4CBAE5991C3272580042F22C /* settgViewController.h */,
+				4CBAE59A1C3272580042F22C /* settgViewController.m */,
+				4CBAE5A41C327FA30042F22C /* xinxiViewController.h */,
+				4CBAE5A51C327FA30042F22C /* xinxiViewController.m */,
+			);
+			path = "设置";
 			sourceTree = "<group>";
 		};
 		4CD3E3471C22C2C600A56EE0 = {
@@ -1999,6 +2043,7 @@
 				TargetAttributes = {
 					4CD3E34F1C22C2C600A56EE0 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = UVBA5D9S4X;
 					};
 					4CD3E3681C22C2C700A56EE0 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -2141,6 +2186,7 @@
 				4C9AFBB61C22F72A0096754F /* IQKeyboardManager.bundle in Resources */,
 				4C80A1031C299C9E00777BA6 /* Switch-Off@3x.png in Resources */,
 				4C80A0E91C299C9E00777BA6 /* female_icon_selected@3x.png in Resources */,
+				4CBAE5AB1C32804C0042F22C /* xinxiTableViewCell.xib in Resources */,
 				4C80A0D21C299C9E00777BA6 /* home_default-photo@2x.png in Resources */,
 				4C80A1001C299C9E00777BA6 /* nav_set-up_icon@2x.png in Resources */,
 				4C80A1131C299C9E00777BA6 /* nav_back_btn@2x.png in Resources */,
@@ -2208,6 +2254,7 @@
 				4C80A1081C299C9E00777BA6 /* share_icon_nprmal@2x.png in Resources */,
 				4C80A06E1C299C9E00777BA6 /* mall_normal@3x.png in Resources */,
 				4C80A0A41C299C9E00777BA6 /* model_icon@2x.png in Resources */,
+				4CBAE5A31C3277180042F22C /* yonghuTableViewCell.xib in Resources */,
 				4CBC71D81C318FA000B233D7 /* me3TableViewCell.xib in Resources */,
 				4C80A0761C299C9E00777BA6 /* go_btn@3x.png in Resources */,
 				4C80A0A91C299C9E00777BA6 /* nav_search_icon@3x.png in Resources */,
@@ -2267,6 +2314,7 @@
 				4C9AFBE41C22F72A0096754F /* UIView+REFrostedViewController.m in Sources */,
 				4C9AFBDB1C22F72A0096754F /* MCplaceholderText.m in Sources */,
 				4CB99F771C3019E700ED9F54 /* fabu5TableViewCell.m in Sources */,
+				4CBAE59E1C32756A0042F22C /* yonghuViewController.m in Sources */,
 				4C5147841C2ACDCA00C8FB87 /* zuixinViewController.m in Sources */,
 				4C80A1191C29A41200777BA6 /* loginTextTableViewCell.m in Sources */,
 				4CB99F7A1C30217200ED9F54 /* fabu6TableViewCell.m in Sources */,
@@ -2279,6 +2327,7 @@
 				4C9AFC411C22FC440096754F /* MJRefreshBackNormalFooter.m in Sources */,
 				4C9AFBC71C22F72A0096754F /* UIView+WebCacheOperation.m in Sources */,
 				4C9AFBB11C22F72A0096754F /* IQTextView.m in Sources */,
+				4CBAE59B1C3272580042F22C /* settgViewController.m in Sources */,
 				4C9AFBDF1C22F72A0096754F /* JT3DScrollView.m in Sources */,
 				4C5147811C2ACDC100C8FB87 /* remenViewController.m in Sources */,
 				4C9AFBDA1C22F72A0096754F /* MCNavViewController.m in Sources */,
@@ -2309,6 +2358,7 @@
 				4C9AFBE11C22F72A0096754F /* REFrostedContainerViewController.m in Sources */,
 				4C9AFBB21C22F72A0096754F /* IQBarButtonItem.m in Sources */,
 				4C9AFBAC1C22F72A0096754F /* IQUIView+Hierarchy.m in Sources */,
+				4CBAE5A91C3280400042F22C /* xinxiTableViewCell.m in Sources */,
 				4C9AFBCF1C22F72A0096754F /* UIPlaceHolderTextView.m in Sources */,
 				4C9AFBA31C22F72A0096754F /* AFURLResponseSerialization.m in Sources */,
 				4CBC71D11C318C0400B233D7 /* me2TableViewCell.m in Sources */,
@@ -2324,6 +2374,7 @@
 				4C9AFBC31C22F72A0096754F /* UIImage+GIF.m in Sources */,
 				4C9AFC3E1C22FC440096754F /* MJRefreshAutoNormalFooter.m in Sources */,
 				4C9AFC731C22FD290096754F /* FabuViewController.m in Sources */,
+				4CBAE5A11C3277090042F22C /* yonghuTableViewCell.m in Sources */,
 				4C9AFBA51C22F72A0096754F /* HMSegmentedControl.m in Sources */,
 				4C9AFBA11C22F72A0096754F /* AFURLConnectionOperation.m in Sources */,
 				4C9AFC3C1C22FC440096754F /* MJRefreshHeader.m in Sources */,
@@ -2353,6 +2404,7 @@
 				4C9AFBC41C22F72A0096754F /* UIImage+MultiFormat.m in Sources */,
 				4C9AFB9E1C22F72A0096754F /* AFHTTPSessionManager.m in Sources */,
 				4C9AFBAF1C22F72A0096754F /* IQKeyboardReturnKeyHandler.m in Sources */,
+				4CBAE5A61C327FA30042F22C /* xinxiViewController.m in Sources */,
 				4C3BA5E71C2A8D8D00166ED4 /* NullSafe.m in Sources */,
 				4C9AFC431C22FC440096754F /* MJRefreshGifHeader.m in Sources */,
 				4C9AFC391C22FC440096754F /* MJRefreshBackFooter.m in Sources */,
@@ -2368,6 +2420,7 @@
 				4C5147951C2AD3D300C8FB87 /* YBImgPickerViewController.m in Sources */,
 				4C9AFBBB1C22F72A0096754F /* SDImageCache.m in Sources */,
 				4C9AFC351C22FC440096754F /* NSObject+MJKeyValue.m in Sources */,
+				4CBAE5AE1C32867E0042F22C /* yijianViewController.m in Sources */,
 				4C9AFC451C22FC440096754F /* MJRefreshStateHeader.m in Sources */,
 				4C9AFBCB1C22F72A0096754F /* MCIucencyView.m in Sources */,
 				4C9AFBAE1C22F72A0096754F /* IQKeyboardManager.m in Sources */,
@@ -2464,7 +2517,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2501,7 +2554,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2512,6 +2565,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: GuangZhou DianDuo Software Technology Co.,Ltd (967UFS6SL4)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SocialMall/PrefixHeader.pch";
 				INFOPLIST_FILE = SocialMall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -2525,6 +2579,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: GuangZhou DianDuo Software Technology Co.,Ltd (967UFS6SL4)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SocialMall/PrefixHeader.pch";
 				INFOPLIST_FILE = SocialMall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;

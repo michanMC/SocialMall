@@ -10,7 +10,8 @@
 #import "me1TableViewCell.h"
 #import "me2TableViewCell.h"
 #import "me3TableViewCell.h"
-
+#import "settgViewController.h"
+#import "yonghuViewController.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -30,6 +31,7 @@
     // Do any additional setup after loading the view.
 }
 -(void)prepareUI{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_set-up_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionrightBar)];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64 - 44) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
@@ -37,6 +39,11 @@
     [self.view addSubview:_tableView];
     
     
+    
+}
+-(void)ActionrightBar{
+    settgViewController * ctl = [[settgViewController alloc]init];
+    [self pushNewViewController:ctl];
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -89,6 +96,22 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"me1TableViewCell" owner:self options:nil]lastObject];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.headBtn.tag = 2000;
+        cell.zanbtn.tag = 2001;
+        cell.fenbtn.tag = 2002;
+        cell.guanBtn.tag = 2003;
+        cell.zhanBtn.tag = 2004;
+        [cell.headBtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.zanbtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.fenbtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.guanBtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.zhanBtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
+
+        
+        
+        
+        
+        
         return cell;
 
     }
@@ -99,6 +122,21 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
+        cell.shouyiBtn.tag = 3000;
+        cell.quanbuBtn.tag = 3001;
+        cell.shouruBtn.tag = 3002;
+        cell.tixianBtn.tag = 3003;
+        
+        [cell.shouyiBtn addTarget:self action:@selector(actionCell2:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.quanbuBtn addTarget:self action:@selector(actionCell2:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.shouruBtn addTarget:self action:@selector(actionCell2:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.tixianBtn addTarget:self action:@selector(actionCell2:) forControlEvents:UIControlEventTouchUpInside];
+
+        
+        
+        
+        
+        
         return cell;
     }
     if (indexPath.section == 2) {
@@ -108,6 +146,16 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
+        cell.shouhuoBtn.tag = 4000;
+        cell.tixingBtn.tag = 4001;
+        cell.shouchangBtn.tag = 4002;
+        cell.dingdanBtn.tag = 4003;
+        [cell.shouhuoBtn addTarget:self action:@selector(actionCell3:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.tixingBtn addTarget:self action:@selector(actionCell3:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.shouchangBtn addTarget:self action:@selector(actionCell3:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.dingdanBtn addTarget:self action:@selector(actionCell3:) forControlEvents:UIControlEventTouchUpInside];
+
+        
         return cell;
 
     }
@@ -116,6 +164,78 @@
     
     
 }
+#pragma mark-第一个cell的点击
+-(void)actionCell1:(UIButton*)btn{
+    if (btn.tag == 2000) {
+        //人头
+        yonghuViewController * ctl = [[yonghuViewController alloc]init];
+        ctl.isMy = YES;
+        [self pushNewViewController:ctl];
+        
+    }
+    else if(btn.tag == 2001){
+        //赞
+        
+    }
+    else if(btn.tag == 2002){
+        //粉
+        
+    } else if(btn.tag == 2003){
+        //关
+        
+    } else if(btn.tag == 2004){
+        //展
+        
+    }
+    
+    
+    
+}
+#pragma mark-第2个cell的点击
+-(void)actionCell2:(UIButton*)btn{
+    if (btn.tag == 3000) {
+       //收益
+        
+    }
+    else if(btn.tag == 3001){
+        //全
+        
+    }
+    else if(btn.tag == 3002){
+        //收
+        
+    } else if(btn.tag == 3003){
+        //提
+        
+    }     
+    
+
+    
+    
+}
+#pragma mark-第3个cell的点击
+-(void)actionCell3:(UIButton*)btn{
+    if (btn.tag == 4000) {
+        //收货
+        
+    }
+    else if(btn.tag == 4001){
+        //提醒
+        
+    }
+    else if(btn.tag == 4002){
+        //收藏
+        
+    } else if(btn.tag == 4003){
+        //订
+        
+    }
+    
+    
+    
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
