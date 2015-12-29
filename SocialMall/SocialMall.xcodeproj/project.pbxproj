@@ -205,6 +205,12 @@
 		4C80A1151C299C9E00777BA6 /* nav_close_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A0611C299C9E00777BA6 /* nav_close_btn@2x.png */; };
 		4C80A1161C299C9E00777BA6 /* nav_close_btn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C80A0621C299C9E00777BA6 /* nav_close_btn@3x.png */; };
 		4C80A1191C29A41200777BA6 /* loginTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C80A1181C29A41200777BA6 /* loginTextTableViewCell.m */; };
+		4C92A5671C32BD4300AC5F55 /* MyshouyiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C92A5661C32BD4300AC5F55 /* MyshouyiViewController.m */; };
+		4C92A56B1C32BE1A00AC5F55 /* HHHorizontalPagingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C92A56A1C32BE1A00AC5F55 /* HHHorizontalPagingView.m */; };
+		4C92A56E1C32BEC100AC5F55 /* headView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C92A56D1C32BEC100AC5F55 /* headView.m */; };
+		4C92A5701C32BED500AC5F55 /* headView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C92A56F1C32BED500AC5F55 /* headView.xib */; };
+		4C92A5731C32C1F200AC5F55 /* HHContentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C92A5721C32C1F200AC5F55 /* HHContentTableView.m */; };
+		4C92A5761C32D53800AC5F55 /* MCseleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C92A5751C32D53800AC5F55 /* MCseleButton.m */; };
 		4C9AE9201C31056200D46CB9 /* me1TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AE91F1C31056200D46CB9 /* me1TableViewCell.m */; };
 		4C9AE9221C31056C00D46CB9 /* me1TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9AE9211C31056C00D46CB9 /* me1TableViewCell.xib */; };
 		4C9AFB9C1C22F72A0096754F /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AFAEA1C22F72A0096754F /* AFHTTPRequestOperation.m */; };
@@ -580,6 +586,17 @@
 		4C80A0621C299C9E00777BA6 /* nav_close_btn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_close_btn@3x.png"; sourceTree = "<group>"; };
 		4C80A1171C29A41200777BA6 /* loginTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loginTextTableViewCell.h; sourceTree = "<group>"; };
 		4C80A1181C29A41200777BA6 /* loginTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginTextTableViewCell.m; sourceTree = "<group>"; };
+		4C92A5651C32BD4300AC5F55 /* MyshouyiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyshouyiViewController.h; sourceTree = "<group>"; };
+		4C92A5661C32BD4300AC5F55 /* MyshouyiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyshouyiViewController.m; sourceTree = "<group>"; };
+		4C92A5691C32BE1A00AC5F55 /* HHHorizontalPagingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHHorizontalPagingView.h; sourceTree = "<group>"; };
+		4C92A56A1C32BE1A00AC5F55 /* HHHorizontalPagingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHHorizontalPagingView.m; sourceTree = "<group>"; };
+		4C92A56C1C32BEC100AC5F55 /* headView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headView.h; sourceTree = "<group>"; };
+		4C92A56D1C32BEC100AC5F55 /* headView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = headView.m; sourceTree = "<group>"; };
+		4C92A56F1C32BED500AC5F55 /* headView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = headView.xib; sourceTree = "<group>"; };
+		4C92A5711C32C1F200AC5F55 /* HHContentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHContentTableView.h; sourceTree = "<group>"; };
+		4C92A5721C32C1F200AC5F55 /* HHContentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHContentTableView.m; sourceTree = "<group>"; };
+		4C92A5741C32D53800AC5F55 /* MCseleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCseleButton.h; sourceTree = "<group>"; };
+		4C92A5751C32D53800AC5F55 /* MCseleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCseleButton.m; sourceTree = "<group>"; };
 		4C9AE91E1C31056200D46CB9 /* me1TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = me1TableViewCell.h; sourceTree = "<group>"; };
 		4C9AE91F1C31056200D46CB9 /* me1TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = me1TableViewCell.m; sourceTree = "<group>"; };
 		4C9AE9211C31056C00D46CB9 /* me1TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = me1TableViewCell.xib; sourceTree = "<group>"; };
@@ -1169,6 +1186,15 @@
 			path = "登录注册";
 			sourceTree = "<group>";
 		};
+		4C92A5681C32BE1A00AC5F55 /* HHHorizontalPagingView */ = {
+			isa = PBXGroup;
+			children = (
+				4C92A5691C32BE1A00AC5F55 /* HHHorizontalPagingView.h */,
+				4C92A56A1C32BE1A00AC5F55 /* HHHorizontalPagingView.m */,
+			);
+			path = HHHorizontalPagingView;
+			sourceTree = "<group>";
+		};
 		4C9AFAE71C22F72A0096754F /* 第三方 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1480,6 +1506,8 @@
 				4C9AFB7D1C22F72A0096754F /* MCplaceholderText.m */,
 				4C9AFB7E1C22F72A0096754F /* MCTabButton.h */,
 				4C9AFB7F1C22F72A0096754F /* MCTabButton.m */,
+				4C92A5741C32D53800AC5F55 /* MCseleButton.h */,
+				4C92A5751C32D53800AC5F55 /* MCseleButton.m */,
 				4C9AFB801C22F72A0096754F /* placeholderText.h */,
 				4C9AFB811C22F72A0096754F /* placeholderText.m */,
 			);
@@ -1499,6 +1527,7 @@
 		4C9AFB851C22F72A0096754F /* 组件 */ = {
 			isa = PBXGroup;
 			children = (
+				4C92A5681C32BE1A00AC5F55 /* HHHorizontalPagingView */,
 				4C9AFB861C22F72A0096754F /* JT3DScrollView */,
 				4C9AFB891C22F72A0096754F /* REFrostedViewController */,
 				4C9AFB961C22F72A0096754F /* ZZCarousel.h */,
@@ -1819,6 +1848,10 @@
 				4C9AFC691C22FD0C0096754F /* MeViewController.m */,
 				4CBAE59C1C32756A0042F22C /* yonghuViewController.h */,
 				4CBAE59D1C32756A0042F22C /* yonghuViewController.m */,
+				4C92A5651C32BD4300AC5F55 /* MyshouyiViewController.h */,
+				4C92A5661C32BD4300AC5F55 /* MyshouyiViewController.m */,
+				4C92A5711C32C1F200AC5F55 /* HHContentTableView.h */,
+				4C92A5721C32C1F200AC5F55 /* HHContentTableView.m */,
 			);
 			path = "我的";
 			sourceTree = "<group>";
@@ -1848,6 +1881,9 @@
 				4CBAE5A71C3280400042F22C /* xinxiTableViewCell.h */,
 				4CBAE5A81C3280400042F22C /* xinxiTableViewCell.m */,
 				4CBAE5AA1C32804C0042F22C /* xinxiTableViewCell.xib */,
+				4C92A56C1C32BEC100AC5F55 /* headView.h */,
+				4C92A56D1C32BEC100AC5F55 /* headView.m */,
+				4C92A56F1C32BED500AC5F55 /* headView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2198,6 +2234,7 @@
 				4C80A10E1C299C9E00777BA6 /* login_btn_bg@3x.png in Resources */,
 				4C80A0E31C299C9E00777BA6 /* capital_icon@3x.png in Resources */,
 				4C80A0F61C299C9E00777BA6 /* mine_income_icon@2x.png in Resources */,
+				4C92A5701C32BED500AC5F55 /* headView.xib in Resources */,
 				4C80A09A1C299C9E00777BA6 /* delete_icon@2x.png in Resources */,
 				4C80A0931C299C9E00777BA6 /* Collocation-list_icon@3x.png in Resources */,
 				4C80A0971C299C9E00777BA6 /* comment_icon_normal@3x.png in Resources */,
@@ -2330,6 +2367,7 @@
 				4CBAE59B1C3272580042F22C /* settgViewController.m in Sources */,
 				4C9AFBDF1C22F72A0096754F /* JT3DScrollView.m in Sources */,
 				4C5147811C2ACDC100C8FB87 /* remenViewController.m in Sources */,
+				4C92A56B1C32BE1A00AC5F55 /* HHHorizontalPagingView.m in Sources */,
 				4C9AFBDA1C22F72A0096754F /* MCNavViewController.m in Sources */,
 				4C9AFBCD1C22F72A0096754F /* UIImage+ImageEffects.m in Sources */,
 				4C9AFC701C22FD210096754F /* FaxianViewController.m in Sources */,
@@ -2339,6 +2377,7 @@
 				4C9AFC4A1C22FC440096754F /* UIView+MJExtension.m in Sources */,
 				4C9AFBB81C22F72A0096754F /* Reachability.m in Sources */,
 				4C9AFBB51C22F72A0096754F /* IQUIView+IQKeyboardToolbar.m in Sources */,
+				4C92A5761C32D53800AC5F55 /* MCseleButton.m in Sources */,
 				4C9AFBBF1C22F72A0096754F /* SDWebImageDownloaderOperation.m in Sources */,
 				4C9AFBD21C22F72A0096754F /* WMAlertView.m in Sources */,
 				4C9AFB9D1C22F72A0096754F /* AFHTTPRequestOperationManager.m in Sources */,
@@ -2408,6 +2447,8 @@
 				4C3BA5E71C2A8D8D00166ED4 /* NullSafe.m in Sources */,
 				4C9AFC431C22FC440096754F /* MJRefreshGifHeader.m in Sources */,
 				4C9AFC391C22FC440096754F /* MJRefreshBackFooter.m in Sources */,
+				4C92A5731C32C1F200AC5F55 /* HHContentTableView.m in Sources */,
+				4C92A56E1C32BEC100AC5F55 /* headView.m in Sources */,
 				4C9AFC361C22FC440096754F /* NSObject+MJProperty.m in Sources */,
 				4C9AFBA21C22F72A0096754F /* AFURLRequestSerialization.m in Sources */,
 				4CA6D7E51C2D2CE3007B70AE /* Fabu2ViewController.m in Sources */,
@@ -2435,6 +2476,7 @@
 				4C9D680D1C2D9F7E00D8558D /* ItemView.m in Sources */,
 				4C9AFBB01C22F72A0096754F /* IQSegmentedNextPrevious.m in Sources */,
 				4C9AFC3B1C22FC440096754F /* MJRefreshFooter.m in Sources */,
+				4C92A5671C32BD4300AC5F55 /* MyshouyiViewController.m in Sources */,
 				4CBC71D61C318F9600B233D7 /* me3TableViewCell.m in Sources */,
 				4CD3E3581C22C2C600A56EE0 /* AppDelegate.m in Sources */,
 				4C9AFBBA1C22F72A0096754F /* NSData+ImageContentType.m in Sources */,

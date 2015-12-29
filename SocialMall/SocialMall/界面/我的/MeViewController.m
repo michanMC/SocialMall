@@ -12,6 +12,7 @@
 #import "me3TableViewCell.h"
 #import "settgViewController.h"
 #import "yonghuViewController.h"
+#import "MyshouyiViewController.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -193,23 +194,28 @@
 }
 #pragma mark-第2个cell的点击
 -(void)actionCell2:(UIButton*)btn{
+    //收益
+    MyshouyiViewController * ctl = [[MyshouyiViewController alloc]init];
     if (btn.tag == 3000) {
-       //收益
+        ctl.index = 0;
         
     }
     else if(btn.tag == 3001){
         //全
-        
+        ctl.index = 0;
+
     }
     else if(btn.tag == 3002){
         //收
-        
+        ctl.index = 1;
+
     } else if(btn.tag == 3003){
         //提
-        
+        ctl.index = 2;
+
     }     
     
-
+[self pushNewViewController:ctl];
     
     
 }
