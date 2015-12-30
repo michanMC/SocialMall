@@ -13,6 +13,8 @@
 #import "settgViewController.h"
 #import "yonghuViewController.h"
 #import "MyshouyiViewController.h"
+#import "tixingViewController.h"
+#import "FenGuanViewController.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -180,9 +182,16 @@
     }
     else if(btn.tag == 2002){
         //粉
+        FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
+        ctl.titleStr = @"2";
+        [self pushNewViewController:ctl];
         
     } else if(btn.tag == 2003){
         //关
+        FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
+        ctl.titleStr = @"1";
+        [self pushNewViewController:ctl];
+
         
     } else if(btn.tag == 2004){
         //展
@@ -227,7 +236,8 @@
     }
     else if(btn.tag == 4001){
         //提醒
-        
+        tixingViewController * ctl = [[tixingViewController alloc]init];
+        [self pushNewViewController:ctl];
     }
     else if(btn.tag == 4002){
         //收藏

@@ -56,12 +56,12 @@
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
 
 {
-    
-    CGFloat imageW = contentRect.size.width;
+    CGFloat imageX = (contentRect.size.width - 40) / 2;
+
+    CGFloat imageW = 40;
     
     CGFloat imageH = 2;
     
-    CGFloat imageX = contentRect.origin.x;
     
     CGFloat imageY = contentRect.size.height - 2 ;
     

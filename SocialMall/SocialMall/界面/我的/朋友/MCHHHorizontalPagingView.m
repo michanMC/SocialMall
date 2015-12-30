@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 Huanhoo. All rights reserved.
 //
 
-#import "HHHorizontalPagingView.h"
-#import "MCseleButton.h"
-@interface HHHorizontalPagingView () <UICollectionViewDataSource, UICollectionViewDelegate>
+#import "MCHHHorizontalPagingView.h"
+
+@interface MCHHHorizontalPagingView () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) UIView             *headerView;
 @property (nonatomic, strong) NSArray            *segmentButtons;
@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong, readwrite) UIView  *segmentView;
 
+@property (nonatomic, strong) UICollectionView   *horizontalCollectionView;
 
 @property (nonatomic, strong) UIScrollView       *currentScrollView;
 @property (nonatomic, strong) NSLayoutConstraint *headerOriginYConstraint;
@@ -28,7 +29,7 @@
 
 @end
 
-@implementation HHHorizontalPagingView
+@implementation MCHHHorizontalPagingView
 
 static void *HHHorizontalPagingViewScrollContext = &HHHorizontalPagingViewScrollContext;
 static void *HHHorizontalPagingViewPanContext    = &HHHorizontalPagingViewPanContext;
@@ -36,7 +37,7 @@ static NSString *pagingCellIdentifier            = @"PagingCellIdentifier";
 static NSInteger pagingButtonTag                 = 1000;
 
 #pragma mark - HHHorizontalPagingView
-+ (HHHorizontalPagingView *)pagingViewWithHeaderView:(UIView *)headerView
++ (MCHHHorizontalPagingView *)pagingViewWithHeaderView:(UIView *)headerView
                                         headerHeight:(CGFloat)headerHeight
                                       segmentButtons:(NSArray *)segmentButtons
                                        segmentHeight:(CGFloat)segmentHeight
@@ -46,25 +47,18 @@ static NSInteger pagingButtonTag                 = 1000;
     layout.minimumInteritemSpacing     = 0.0;
     layout.scrollDirection             = UICollectionViewScrollDirectionHorizontal;
     
-    HHHorizontalPagingView *pagingView = [[HHHorizontalPagingView alloc] initWithFrame:CGRectMake(0., 64, Main_Screen_Width, Main_Screen_Height - 64 - 54 )];
+    MCHHHorizontalPagingView *pagingView = [[MCHHHorizontalPagingView alloc] initWithFrame:CGRectMake(0., 64, Main_Screen_Width, Main_Screen_Height - 64 )];
     
-    pagingView.horizontalCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, -64, Main_Screen_Width, Main_Screen_Height - 44 )collectionViewLayout:layout];
+    pagingView.horizontalCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height - 64)collectionViewLayout:layout];
     
     pagingView.horizontalCollectionView.bounces = NO;
-    
-    
-    
+
     [pagingView.horizontalCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:pagingCellIdentifier];
-    
-    
-    
     pagingView.horizontalCollectionView.backgroundColor                = [UIColor clearColor];
     pagingView.horizontalCollectionView.dataSource                     = pagingView;
     pagingView.horizontalCollectionView.delegate                       = pagingView;
     pagingView.horizontalCollectionView.pagingEnabled                  = YES;
     pagingView.horizontalCollectionView.showsHorizontalScrollIndicator = NO;
-    
-    
     pagingView.headerView                     = headerView;
     pagingView.segmentButtons                 = segmentButtons;
     pagingView.contentViews                   = contentViews;
@@ -73,8 +67,9 @@ static NSInteger pagingButtonTag                 = 1000;
     pagingView.segmentButtonConstraintArray   = [NSMutableArray array];
     
     UICollectionViewFlowLayout *tempLayout = (id)pagingView.horizontalCollectionView.collectionViewLayout;
-    tempLayout.itemSize = CGSizeMake(pagingView.horizontalCollectionView.frame.size.width, pagingView.horizontalCollectionView.frame.size.height - 64);//pagingView.horizontalCollectionView.frame.size;
-    
+    tempLayout.itemSize = pagingView.horizontalCollectionView.frame.size;
+   // tempLayout.itemSize = CGSizeMake(pagingView.horizontalCollectionView.frame.size.width, pagingView.horizontalCollectionView.frame.size.height - 64);//pagingView.horizontalCollectionView.frame.size;
+
     [pagingView addSubview:pagingView.horizontalCollectionView];
     [pagingView configureHeaderView];
     [pagingView configureSegmentView];
@@ -113,7 +108,6 @@ static NSInteger pagingButtonTag                 = 1000;
 - (void)configureContentView {
     for(UIScrollView *v in self.contentViews) {
         [v  setContentInset:UIEdgeInsetsMake(self.headerViewHeight+self.segmentBarHeight, 0., v.contentInset.bottom, 0.)];
-        
         v.alwaysBounceVertical = YES;
         v.showsVerticalScrollIndicator = NO;
         //v.contentOffset = CGPointMake(0., -self.headerViewHeight-self.segmentBarHeight);
@@ -151,24 +145,19 @@ static NSInteger pagingButtonTag                 = 1000;
         
         [_segmentView removeConstraints:self.segmentButtonConstraintArray];
         for(int i = 0; i < [self.segmentButtons count]; i++) {
-            MCseleButton *segmentButton = self.segmentButtons[i];
+            UIButton *segmentButton = self.segmentButtons[i];
             [segmentButton removeConstraints:self.segmentButtonConstraintArray];
-            [segmentButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateSelected];
-            [segmentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            segmentButton.titleLabel.font = AppFont;
-            
-            UIImageView * imgv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 39, 2)];
-            imgv.backgroundColor =  AppCOLOR;
-            [segmentButton setImage:[UIImage imageNamed:@"我的收益"] forState:UIControlStateSelected];
-            [segmentButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-
             segmentButton.tag = pagingButtonTag+i;
             [segmentButton addTarget:self action:@selector(segmentButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
             [_segmentView addSubview:segmentButton];
-           
-//            if(i == 0) {
-//                [segmentButton setSelected:YES];
-//            }
+            [segmentButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateSelected];
+            [segmentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            segmentButton.titleLabel.font = AppFont;
+            [segmentButton setImage:[UIImage imageNamed:@"我的收益"] forState:UIControlStateSelected];
+            [segmentButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+            if(i == 0) {
+                [segmentButton setSelected:YES];
+            }
             
             segmentButton.translatesAutoresizingMaskIntoConstraints = NO;
             
@@ -194,18 +183,15 @@ static NSInteger pagingButtonTag                 = 1000;
 - (void)segmentButtonEvent:(UIButton *)segmentButton {
     for(UIButton *b in self.segmentButtons) {
         [b setSelected:NO];
-        b.titleLabel.font = AppFont;
-
         
     }
     [segmentButton setSelected:YES];
-    segmentButton.titleLabel.font = [UIFont systemFontOfSize:18];
-
+    
     NSInteger clickIndex = segmentButton.tag-pagingButtonTag;
     
     [self.horizontalCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:clickIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
     if(self.currentScrollView.contentOffset.y<-(self.headerViewHeight+self.segmentBarHeight)) {
-        [self.currentScrollView setContentOffset:CGPointMake(self.currentScrollView.contentOffset.x, -(self.headerViewHeight+self.segmentBarHeight )) animated:NO];
+        [self.currentScrollView setContentOffset:CGPointMake(self.currentScrollView.contentOffset.x, -(self.headerViewHeight+self.segmentBarHeight)) animated:NO];
     }else {
         [self.currentScrollView setContentOffset:self.currentScrollView.contentOffset animated:NO];
     }
@@ -345,15 +331,8 @@ static NSInteger pagingButtonTag                 = 1000;
     for(UIButton *b in self.segmentButtons) {
         if(b.tag - pagingButtonTag == currentPage) {
             [b setSelected:YES];
-            b.titleLabel.font = [UIFont systemFontOfSize:18];
-
-            
-            
         }else {
             [b setSelected:NO];
-            b.titleLabel.font = AppFont;
-
-            
         }
     }
     self.currentScrollView = self.contentViews[currentPage];

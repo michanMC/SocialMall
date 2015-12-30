@@ -9,16 +9,19 @@
 #import "MyshouyiViewController.h"
 #import "HHHorizontalPagingView.h"
 #import "headView.h"
-#import "HHContentTableView.h"
 #import "MCseleButton.h"
+#import "allTableView.h"
+#import "shouruTableView.h"
+#import "tixianTableView.h"
+
 @interface MyshouyiViewController ()
 {
     headView * _headView;
-    HHContentTableView *_quanbuTableView;
-    HHContentTableView *_shouruTableView;
-    HHContentTableView *_tixianTableView;
+    allTableView *_quanbuTableView;
+    shouruTableView *_shouruTableView;
+    tixianTableView *_tixianTableView;
 
-    
+    UITextField * _tixianText;
     
 }
 
@@ -30,26 +33,76 @@
     [super viewDidLoad];
     self.title = @"我的收益";
     _headView = [self head_View];
-    _quanbuTableView = [HHContentTableView contentTableView];
-    _shouruTableView = [HHContentTableView contentTableView];
-    _tixianTableView = [HHContentTableView contentTableView];
+    _quanbuTableView = [allTableView contentTableView];
+    _shouruTableView = [shouruTableView contentTableView];
+    _tixianTableView = [tixianTableView contentTableView];
     NSMutableArray *buttonArray = [NSMutableArray array];
     for(int i = 0; i < 3; i++) {
-        UIButton *segmentButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [segmentButton setBackgroundImage:[UIImage imageNamed:@"button_normal"] forState:UIControlStateNormal];
-        [segmentButton setBackgroundImage:[UIImage imageNamed:@"button_selected"] forState:UIControlStateSelected];
-        [segmentButton setTitle:[NSString stringWithFormat:@"view%@",@(i)] forState:UIControlStateNormal];
-        [segmentButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        MCseleButton *segmentButton = [MCseleButton buttonWithType:UIButtonTypeCustom];
+        if (i == 0) {
+            [segmentButton setTitle:[NSString stringWithFormat:@"全部"] forState:UIControlStateNormal];
+        }
+        else if(i == 1){
+            [segmentButton setTitle:[NSString stringWithFormat:@"收入"] forState:UIControlStateNormal];
+        }
+        else{
+            [segmentButton setTitle:[NSString stringWithFormat:@"提现"] forState:UIControlStateNormal];
+        }
+
+//        [segmentButton setBackgroundImage:[UIImage imageNamed:@"button_normal"] forState:UIControlStateNormal];
+//        [segmentButton setBackgroundImage:[UIImage imageNamed:@"button_selected"] forState:UIControlStateSelected];
+//        [segmentButton setTitle:[NSString stringWithFormat:@"view%@",@(i)] forState:UIControlStateNormal];
+//        [segmentButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [buttonArray addObject:segmentButton];
     }
-    HHHorizontalPagingView *pagingView = [HHHorizontalPagingView pagingViewWithHeaderView:_headView headerHeight:162.f segmentButtons:buttonArray segmentHeight:44 contentViews:@[_quanbuTableView, _shouruTableView, _tixianTableView]];
+    HHHorizontalPagingView *pagingView = [HHHorizontalPagingView pagingViewWithHeaderView:_headView headerHeight:164.f segmentButtons:buttonArray segmentHeight:44 contentViews:@[_quanbuTableView, _shouruTableView, _tixianTableView]];
        // pagingView.segmentButtonSize = CGSizeMake(60., 30.);              //自定义segmentButton的大小
         pagingView.segmentView.backgroundColor = [UIColor whiteColor];     //设置segmentView的背景色
     pagingView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     pagingView.horizontalCollectionView.contentOffset = CGPointMake(Main_Screen_Width*_index, 0);
     MCseleButton * btn = (MCseleButton*)[pagingView viewWithTag:1000+ _index];
     btn.selected = YES;
+    btn.titleLabel.font = [UIFont systemFontOfSize:18];
+
+    
+
+    
+    
+    
+    
      [self.view addSubview:pagingView];
+    UIView * _botBtnView = [[UIView alloc]initWithFrame:CGRectMake(0, Main_Screen_Height - 44, Main_Screen_Width, 44)];
+    UIView *_lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, 0.5)];
+    _lineView.backgroundColor = [UIColor lightGrayColor];
+    
+    [_botBtnView addSubview:_lineView];
+
+    
+    _botBtnView.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    
+    _tixianText = [[UITextField alloc]initWithFrame:CGRectMake(10, 0, Main_Screen_Width/2, 44)];
+    _tixianText.placeholder = @"请输入提现金额";
+    _tixianText.textColor = [UIColor darkTextColor];
+    _tixianText.font =AppFont;
+    [_botBtnView addSubview:_tixianText];
+
+    UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 15 - 100, 6, 100, 32)];
+    [btn3 setTitle:@"申请提现" forState:0];
+    [btn3 setTitleColor:[UIColor whiteColor] forState:0];
+    btn3.backgroundColor = AppCOLOR;
+    ViewRadius(btn3, 5);
+    btn3.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_botBtnView addSubview:btn3];
+
+    
+    
+    
+    
+    [self.view addSubview:_botBtnView];
+    
     
     
     // Do any additional setup after loading the view.

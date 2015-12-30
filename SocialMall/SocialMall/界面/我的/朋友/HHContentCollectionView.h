@@ -1,5 +1,5 @@
 //
-//  HHContentTableView.h
+//  HHContentCollectionView.h
 //  HHHorizontalPagingView
 //
 //  Created by Huanhoo on 15/7/16.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HHContentTableView : UITableView
+@interface HHContentCollectionView : UICollectionView
 
-+ (HHContentTableView *)contentTableView;
++ (HHContentCollectionView *)contentCollectionView;
 
 @end
