@@ -14,6 +14,9 @@
 		4C3BA5E71C2A8D8D00166ED4 /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BA5E61C2A8D8D00166ED4 /* NullSafe.m */; };
 		4C3BA5EA1C2A8DAE00166ED4 /* wangjiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BA5E91C2A8DAE00166ED4 /* wangjiViewController.m */; };
 		4C3BA5EE1C2AA20800166ED4 /* MCNoMuiscView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BA5ED1C2AA20800166ED4 /* MCNoMuiscView.m */; };
+		4C4A955D1C3BC76E0060B0F8 /* zhanshiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A955C1C3BC76E0060B0F8 /* zhanshiViewController.m */; };
+		4C4A95601C3BC8C90060B0F8 /* zhanshiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A955F1C3BC8C90060B0F8 /* zhanshiTableViewCell.m */; };
+		4C4A95621C3BC8D30060B0F8 /* zhanshiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4A95611C3BC8D30060B0F8 /* zhanshiTableViewCell.xib */; };
 		4C51477E1C2ACDB900C8FB87 /* tuijianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C51477D1C2ACDB900C8FB87 /* tuijianViewController.m */; };
 		4C5147811C2ACDC100C8FB87 /* remenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5147801C2ACDC100C8FB87 /* remenViewController.m */; };
 		4C5147841C2ACDCA00C8FB87 /* zuixinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5147831C2ACDCA00C8FB87 /* zuixinViewController.m */; };
@@ -409,6 +412,11 @@
 		4C3BA5E91C2A8DAE00166ED4 /* wangjiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = wangjiViewController.m; sourceTree = "<group>"; };
 		4C3BA5EC1C2AA20800166ED4 /* MCNoMuiscView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCNoMuiscView.h; sourceTree = "<group>"; };
 		4C3BA5ED1C2AA20800166ED4 /* MCNoMuiscView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCNoMuiscView.m; sourceTree = "<group>"; };
+		4C4A955B1C3BC76E0060B0F8 /* zhanshiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhanshiViewController.h; sourceTree = "<group>"; };
+		4C4A955C1C3BC76E0060B0F8 /* zhanshiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhanshiViewController.m; sourceTree = "<group>"; };
+		4C4A955E1C3BC8C90060B0F8 /* zhanshiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhanshiTableViewCell.h; sourceTree = "<group>"; };
+		4C4A955F1C3BC8C90060B0F8 /* zhanshiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhanshiTableViewCell.m; sourceTree = "<group>"; };
+		4C4A95611C3BC8D30060B0F8 /* zhanshiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = zhanshiTableViewCell.xib; sourceTree = "<group>"; };
 		4C51477C1C2ACDB900C8FB87 /* tuijianViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tuijianViewController.h; sourceTree = "<group>"; };
 		4C51477D1C2ACDB900C8FB87 /* tuijianViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tuijianViewController.m; sourceTree = "<group>"; };
 		4C51477F1C2ACDC100C8FB87 /* remenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remenViewController.h; sourceTree = "<group>"; };
@@ -1912,6 +1920,8 @@
 				4CA81C571C33861E0054E516 /* tixingViewController.m */,
 				4CA81C681C339EB70054E516 /* FenGuanViewController.h */,
 				4CA81C691C339EB70054E516 /* FenGuanViewController.m */,
+				4C4A955B1C3BC76E0060B0F8 /* zhanshiViewController.h */,
+				4C4A955C1C3BC76E0060B0F8 /* zhanshiViewController.m */,
 			);
 			path = "我的";
 			sourceTree = "<group>";
@@ -1970,6 +1980,9 @@
 				4CA81C4F1C337A010054E516 /* tixianTableView.m */,
 				4CA81C811C33BA9A0054E516 /* HHCollectionViewCell.h */,
 				4CA81C821C33BA9A0054E516 /* HHCollectionViewCell.m */,
+				4C4A955E1C3BC8C90060B0F8 /* zhanshiTableViewCell.h */,
+				4C4A955F1C3BC8C90060B0F8 /* zhanshiTableViewCell.m */,
+				4C4A95611C3BC8D30060B0F8 /* zhanshiTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2342,6 +2355,7 @@
 				4C80A0FD1C299C9E00777BA6 /* mine_Withdraws-cash_icon@3x.png in Resources */,
 				4CD3E3871C22C3AC00A56EE0 /* Default-568h@2x.png in Resources */,
 				4C80A0E01C299C9E00777BA6 /* arrow_up@2x.png in Resources */,
+				4C4A95621C3BC8D30060B0F8 /* zhanshiTableViewCell.xib in Resources */,
 				4C80A07B1C299C9E00777BA6 /* share_wechat@2x.png in Resources */,
 				4CA81C621C338F290054E516 /* shouyi2TableViewCell.xib in Resources */,
 				4C80A0D31C299C9E00777BA6 /* home_default-photo@3x.png in Resources */,
@@ -2454,6 +2468,7 @@
 				4C9AFBCE1C22F72A0096754F /* UIImageView+LBBlurredImage.m in Sources */,
 				4C9AFC311C22FC440096754F /* MJPropertyKey.m in Sources */,
 				4C9AFB9C1C22F72A0096754F /* AFHTTPRequestOperation.m in Sources */,
+				4C4A95601C3BC8C90060B0F8 /* zhanshiTableViewCell.m in Sources */,
 				4C9AFBE41C22F72A0096754F /* UIView+REFrostedViewController.m in Sources */,
 				4C9AFBDB1C22F72A0096754F /* MCplaceholderText.m in Sources */,
 				4CB99F771C3019E700ED9F54 /* fabu5TableViewCell.m in Sources */,
@@ -2549,6 +2564,7 @@
 				4CB99F6C1C30046E00ED9F54 /* fabu4ViewController.m in Sources */,
 				4C9AFBC21C22F72A0096754F /* UIButton+WebCache.m in Sources */,
 				4C9AFBCC1C22F72A0096754F /* MCUser.m in Sources */,
+				4C4A955D1C3BC76E0060B0F8 /* zhanshiViewController.m in Sources */,
 				4C9AFC2F1C22FC440096754F /* MJFoundation.m in Sources */,
 				4C9AFC481C22FC440096754F /* UIScrollView+MJExtension.m in Sources */,
 				4C9AFBE01C22F72A0096754F /* RECommonFunctions.m in Sources */,

@@ -16,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *guanzhuLbl;
 @property (weak, nonatomic) IBOutlet UILabel *fensiLbl;
 @property (weak, nonatomic) IBOutlet UILabel *zanlbl;
+@property (weak, nonatomic) IBOutlet UIButton *guanzhu2btn;
+@property (weak, nonatomic) IBOutlet UIButton *fensiBtn2;
 
 @end

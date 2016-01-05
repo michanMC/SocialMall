@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface HHContentCollectionView : UICollectionView
+@property(nonatomic,copy) NSString * keyStr;//1:赞过 2：展示
 
-+ (HHContentCollectionView *)contentCollectionView;
++ (HHContentCollectionView *)contentCollectionViewKey:(NSString*)keystr;
+-(void)loadData;
 
 @end

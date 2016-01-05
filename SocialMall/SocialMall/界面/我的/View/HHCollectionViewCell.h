@@ -9,5 +9,29 @@
 #import <UIKit/UIKit.h>
 
 @interface HHCollectionViewCell : UICollectionViewCell
+@property(nonatomic,strong)UIButton* aixinBtn;
+@property(nonatomic,strong)UIButton* pinglunBtn;
+@property(nonatomic,copy)NSString * titleStr;
+@property(nonatomic,copy)NSString * timeStr;
+@property(nonatomic,copy)NSString * aixinStr;
+@property(nonatomic,copy)NSString * pingluStr;
+@property(nonatomic,copy)NSString * imgStr;
+
+
+
+
+
+
+
+
+
 -(void)prepareUI;
+
+
+
+
+
+
+
+
 @end

@@ -29,7 +29,7 @@
     
     CGRect  frame = self.contentView.frame;
     self.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(5, 0, (Main_Screen_Width -15)/2 , frame.size.height)];
+    UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(5, 0, (Main_Screen_Width -15)/2 , frame.size.height - 5)];
     
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -56,6 +56,7 @@
     
     _titleLbl.text = @"民族风可爱";
     _titleLbl.font = AppFont;
+    _titleLbl.textAlignment = NSTextAlignmentCenter;
     _titleLbl.textColor = [UIColor darkTextColor];
     [bgView addSubview:_titleLbl];
     
@@ -63,9 +64,10 @@
     
     y += height + 5;
     
-    _timeLbl = [[UILabel alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    _timeLbl = [[UILabel alloc]initWithFrame:CGRectMake(x+5, y, width - 5, height)];
     _timeLbl.font = [UIFont systemFontOfSize:13];
     _timeLbl.textColor = [UIColor lightGrayColor];
+    _timeLbl.text = @"2016-01-04";
     [bgView addSubview:_timeLbl];
     
     y += height + 5;
@@ -75,20 +77,58 @@
     [bgView addSubview:lineVieww];
     
     
+    x = width/2;
+    width = 0.5;
+    height =frame.size.height- y - 5;
+    lineVieww =[[UIView alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    lineVieww.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [bgView addSubview:lineVieww];
+
     
+   
+    width = bgView.frame.size.width/2;
+    x = 0;
+    _aixinBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    [_aixinBtn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:UIControlStateNormal];
+    [_aixinBtn setTitle:@"10" forState:UIControlStateNormal];
+    _aixinBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_aixinBtn setTitleColor:[UIColor lightGrayColor] forState:0];
+    [bgView addSubview:_aixinBtn];
     
-    
-    
-    
-    
-    
+    x += width;
+    _pinglunBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    [_pinglunBtn setImage:[UIImage imageNamed:@"comment_icon_normal"] forState:UIControlStateNormal];
+    [_pinglunBtn setTitle:@"10" forState:UIControlStateNormal];
+    _pinglunBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_pinglunBtn setTitleColor:[UIColor lightGrayColor] forState:0];
+    [bgView addSubview:_pinglunBtn];
+
     
     
     
     
     
 }
-
-
-
+-(void)setTimeStr:(NSString *)timeStr
+{
+    _timeLbl.text = timeStr;
+}
+-(void)setTitleStr:(NSString *)titleStr
+{
+    _titleLbl.text = titleStr;
+}
+-(void)setAixinStr:(NSString *)aixinStr
+{
+    [_aixinBtn setTitle:aixinStr forState:UIControlStateNormal];
+ 
+    
+}
+-(void)setPingluStr:(NSString *)pingluStr{
+    [_pinglunBtn setTitle:pingluStr forState:UIControlStateNormal];
+ 
+}
+-(void)setImgStr:(NSString *)imgStr
+{
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:imgStr] placeholderImage:[UIImage imageNamed:@"releaes_default-photo"]];
+}
 @end

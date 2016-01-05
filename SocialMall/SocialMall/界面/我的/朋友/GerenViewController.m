@@ -13,14 +13,13 @@
 #import "head2View.h"
 #import "MCseleButton.h"
 #import "HHContentCollectionView.h"
-
+#import "FenGuanViewController.h"
 @interface GerenViewController ()
 {
     head2View * _headView;
-
-    allTableView *_quanbuTableView;
-    shouruTableView *_shouruTableView;
     HHContentCollectionView *_collectionView;
+    HHContentCollectionView *_zancollectionView;
+
 }
 
 @end
@@ -30,9 +29,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _headView = [self head_View];
-    _quanbuTableView = [allTableView contentTableView];
-    _shouruTableView = [shouruTableView contentTableView];
-    _collectionView =[HHContentCollectionView contentCollectionView];
+    _collectionView =[HHContentCollectionView contentCollectionViewKey:@"1"];
+    [_collectionView loadData];
+    _zancollectionView =[HHContentCollectionView contentCollectionViewKey:@"2"];
+    [_zancollectionView loadData];
+
     NSMutableArray *buttonArray = [NSMutableArray array];
     for(int i = 0; i < 2; i++) {
         MCseleButton *segmentButton = [MCseleButton buttonWithType:UIButtonTypeCustom];
@@ -49,7 +50,7 @@
         //        [segmentButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [buttonArray addObject:segmentButton];
     }
-    MCHHHorizontalPagingView *pagingView = [MCHHHorizontalPagingView pagingViewWithHeaderView:_headView headerHeight:164.f segmentButtons:buttonArray segmentHeight:44 contentViews:@[_collectionView, _shouruTableView]];
+    MCHHHorizontalPagingView *pagingView = [MCHHHorizontalPagingView pagingViewWithHeaderView:_headView headerHeight:164.f segmentButtons:buttonArray segmentHeight:44 contentViews:@[_collectionView, _zancollectionView]];
     // pagingView.segmentButtonSize = CGSizeMake(60., 30.);              //自定义segmentButton的大小
     pagingView.segmentView.backgroundColor = [UIColor whiteColor];     //设置segmentView的背景色
     pagingView.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -70,12 +71,39 @@
 }
 -(head2View*)head_View{
     head2View *headerView = [[NSBundle mainBundle] loadNibNamed:@"head2View" owner:self options:nil][0];
+    headerView.guanzhuBtn.backgroundColor = AppCOLOR;
+    ViewRadius(headerView.guanzhuBtn, 5);
+    //[headerView.guanzhuBtn addTarget:self action:<#(nonnull SEL)#> forControlEvents:<#(UIControlEvents)#>]
+    [headerView.guanzhu2btn addTarget:self action:@selector(ActionBtn:) forControlEvents:UIControlEventTouchUpInside];
+    headerView.guanzhu2btn.tag = 50000;
+    [headerView.fensiBtn2 addTarget:self action:@selector(ActionBtn:) forControlEvents:UIControlEventTouchUpInside];
+    headerView.fensiBtn2.tag = 50001;
+
     return headerView;
     
     
     
 }
+-(void)ActionBtn:(UIButton*)btn{
+    if (btn.tag == 50000) {//关
+        //粉
+        FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
+        ctl.titleStr = @"1";
+        [self pushNewViewController:ctl];
+ 
+    }
+    else
+    {
+        //粉
+        FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
+        ctl.titleStr = @"2";
+        [self pushNewViewController:ctl];
 
+        
+    }
+    
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

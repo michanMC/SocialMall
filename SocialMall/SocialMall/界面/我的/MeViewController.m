@@ -15,6 +15,7 @@
 #import "MyshouyiViewController.h"
 #import "tixingViewController.h"
 #import "FenGuanViewController.h"
+#import "zhanshiViewController.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -177,7 +178,11 @@
         
     }
     else if(btn.tag == 2001){
-        //赞
+        //赞'
+        zhanshiViewController * ctl = [[zhanshiViewController alloc]init];
+        ctl.keyStr = @"2";
+        [self pushNewViewController:ctl];
+
         
     }
     else if(btn.tag == 2002){
@@ -195,6 +200,11 @@
         
     } else if(btn.tag == 2004){
         //展
+        
+        zhanshiViewController * ctl = [[zhanshiViewController alloc]init];
+        ctl.keyStr = @"1";
+        [self pushNewViewController:ctl];
+
         
     }
     

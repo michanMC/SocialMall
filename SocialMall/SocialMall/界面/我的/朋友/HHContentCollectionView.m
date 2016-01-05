@@ -9,6 +9,11 @@
 #import "HHContentCollectionView.h"
 #import "HHCollectionViewCell.h"
 @interface HHContentCollectionView () <UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+{
+    
+    
+    
+}
 
 @end
 
@@ -16,8 +21,8 @@
 
 static NSString *collectionViewCellIdentifier = @"collectionViewCell";
 
-+ (HHContentCollectionView *)contentCollectionView {
-    
++ (HHContentCollectionView *)contentCollectionViewKey:(NSString*)keystr{
+
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumLineSpacing = 0;
     layout.minimumInteritemSpacing = 0;
@@ -34,8 +39,21 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
     collectionView.delegate = collectionView;
     
     [collectionView registerClass:[HHCollectionViewCell class] forCellWithReuseIdentifier:collectionViewCellIdentifier];
-    
+    collectionView.keyStr = keystr;
     return collectionView;
+}
+-(void)loadData{
+    
+    if ([_keyStr isEqualToString:@"1"]) {//赞过
+      //  self.backgroundColor = [UIColor redColor];
+    }
+    else
+    {
+       // self.backgroundColor = [UIColor yellowColor];
+    }
+    [self reloadData];
+    
+    
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
@@ -51,7 +69,7 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
 {
     //item
     
-    return CGSizeMake(Main_Screen_Width /2, (Main_Screen_Width) /2 + 100);
+    return CGSizeMake(Main_Screen_Width /2, (Main_Screen_Width) /2 + 95);
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
