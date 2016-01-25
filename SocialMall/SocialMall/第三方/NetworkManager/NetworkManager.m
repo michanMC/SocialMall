@@ -120,13 +120,13 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
 
     [self.httpClient POST:webApi parameters:paraDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-    //DLog(@"URL:%@, 请求参数:%@, 返回值:%@",operation.request.URL,para,responseObject);
+  //  DLog(@"URL:%@, 请求参数:%@, 返回值:%@",operation.request.URL,para,responseObject);
         
         NSError *parserError = nil;
         NSDictionary *resultDic = nil;
         @try {
             NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-           // NSLog(@"<<<<<<%@",responseString);
+          //  NSLog(@"<<<<<<%@",responseString);
 
             
             NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
@@ -144,10 +144,10 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
         }
         @finally {
             //业务产生的状态码
-            NSString *logicCode = [NSString stringWithFormat:@"%ld",[resultDic[@"code"] integerValue]];
+            NSString *logicCode = [NSString stringWithFormat:@"%ld",[resultDic[@"status"] integerValue]];
             
             //成功获得数据
-            if ([logicCode isEqualToString:@"1"]) {
+            if ([logicCode isEqualToString:@"200000"]) {
                 
                 completeBlock(resultDic);
                 

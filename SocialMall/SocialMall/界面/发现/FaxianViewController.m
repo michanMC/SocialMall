@@ -65,7 +65,7 @@
     view.backgroundColor = [UIColor clearColor];
     
     //选择框
-    titleSegment = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(44, 0, Main_Screen_Width-44* 2, 44)];
+    titleSegment = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(60, 0, Main_Screen_Width-60* 2, 44)];
     titleSegment.sectionTitles = @[@"推荐", @"热门",@"最新"];
     titleSegment.selectedSegmentIndex = 0;
     titleSegment.backgroundColor = [UIColor clearColor];
@@ -76,6 +76,7 @@
     titleSegment.selectionIndicatorColor = [UIColor whiteColor];
     titleSegment.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
     titleSegment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    
     titleSegment.center = view.center;
     [view addSubview:titleSegment];
     __weak typeof(self) weakSelf = self;

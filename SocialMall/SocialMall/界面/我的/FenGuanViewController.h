@@ -10,7 +10,7 @@
 
 @interface FenGuanViewController : BaseViewController
 
-@property(nonatomic,copy)NSString *titleStr;//1=关注   2 = 粉丝
+@property(nonatomic,copy)NSString *titleStr;//1=关注   2 = 粉丝 3赞
 
 
 @end

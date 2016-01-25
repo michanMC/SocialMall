@@ -28,6 +28,11 @@
     if([_titleStr isEqualToString:@"2"]){
         self.title = @"粉丝列表";
     }
+    if([_titleStr isEqualToString:@"3"]){
+        self.title = @"点赞列表";
+    }
+    
+
     
     [self prepareUI];
     // Do any additional setup after loading the view.

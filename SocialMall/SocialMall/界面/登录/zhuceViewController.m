@@ -238,34 +238,44 @@
             
         }
         
-    } else if(btn.tag == 401){
+    } else if(btn.tag == 401){//获取验证码
         
         _gameStartTime=[NSDate date];
+
+
+        NSDictionary * Parameterdic = @{
+                                        @"phone":_phoneStr
+                                        };
+        
+        
+        [self showLoading:YES AndText:nil];
+        [self.requestManager requestWebWithParaWithURL:@"Login/getPhoneVerify" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
+            [self hideHud];
+            NSLog(@"成功");
+            NSLog(@"返回==%@",resultDic);
+            [self showAllTextDialog:@"发送成功，请留意你的手机短信"];
             _gameTimer= [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
-//
-//        NSDictionary * Parameterdic = @{
-//                                        @"phone":_phoneText.text,
-//                                        @"type":@(0)
-//                                        };
-//        
-//        
-//        [self showLoading:YES AndText:nil];
-//        [self.requestManager requestWebWithParaWithURL:@"api/user/genCode.json" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
-//            [self hideHud];
-//            NSLog(@"成功");
-//            NSLog(@"返回==%@",resultDic);
-//            [self showAllTextDialog:@"发送成功，请留意你的手机短信"];
-//            _gameTimer= [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
+//            if (resultDic[@"data"][@"sessionId"]) {
 //            
-//        } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
-//            [self hideHud];
-//            [self showAllTextDialog:description];
+//            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+//                [defaults setObject:resultDic[@"data"][@"sessionId"] forKey:@"sessionId"];
 //            
-//            NSLog(@"失败");
-//        }];
-//        
-//        
-//
+//            //强制让数据立刻保存
+//            [defaults synchronize];
+//            }
+            
+            
+            
+            
+        } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+            [self hideHud];
+            [self showAllTextDialog:description];
+            
+            NSLog(@"失败");
+        }];
+        
+        
+
         
         
         

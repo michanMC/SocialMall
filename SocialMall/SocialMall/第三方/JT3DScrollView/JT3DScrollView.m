@@ -98,7 +98,7 @@
             self.rotationY = 0.;
             self.rotationZ = 0.;
             
-            self.translateX = .25;
+            self.translateX = 0.;
             self.translateY = 0.;
             break;
     }
@@ -122,16 +122,14 @@
         
         view.layer.transform = t1;
                 
-        distanceFromCenterX = distanceFromCenterX * 40. / CGRectGetWidth(self.frame);
-        
-        
+        distanceFromCenterX = distanceFromCenterX * 100. / CGRectGetWidth(self.frame);
 //        distanceFromCenterY = distanceFromCenterY * 100. / CGRectGetHeight(self.frame);
         
         CGFloat angle = distanceFromCenterX * self.angleRatio;
         
         CGFloat offset = distanceFromCenterX;
-        CGFloat translateX = (CGRectGetWidth(self.frame) * self.translateX) * offset / Main_Screen_Width;
-        CGFloat translateY = (CGRectGetWidth(self.frame) * self.translateY) * abs(offset) / 40.;
+        CGFloat translateX = (CGRectGetWidth(self.frame) * self.translateX) * offset / 300.;
+        CGFloat translateY = (CGRectGetWidth(self.frame) * self.translateY) * abs(offset) / 100.;
         
         
         CATransform3D t = CATransform3DMakeTranslation(translateX, translateY, 0.);
