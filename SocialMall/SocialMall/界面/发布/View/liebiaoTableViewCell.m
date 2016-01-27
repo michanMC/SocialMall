@@ -38,16 +38,19 @@
         
         CGFloat x = 15;
         CGFloat y = 0;
-        CGFloat width = Main_Screen_Width - x * 2 - 10;
-        CGFloat height = 20;
+        CGFloat width = _bgView.frame.size.width - x - 30 - 50;
+        CGFloat height = 50;
         _nameLbl = [[UILabel alloc]initWithFrame:CGRectMake(x, y, width, height)];
         _nameLbl.textColor = [UIColor darkTextColor];
-        _nameLbl.font = [UIFont systemFontOfSize:14];
+        _nameLbl.font = [UIFont systemFontOfSize:15];
         [self.contentView addSubview:_nameLbl];
-        y += height + 5;
+        x = _bgView.frame.size.width - 30 - 50;
+        width = 50;
+        //y += height + 5;
         _pinpai_mashuLbl = [[UILabel alloc]initWithFrame:CGRectMake(x, y, width, height)];
         _pinpai_mashuLbl.textColor = [UIColor grayColor];
         _pinpai_mashuLbl.font = [UIFont systemFontOfSize:13];
+        _pinpai_mashuLbl.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:_pinpai_mashuLbl];
         _deleBtn = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width -10 - 5 - 20, (50 - 20)/2, 20, 20)];
         [_deleBtn setImage:[UIImage imageNamed:@"delete_icon"] forState:0];

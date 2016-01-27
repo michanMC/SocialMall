@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *sexLbl;
 @property (weak, nonatomic) IBOutlet UILabel *dingweilbl;
 @property (weak, nonatomic) IBOutlet UILabel *zongshuoyiLbl;
+@property (weak, nonatomic) IBOutlet UILabel *qianmingLbl;
 
 @end

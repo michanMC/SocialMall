@@ -139,7 +139,7 @@
     }
 
     
-    return y+height + 2 * 40;
+    return y+height + 1 * 40+10;
     }
     return 60;
 }
@@ -169,7 +169,7 @@
         
         
         cell.nameStr = @"xxxxxxxxx";
-        cell.mashuStr = @"GAP  M码";
+        cell.mashuStr = @"GAP";
         cell.deleBtn.tag = 800 + indexPath.row;
         [cell.deleBtn addTarget:self action:@selector(ACtionDeleBtn:) forControlEvents:UIControlEventTouchUpInside];
         if (indexPath.row == _xuanzheIndedx) {

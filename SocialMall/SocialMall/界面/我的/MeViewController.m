@@ -16,11 +16,14 @@
 #import "tixingViewController.h"
 #import "FenGuanViewController.h"
 #import "zhanshiViewController.h"
+#import "me4TableViewCell.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     
     UITableView *_tableView;
-    
+    NSArray *_titleArray;
+    NSArray *_imgArray;
+
     
     
 }
@@ -31,6 +34,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _titleArray = @[@"我的收益",@"收货地址管理",@"消息提醒",@"我的收藏",@"我的订单"];
+    _imgArray = @[@"income_icon",@"mine_address_icon",@"mine_message_icon",@"mine_collect_icon",@"mine_order_icon"];
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
@@ -52,10 +57,12 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if(section== 0)
     return 10;
+    return 20;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0.01;
@@ -63,14 +70,14 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
-        return 220;
+        return 240;
     }
-    if (indexPath.section == 1) {
-        return 97;
-    }
-    if (indexPath.section == 2) {
-        return 126;
-    }
+//    if (indexPath.section == 1) {
+//        return 44;
+//    }
+//    if (indexPath.section == 2) {
+//        return 126;
+//    }
     return 44;
     
 }
@@ -80,21 +87,14 @@
        
         return 1;
     }
-    if (section == 1) {
-        return 1;
-    
-    }
-    if (section == 2) {
-        return 1;
-    }
-    return 1;
+    return 5;
     
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     
-    if (indexPath.section == 0) {
+    if (indexPath.section == 0) {//头
         me1TableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"me1TableViewCell"];
         if (!cell) {
             cell = [[[NSBundle mainBundle]loadNibNamed:@"me1TableViewCell" owner:self options:nil]lastObject];
@@ -105,11 +105,13 @@
         cell.fenbtn.tag = 2002;
         cell.guanBtn.tag = 2003;
         cell.zhanBtn.tag = 2004;
+        cell.shoudaozanBtn.tag = 2005;
         [cell.headBtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
         [cell.zanbtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
         [cell.fenbtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
         [cell.guanBtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
         [cell.zhanBtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.shoudaozanBtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
 
         
         
@@ -119,7 +121,26 @@
         return cell;
 
     }
+     if (indexPath.section == 1) {
+         
+         me4TableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"me4TableViewCell"];
+         if (!cell) {
+             cell = [[[NSBundle mainBundle]loadNibNamed:@"me4TableViewCell" owner:self options:nil]lastObject];
+         }
+         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+         cell.imgView.image = [UIImage imageNamed:_imgArray[indexPath.row]];
+         cell.tiltleLbl.text = _titleArray[indexPath.row];
+         return cell;
+         
+         
+         
+     }
+    
+    /*弃用
     if (indexPath.section == 1) {
+        
+        
+        
         me2TableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"me2TableViewCell"];
         if (!cell) {
             cell = [[[NSBundle mainBundle]loadNibNamed:@"me2TableViewCell" owner:self options:nil]lastObject];
@@ -163,8 +184,42 @@
         return cell;
 
     }
+     */
     return [[UITableViewCell alloc]init];
 
+    
+    
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            //收益
+            MyshouyiViewController * ctl = [[MyshouyiViewController alloc]init];
+            [self pushNewViewController:ctl];
+
+        }
+        if (indexPath.row == 1) {
+            //收货
+            [self showAllTextDialog:@"跳H5?"];
+        }
+        if (indexPath.row == 2) {
+            //提醒
+            tixingViewController * ctl = [[tixingViewController alloc]init];
+            [self pushNewViewController:ctl];
+        }
+        if (indexPath.row == 3) {
+            //收藏
+            [self showAllTextDialog:@"跳H5?"];
+        }
+        if (indexPath.row == 4) {
+            //订单
+            [self showAllTextDialog:@"跳H5?"];
+            
+        }
+
+        
+    }
     
     
 }
@@ -207,10 +262,21 @@
 
         
     }
+    else if(btn.tag == 2005){
+        //收到的赞
+        
+        zhanshiViewController * ctl = [[zhanshiViewController alloc]init];
+        ctl.keyStr = @"3";
+        [self pushNewViewController:ctl];
+        
+        
+    }
+
     
     
     
 }
+/*弃用
 #pragma mark-第2个cell的点击
 -(void)actionCell2:(UIButton*)btn{
     //收益
@@ -238,6 +304,7 @@
     
     
 }
+ 
 #pragma mark-第3个cell的点击
 -(void)actionCell3:(UIButton*)btn{
     if (btn.tag == 4000) {
@@ -261,7 +328,7 @@
     
     
 }
-
+*/
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -134,6 +134,13 @@
     
     return [[UITableViewCell alloc]init];
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 1)
+    //发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectXQObjNotification" object:@"1"];
+    
+    
+}
 #pragma mark-举报
 -(void)actionjubao{
     

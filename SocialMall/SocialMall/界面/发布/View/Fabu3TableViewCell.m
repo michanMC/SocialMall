@@ -51,16 +51,21 @@
     }
     NSString * ss = @"没有你的搭配，点击添加";
   CGFloat w =  [MCIucencyView heightforString:ss andHeight:40 fontSize:13];
-    CGFloat ix = Main_Screen_Width/ 2 - w / 2 - 5 - 25;
-    UIImageView * iimg = [[UIImageView alloc]initWithFrame:CGRectMake(ix, y+height + (40 - 25)/2 , 25, 25)];
-    iimg.image = [UIImage imageNamed:@"add_icon"];
-    [self.contentView addSubview:iimg];
-    UILabel * lbl2 = [[UILabel alloc]initWithFrame:CGRectMake((Main_Screen_Width - w ) / 2, y+height, w, 40)];
-    lbl2.text = ss;
-    lbl2.textColor = [UIColor grayColor];
-    lbl2.font = [UIFont systemFontOfSize:13];
-    [self.contentView addSubview:lbl2];
-    UIButton * btn2 = [[UIButton alloc]initWithFrame:CGRectMake(0, y+ height, Main_Screen_Width, 40)];
+    CGFloat ix = Main_Screen_Width - 25 - 20;//Main_Screen_Width/ 2 - w / 2 - 5 - 25;
+   // UIImageView * iimg = [[UIImageView alloc]initWithFrame:CGRectMake(ix, y+height + (40 - 25)/2 , 25, 25)];
+//    UIImageView * iimg = [[UIImageView alloc]initWithFrame:CGRectMake(ix, 10 , 25, 25)];
+//
+//    iimg.image = [UIImage imageNamed:@"add_icon"];
+//    [self.contentView addSubview:iimg];
+//    UILabel * lbl2 = [[UILabel alloc]initWithFrame:CGRectMake((Main_Screen_Width - w ) / 2, y+height, w, 40)];
+//    lbl2.text = ss;
+//    lbl2.textColor = [UIColor grayColor];
+//    lbl2.font = [UIFont systemFontOfSize:13];
+//    [self.contentView addSubview:lbl2];
+    
+    
+    UIButton * btn2 = [[UIButton alloc]initWithFrame:CGRectMake(ix, 5, 40, 40)];
+    [btn2 setImage:[UIImage imageNamed:@"add_icon"] forState:0];
     [btn2 addTarget:self action:@selector(actionBtn2:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.contentView addSubview:btn2];

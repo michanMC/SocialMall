@@ -8,10 +8,13 @@
 
 #import "HHHorizontalPagingView.h"
 #import "MCseleButton.h"
+#import "MyshouyiBtn.h"
 @interface HHHorizontalPagingView () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) UIView             *headerView;
 @property (nonatomic, strong) NSArray            *segmentButtons;
+@property (nonatomic, strong) NSArray            *segmentViews;
+
 @property (nonatomic, strong) NSArray            *contentViews;
 
 @property (nonatomic, strong, readwrite) UIView  *segmentView;
@@ -39,6 +42,7 @@ static NSInteger pagingButtonTag                 = 1000;
 + (HHHorizontalPagingView *)pagingViewWithHeaderView:(UIView *)headerView
                                         headerHeight:(CGFloat)headerHeight
                                       segmentButtons:(NSArray *)segmentButtons
+                                         segmentViews:(NSArray *)segmentViews
                                        segmentHeight:(CGFloat)segmentHeight
                                         contentViews:(NSArray *)contentViews {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -67,6 +71,7 @@ static NSInteger pagingButtonTag                 = 1000;
     
     pagingView.headerView                     = headerView;
     pagingView.segmentButtons                 = segmentButtons;
+    pagingView.segmentViews = segmentViews;
     pagingView.contentViews                   = contentViews;
     pagingView.headerViewHeight               = headerHeight;
     pagingView.segmentBarHeight               = segmentHeight;
@@ -102,7 +107,13 @@ static NSInteger pagingButtonTag                 = 1000;
     
     if(self.segmentView) {
         self.segmentView.translatesAutoresizingMaskIntoConstraints = NO;
+      
+//        UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 59.5, Main_Screen_Width, 0.5)];
+//        lineView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+//        [_segmentView addSubview:lineView];
         [self addSubview:self.segmentView];
+        
+        
         [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.headerView ? : self attribute:self.headerView ? NSLayoutAttributeBottom : NSLayoutAttributeTop multiplier:1 constant:0]];
@@ -143,6 +154,8 @@ static NSInteger pagingButtonTag                 = 1000;
             buttonWidth = [[UIScreen mainScreen] bounds].size.width/(CGFloat)[self.segmentButtons count];
             buttonHeight = self.segmentBarHeight;
         }else {
+            
+            
             buttonWidth = self.segmentButtonSize.width;
             buttonHeight = self.segmentButtonSize.height;
             buttonTop = (self.segmentBarHeight - buttonHeight)/2.f;
@@ -151,27 +164,34 @@ static NSInteger pagingButtonTag                 = 1000;
         
         [_segmentView removeConstraints:self.segmentButtonConstraintArray];
         for(int i = 0; i < [self.segmentButtons count]; i++) {
-            MCseleButton *segmentButton = self.segmentButtons[i];
+            
+            MyshouyiBtn *segmentButton = self.segmentButtons[i];
+            UIView *segment_View = self.segmentViews[i];
+            [segment_View removeConstraints:self.segmentButtonConstraintArray];
+
             [segmentButton removeConstraints:self.segmentButtonConstraintArray];
             [segmentButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateSelected];
             [segmentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             segmentButton.titleLabel.font = AppFont;
             
-            UIImageView * imgv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 39, 2)];
-            imgv.backgroundColor =  AppCOLOR;
-            [segmentButton setImage:[UIImage imageNamed:@"我的收益"] forState:UIControlStateSelected];
-            [segmentButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+//            UIImageView * imgv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 39, 2)];
+//            imgv.backgroundColor =  AppCOLOR;
+////            [segmentButton setImage:[UIImage imageNamed:@"我的收益"] forState:UIControlStateSelected];
+//            [segmentButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
 
             segmentButton.tag = pagingButtonTag+i;
             [segmentButton addTarget:self action:@selector(segmentButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
+            //segmentButton.backgroundColor = [UIColor redColor];
             [_segmentView addSubview:segmentButton];
-           
+            
+
 //            if(i == 0) {
 //                [segmentButton setSelected:YES];
 //            }
             
             segmentButton.translatesAutoresizingMaskIntoConstraints = NO;
-            
+           // segment_View.translatesAutoresizingMaskIntoConstraints = NO;
+
             NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:segmentButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_segmentView attribute:NSLayoutAttributeTop multiplier:1 constant:buttonTop];
             NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:segmentButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_segmentView attribute:NSLayoutAttributeLeft multiplier:1 constant:i*buttonWidth+buttonLeft*i+buttonLeft];
             NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:segmentButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:buttonWidth];
@@ -184,8 +204,21 @@ static NSInteger pagingButtonTag                 = 1000;
             
             [_segmentView addConstraint:topConstraint];
             [_segmentView addConstraint:leftConstraint];
+//            _segmentView.frame = CGRectMake(0, 0, Main_Screen_Width, 60);
+//            segmentButton.frame = CGRectMake(0, 0, Main_Screen_Width/3, 60);
+           // segmentButton.backgroundColor = [UIColor yellowColor];
+          //  _segmentView.backgroundColor =[UIColor redColor];
             [segmentButton addConstraint:widthConstraint];
             [segmentButton addConstraint:heightConstraint];
+            NSLog(@"%zd",segmentButton.frame.origin.x);
+           // [segmentButton addSubview:segment_View];
+
+            
+//            [segment_View addConstraint:widthConstraint];
+//            [segment_View addConstraint:heightConstraint];
+
+       
+        
         }
         
     }

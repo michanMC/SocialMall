@@ -53,5 +53,11 @@
                                       segmentButtons:(NSArray *)segmentButtons
                                        segmentHeight:(CGFloat)segmentHeight
                                         contentViews:(NSArray *)contentViews;
++ (HHHorizontalPagingView *)pagingViewWithHeaderView:(UIView *)headerView
+                                        headerHeight:(CGFloat)headerHeight
+                                      segmentButtons:(NSArray *)segmentButtons
+                                        segmentViews:(NSArray *)segmentViews
+                                       segmentHeight:(CGFloat)segmentHeight
+                                        contentViews:(NSArray *)contentViews;
 
 @end

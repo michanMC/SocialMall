@@ -69,7 +69,7 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
 {
     //item
     
-    return CGSizeMake(Main_Screen_Width /2, (Main_Screen_Width) /2 + 95);
+    return CGSizeMake(Main_Screen_Width /3, (Main_Screen_Width) /3 + 90);
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

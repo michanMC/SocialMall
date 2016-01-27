@@ -29,7 +29,7 @@
     
     CGRect  frame = self.contentView.frame;
     self.contentView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(5, 0, (Main_Screen_Width -15)/2 , frame.size.height - 5)];
+    UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(5, 0, (Main_Screen_Width -20)/3 , frame.size.height - 5)];
     
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -38,11 +38,11 @@
     [self.contentView addSubview:bgView];
     
     
-    _imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, bgView.frame.size.width, bgView.frame.size.width)];
+    _imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, bgView.frame.size.width, bgView.frame.size.width-5)];
     _imgView.image = [UIImage imageNamed:@"releaes_default-photo"];
     [bgView addSubview:_imgView];
     CGFloat x = 0;
-    CGFloat y = bgView.frame.size.width;
+    CGFloat y = bgView.frame.size.width-5;
     CGFloat width = bgView.frame.size.width;
     CGFloat height = 0.5;
     UIView *lineVieww =[[UIView alloc]initWithFrame:CGRectMake(x, y, width, height)];

@@ -150,7 +150,7 @@
             
             cell.contentView.backgroundColor = [UIColor whiteColor];
             cell.nameStr = @"xxxxxxxxx";
-            cell.mashuStr = @"GAP  M码";
+            cell.mashuStr = @"GAP";
             cell.deleBtn.tag = 800 + indexPath.row;
             [cell.deleBtn addTarget:self action:@selector(ACtionDeleBtn:) forControlEvents:UIControlEventTouchUpInside];
             if (indexPath.row == _xuanzheIndedx) {

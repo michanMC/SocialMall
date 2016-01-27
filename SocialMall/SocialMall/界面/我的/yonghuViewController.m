@@ -8,10 +8,11 @@
 
 #import "yonghuViewController.h"
 #import "yonghuTableViewCell.h"
-@interface yonghuViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "yonghu2TableViewCell.h"
+@interface yonghuViewController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 {
     UITableView *_tableView;
-    
+    NSString *_textViewStr;
 }
 
 @end
@@ -45,7 +46,7 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;
@@ -57,11 +58,15 @@
     return 1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1) {
+        return 120;
+    }
     return 152;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (indexPath.section == 0) {
+        
     yonghuTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"yonghuTableViewCell"];
     if (!cell) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"yonghuTableViewCell" owner:self options:nil]lastObject];
@@ -89,7 +94,30 @@
     [cell.nanBtn addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
 
     return cell;
-    
+    }
+    if (indexPath.section == 1) {
+        yonghu2TableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"yonghu2TableViewCell"];
+        if (!cell) {
+
+            cell = [[yonghu2TableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"yonghu2TableViewCell"];
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textView.tag = 4444;
+        cell.textView.delegate =self;
+        if (_isMy) {
+            cell.textView.userInteractionEnabled = YES;
+        }
+        else
+        {
+            cell.textView.userInteractionEnabled = NO;
+
+        }
+
+        return cell;
+
+    }
+    return [[UITableViewCell alloc]init];
 }
 -(void)actionBtn:(UIButton*)btn{
     
@@ -98,6 +126,31 @@
     btn1.selected = NO;
     btn2.selected = NO;
     btn.selected = YES;
+    
+}
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    _textViewStr = textView.text;
+}
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    
+    if ([text isEqualToString:@"\n"]){
+        [textView resignFirstResponder];
+        return NO;
+    }
+//    UILabel * lbl = (UILabel*)[self.view viewWithTag:600];
+//    
+    NSString * aString = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    
+    if ([aString length] > 76) {
+        //[_tableview reloadData];
+        
+        
+        return NO;
+    }
+    return YES;
+    
     
 }
 

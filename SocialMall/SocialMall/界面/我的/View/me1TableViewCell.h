@@ -29,5 +29,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *fensiLbl;
 @property (weak, nonatomic) IBOutlet UILabel *guanzhuLbl;
 @property (weak, nonatomic) IBOutlet UILabel *zhanshiLbl;
+@property (weak, nonatomic) IBOutlet UILabel *shoudaoZanLbl;
+@property (weak, nonatomic) IBOutlet UIButton *shoudaozanBtn;
+@property (weak, nonatomic) IBOutlet UILabel *qianmingLbl;
 
 @end

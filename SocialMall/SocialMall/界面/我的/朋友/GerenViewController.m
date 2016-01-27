@@ -50,7 +50,7 @@
         //        [segmentButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [buttonArray addObject:segmentButton];
     }
-    MCHHHorizontalPagingView *pagingView = [MCHHHorizontalPagingView pagingViewWithHeaderView:_headView headerHeight:164.f segmentButtons:buttonArray segmentHeight:44 contentViews:@[_collectionView, _zancollectionView]];
+    MCHHHorizontalPagingView *pagingView = [MCHHHorizontalPagingView pagingViewWithHeaderView:_headView headerHeight:174.f segmentButtons:buttonArray segmentHeight:44 contentViews:@[_collectionView, _zancollectionView]];
     // pagingView.segmentButtonSize = CGSizeMake(60., 30.);              //自定义segmentButton的大小
     pagingView.segmentView.backgroundColor = [UIColor whiteColor];     //设置segmentView的背景色
     pagingView.backgroundColor = [UIColor groupTableViewBackgroundColor];

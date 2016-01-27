@@ -22,10 +22,15 @@
     if ([_keyStr isEqualToString:@"1"]) {
       self.title = @"发布列表";
     }
-    else
+    else if ([_keyStr isEqualToString:@"2"])
     {
         self.title = @"赞过列表";
  
+    }
+    else if ([_keyStr isEqualToString:@"3"])
+    {
+        self.title = @"收到的赞";
+        
     }
     [self prepareUI];
     // Do any additional setup after loading the view.
