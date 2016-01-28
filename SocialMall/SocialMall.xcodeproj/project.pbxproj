@@ -31,6 +31,19 @@
 		4C0D41581C561098005DEB5E /* report_i@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0D41561C561098005DEB5E /* report_i@3x.png */; };
 		4C0D415C1C56139E005DEB5E /* CLAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D41591C56139E005DEB5E /* CLAnimationView.m */; };
 		4C0D415D1C56139E005DEB5E /* CLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0D415B1C56139E005DEB5E /* CLView.m */; };
+		4C2074511C59A62100FFC806 /* QX1TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074501C59A62100FFC806 /* QX1TableViewCell.m */; };
+		4C2074531C59A63100FFC806 /* QX1TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2074521C59A63100FFC806 /* QX1TableViewCell.xib */; };
+		4C2074561C59ABAD00FFC806 /* QX2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074551C59ABAD00FFC806 /* QX2TableViewCell.m */; };
+		4C2074591C59B07C00FFC806 /* QX3TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074581C59B07C00FFC806 /* QX3TableViewCell.m */; };
+		4C20745B1C59B08500FFC806 /* QX3TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C20745A1C59B08500FFC806 /* QX3TableViewCell.xib */; };
+		4C20745E1C59E31000FFC806 /* QX4TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20745D1C59E31000FFC806 /* QX4TableViewCell.m */; };
+		4C2074601C59E31B00FFC806 /* QX4TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C20745F1C59E31B00FFC806 /* QX4TableViewCell.xib */; };
+		4C2074621C59E5B500FFC806 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2074611C59E5B500FFC806 /* line@2x.png */; };
+		4C2074651C59E6C200FFC806 /* QX5TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074641C59E6C200FFC806 /* QX5TableViewCell.m */; };
+		4C2074671C59F24C00FFC806 /* iconfont-zhiding@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2074661C59F24C00FFC806 /* iconfont-zhiding@2x.png */; };
+		4C2074691C59F66700FFC806 /* 组-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2074681C59F66700FFC806 /* 组-2@2x.png */; };
+		4C20746D1C5A0E1100FFC806 /* faxianCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C20746C1C5A0E1100FFC806 /* faxianCollectionViewCell.m */; };
+		4C20746F1C5A17B500FFC806 /* shous@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C20746E1C5A17B500FFC806 /* shous@2x.png */; };
 		4C2DD1B11C571560009BBCA5 /* MCBannerFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2DD1B01C571560009BBCA5 /* MCBannerFooter.m */; };
 		4C2DD1B31C57175F009BBCA5 /* banner_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2DD1B21C57175F009BBCA5 /* banner_arrow@2x.png */; };
 		4C3BA5DC1C2A621500166ED4 /* zhuceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BA5DB1C2A621500166ED4 /* zhuceViewController.m */; };
@@ -480,6 +493,25 @@
 		4C0D415A1C56139E005DEB5E /* CLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLView.h; sourceTree = "<group>"; };
 		4C0D415B1C56139E005DEB5E /* CLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLView.m; sourceTree = "<group>"; };
 		4C0D415E1C5613C0005DEB5E /* CLAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAnimationView.h; sourceTree = "<group>"; };
+		4C20744F1C59A62100FFC806 /* QX1TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QX1TableViewCell.h; sourceTree = "<group>"; };
+		4C2074501C59A62100FFC806 /* QX1TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QX1TableViewCell.m; sourceTree = "<group>"; };
+		4C2074521C59A63100FFC806 /* QX1TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QX1TableViewCell.xib; sourceTree = "<group>"; };
+		4C2074541C59ABAD00FFC806 /* QX2TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QX2TableViewCell.h; sourceTree = "<group>"; };
+		4C2074551C59ABAD00FFC806 /* QX2TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QX2TableViewCell.m; sourceTree = "<group>"; };
+		4C2074571C59B07C00FFC806 /* QX3TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QX3TableViewCell.h; sourceTree = "<group>"; };
+		4C2074581C59B07C00FFC806 /* QX3TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QX3TableViewCell.m; sourceTree = "<group>"; };
+		4C20745A1C59B08500FFC806 /* QX3TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QX3TableViewCell.xib; sourceTree = "<group>"; };
+		4C20745C1C59E31000FFC806 /* QX4TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QX4TableViewCell.h; sourceTree = "<group>"; };
+		4C20745D1C59E31000FFC806 /* QX4TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QX4TableViewCell.m; sourceTree = "<group>"; };
+		4C20745F1C59E31B00FFC806 /* QX4TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QX4TableViewCell.xib; sourceTree = "<group>"; };
+		4C2074611C59E5B500FFC806 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
+		4C2074631C59E6C200FFC806 /* QX5TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QX5TableViewCell.h; sourceTree = "<group>"; };
+		4C2074641C59E6C200FFC806 /* QX5TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QX5TableViewCell.m; sourceTree = "<group>"; };
+		4C2074661C59F24C00FFC806 /* iconfont-zhiding@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-zhiding@2x.png"; sourceTree = "<group>"; };
+		4C2074681C59F66700FFC806 /* 组-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "组-2@2x.png"; sourceTree = "<group>"; };
+		4C20746B1C5A0E1100FFC806 /* faxianCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = faxianCollectionViewCell.h; sourceTree = "<group>"; };
+		4C20746C1C5A0E1100FFC806 /* faxianCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = faxianCollectionViewCell.m; sourceTree = "<group>"; };
+		4C20746E1C5A17B500FFC806 /* shous@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shous@2x.png"; sourceTree = "<group>"; };
 		4C2DD1AF1C571560009BBCA5 /* MCBannerFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBannerFooter.h; sourceTree = "<group>"; };
 		4C2DD1B01C571560009BBCA5 /* MCBannerFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCBannerFooter.m; sourceTree = "<group>"; };
 		4C2DD1B21C57175F009BBCA5 /* banner_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banner_arrow@2x.png"; sourceTree = "<group>"; };
@@ -1955,6 +1987,19 @@
 		4C9AFC551C22FCE20096754F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4C20744F1C59A62100FFC806 /* QX1TableViewCell.h */,
+				4C2074501C59A62100FFC806 /* QX1TableViewCell.m */,
+				4C2074521C59A63100FFC806 /* QX1TableViewCell.xib */,
+				4C2074541C59ABAD00FFC806 /* QX2TableViewCell.h */,
+				4C2074551C59ABAD00FFC806 /* QX2TableViewCell.m */,
+				4C2074571C59B07C00FFC806 /* QX3TableViewCell.h */,
+				4C2074581C59B07C00FFC806 /* QX3TableViewCell.m */,
+				4C20745A1C59B08500FFC806 /* QX3TableViewCell.xib */,
+				4C20745C1C59E31000FFC806 /* QX4TableViewCell.h */,
+				4C20745D1C59E31000FFC806 /* QX4TableViewCell.m */,
+				4C20745F1C59E31B00FFC806 /* QX4TableViewCell.xib */,
+				4C2074631C59E6C200FFC806 /* QX5TableViewCell.h */,
+				4C2074641C59E6C200FFC806 /* QX5TableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2050,6 +2095,8 @@
 				4C0D41251C55F8E7005DEB5E /* zuopinDataView4Cell.xib */,
 				4C2DD1AF1C571560009BBCA5 /* MCBannerFooter.h */,
 				4C2DD1B01C571560009BBCA5 /* MCBannerFooter.m */,
+				4C20746B1C5A0E1100FFC806 /* faxianCollectionViewCell.h */,
+				4C20746C1C5A0E1100FFC806 /* faxianCollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2206,6 +2253,10 @@
 		4C9AFC771C22FF990096754F /* image */ = {
 			isa = PBXGroup;
 			children = (
+				4C20746E1C5A17B500FFC806 /* shous@2x.png */,
+				4C2074681C59F66700FFC806 /* 组-2@2x.png */,
+				4C2074661C59F24C00FFC806 /* iconfont-zhiding@2x.png */,
+				4C2074611C59E5B500FFC806 /* line@2x.png */,
 				4CBC61AC1C58BEFE005BBA6D /* arrow_pull-down@2x.png */,
 				4CBC61AD1C58BEFE005BBA6D /* arrow_pull-down@3x.png */,
 				4CBC61951C58A90C005BBA6D /* iphone */,
@@ -2468,6 +2519,7 @@
 				4C80A0E21C299C9E00777BA6 /* capital_icon@2x.png in Resources */,
 				4C80A0D11C299C9E00777BA6 /* friend_default-photo@3x.png in Resources */,
 				4C80A0FB1C299C9E00777BA6 /* mine_order_icon@3x.png in Resources */,
+				4C2074601C59E31B00FFC806 /* QX4TableViewCell.xib in Resources */,
 				4CBC61A31C58A90C005BBA6D /* ios-template-58.png in Resources */,
 				4C80A07C1C299C9E00777BA6 /* share_wechat@3x.png in Resources */,
 				4C80A0E41C299C9E00777BA6 /* dot_icon@2x.png in Resources */,
@@ -2484,6 +2536,7 @@
 				4C80A08B1C299C9E00777BA6 /* check-box_pressed@2x.png in Resources */,
 				4C80A08A1C299C9E00777BA6 /* check-box_normal@3x.png in Resources */,
 				4C80A0A01C299C9E00777BA6 /* hide_icon@2x.png in Resources */,
+				4C2074691C59F66700FFC806 /* 组-2@2x.png in Resources */,
 				4C80A0BE1C299C9E00777BA6 /* 品牌@2x.png in Resources */,
 				4C80A0FF1C299C9E00777BA6 /* more_icon@3x.png in Resources */,
 				4CBC61A11C58A90C005BBA6D /* ios-template-29.png in Resources */,
@@ -2514,6 +2567,7 @@
 				4C9AFBAA1C22F72A0096754F /* whiteplaceholder.png in Resources */,
 				4C9AFBD51C22F72A0096754F /* ZYQAssetPicker.Bundle in Resources */,
 				4CA6D7E81C2D3224007B70AE /* nav_icon_back@2x.png in Resources */,
+				4C2074621C59E5B500FFC806 /* line@2x.png in Resources */,
 				4C80A0DA1C299C9E00777BA6 /* 弹出按钮框@2x.png in Resources */,
 				4C80A0BA1C299C9E00777BA6 /* style_icon@2x.png in Resources */,
 				4C80A1111C299C9E00777BA6 /* login_password_icon@2x.png in Resources */,
@@ -2537,6 +2591,7 @@
 				4C80A07F1C299C9E00777BA6 /* add_icon@2x.png in Resources */,
 				4C80A09E1C299C9E00777BA6 /* favorite_icon_pressed@2x.png in Resources */,
 				4CBC61941C58A4BE005BBA6D /* me4TableViewCell.xib in Resources */,
+				4C20746F1C5A17B500FFC806 /* shous@2x.png in Resources */,
 				4C80A06F1C299C9E00777BA6 /* mall_pressed@2x.png in Resources */,
 				4C80A0E61C299C9E00777BA6 /* female_icon_not-selected@2x.png in Resources */,
 				4C9AFBB61C22F72A0096754F /* IQKeyboardManager.bundle in Resources */,
@@ -2561,6 +2616,7 @@
 				4C80A09A1C299C9E00777BA6 /* delete_icon@2x.png in Resources */,
 				4C80A0931C299C9E00777BA6 /* Collocation-list_icon@3x.png in Resources */,
 				4C80A0971C299C9E00777BA6 /* comment_icon_normal@3x.png in Resources */,
+				4C2074671C59F24C00FFC806 /* iconfont-zhiding@2x.png in Resources */,
 				4C0D41571C561098005DEB5E /* report_i@2x.png in Resources */,
 				4C80A0FD1C299C9E00777BA6 /* mine_Withdraws-cash_icon@3x.png in Resources */,
 				4C80A0E01C299C9E00777BA6 /* arrow_up@2x.png in Resources */,
@@ -2593,6 +2649,7 @@
 				4C0D41291C55FBB5005DEB5E /* report_icon1@2x.png in Resources */,
 				4C80A0FE1C299C9E00777BA6 /* more_icon@2x.png in Resources */,
 				4C80A0681C299C9E00777BA6 /* detection_pressed@3x.png in Resources */,
+				4C20745B1C59B08500FFC806 /* QX3TableViewCell.xib in Resources */,
 				4C80A0FA1C299C9E00777BA6 /* mine_order_icon@2x.png in Resources */,
 				4C80A0F71C299C9E00777BA6 /* mine_income_icon@3x.png in Resources */,
 				4C80A1121C299C9E00777BA6 /* login_password_icon@3x.png in Resources */,
@@ -2647,6 +2704,7 @@
 				4C80A07A1C299C9E00777BA6 /* share_friends@3x.png in Resources */,
 				4C80A0F01C299C9E00777BA6 /* mine_address_icon@2x.png in Resources */,
 				4C0D41191C55CF1F005DEB5E /* zuopinDataView1.xib in Resources */,
+				4C2074531C59A63100FFC806 /* QX1TableViewCell.xib in Resources */,
 				4C80A0B71C299C9E00777BA6 /* style_bg_selected@3x.png in Resources */,
 				4C0D411E1C55EB31005DEB5E /* zuopinDataView2Cell.xib in Resources */,
 				4CA81C6F1C339ED50054E516 /* FenGuanTableViewCell.xib in Resources */,
@@ -2736,13 +2794,16 @@
 				4C9AFC381C22FC440096754F /* MJRefreshAutoFooter.m in Sources */,
 				4C0D41171C55CF12005DEB5E /* zuopinDataView1.m in Sources */,
 				4C5147931C2AD3D300C8FB87 /* YBImgPickerViewCell.m in Sources */,
+				4C2074651C59E6C200FFC806 /* QX5TableViewCell.m in Sources */,
 				4C9AFC471C22FC440096754F /* MJRefreshConst.m in Sources */,
 				4C9AFC2D1C22FC440096754F /* MJDictionaryCache.m in Sources */,
 				4C9AFB9F1C22F72A0096754F /* AFNetworkReachabilityManager.m in Sources */,
 				4C9AFBB41C22F72A0096754F /* IQToolbar.m in Sources */,
 				4C9AFC3A1C22FC440096754F /* MJRefreshComponent.m in Sources */,
+				4C20745E1C59E31000FFC806 /* QX4TableViewCell.m in Sources */,
 				4C9AFBD91C22F72A0096754F /* MCbackButton.m in Sources */,
 				4C9AFC331C22FC440096754F /* NSObject+MJClass.m in Sources */,
+				4C2074561C59ABAD00FFC806 /* QX2TableViewCell.m in Sources */,
 				4C0D41541C560A5F005DEB5E /* UIView+TYAutoLayout.m in Sources */,
 				4C3BA5EE1C2AA20800166ED4 /* MCNoMuiscView.m in Sources */,
 				4C9AFBD61C22F72A0096754F /* ZYQAssetPickerController.m in Sources */,
@@ -2751,6 +2812,7 @@
 				4C9AFBE11C22F72A0096754F /* REFrostedContainerViewController.m in Sources */,
 				4C9AFBB21C22F72A0096754F /* IQBarButtonItem.m in Sources */,
 				4C9AFBAC1C22F72A0096754F /* IQUIView+Hierarchy.m in Sources */,
+				4C2074591C59B07C00FFC806 /* QX3TableViewCell.m in Sources */,
 				4CBAE5A91C3280400042F22C /* xinxiTableViewCell.m in Sources */,
 				4CA81C4A1C3379E30054E516 /* allTableView.m in Sources */,
 				4CA81C6D1C339ECA0054E516 /* FenGuanTableViewCell.m in Sources */,
@@ -2799,6 +2861,7 @@
 				4C0D41501C560A5F005DEB5E /* TYAlertController.m in Sources */,
 				4C0D41471C560A5F005DEB5E /* UIImage+ImageEffects.m in Sources */,
 				4C9AFC2F1C22FC440096754F /* MJFoundation.m in Sources */,
+				4C20746D1C5A0E1100FFC806 /* faxianCollectionViewCell.m in Sources */,
 				4C4EFFA11C3CE22800851B00 /* zuopinDataView.m in Sources */,
 				4C9AFC481C22FC440096754F /* UIScrollView+MJExtension.m in Sources */,
 				4C9AFBE01C22F72A0096754F /* RECommonFunctions.m in Sources */,
@@ -2833,6 +2896,7 @@
 				4CA81C501C337A010054E516 /* tixianTableView.m in Sources */,
 				4C2DD1B11C571560009BBCA5 /* MCBannerFooter.m in Sources */,
 				4CBAE5AE1C32867E0042F22C /* yijianViewController.m in Sources */,
+				4C2074511C59A62100FFC806 /* QX1TableViewCell.m in Sources */,
 				4CBC61AB1C58BA47005BBA6D /* XQViewController.m in Sources */,
 				4C0D411C1C55EB21005DEB5E /* zuopinDataView2Cell.m in Sources */,
 				4C9AFC451C22FC440096754F /* MJRefreshStateHeader.m in Sources */,

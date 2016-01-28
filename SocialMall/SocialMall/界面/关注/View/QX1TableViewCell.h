@@ -1,15 +1,14 @@
 //
-//  zuopinDataView2Cell.h
+//  QX1TableViewCell.h
 //  SocialMall
 //
-//  Created by MC on 16/1/25.
+//  Created by MC on 16/1/28.
 //  Copyright © 2016年 MC. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface zuopinDataView2Cell : UITableViewCell
+@interface QX1TableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
-@property (weak, nonatomic) IBOutlet UILabel *titleLbl;
 
 @end

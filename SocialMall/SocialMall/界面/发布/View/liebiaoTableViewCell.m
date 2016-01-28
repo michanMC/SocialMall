@@ -69,7 +69,11 @@
 -(void)setMashuStr:(NSString *)mashuStr
 {
     _pinpai_mashuLbl.text = mashuStr;
-    
+
+    if(_deleBtn.hidden)
+    {
+        _pinpai_mashuLbl.frame = CGRectMake(_pinpai_mashuLbl.frame.origin.x, _pinpai_mashuLbl.frame.origin.y, Main_Screen_Width - 10 - _pinpai_mashuLbl.frame.origin.x, _pinpai_mashuLbl.frame.size.height);
+    }
     
 }
 - (void)awakeFromNib {

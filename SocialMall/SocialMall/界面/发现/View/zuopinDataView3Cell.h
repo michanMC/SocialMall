@@ -16,6 +16,7 @@
 
 
 @interface zuopinDataView3Cell : UITableViewCell
+@property (nonatomic,assign) BOOL isQX;
 @property(nonatomic,weak)id<zuopinDataView3CellDelegate>deleGate;
 -(void)prepareUI;
 

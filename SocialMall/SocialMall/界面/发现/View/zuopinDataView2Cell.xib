@@ -14,19 +14,32 @@
                 <rect key="frame" x="0.0" y="0.0" width="280" height="309.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home_default-photo.png" translatesAutoresizingMaskIntoConstraints="NO" id="GbF-6m-GbT">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_default-photo.png" translatesAutoresizingMaskIntoConstraints="NO" id="GbF-6m-GbT">
                         <rect key="frame" x="0.0" y="0.0" width="280" height="280"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="虽然iOS系统功能强大，但是其中一些功能除了给用户增添吹牛逼的资本之外，对于果粉来说一点用处都没有！下面小编就来给大家说一说" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9G-fD-Avn">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="虽然iOS系统功能强大，但是其中一些功能除了给用户增添吹牛逼的资本之外，对于果粉来说一点用处都没有！下面小编就来给大家说一说" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9G-fD-Avn">
                         <rect key="frame" x="10" y="280" width="260" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="qUM-pg-3Eq"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="E9G-fD-Avn" firstAttribute="leading" secondItem="pOl-PV-3l1" secondAttribute="leading" constant="10" id="9Ov-u3-7Tb"/>
+                    <constraint firstItem="GbF-6m-GbT" firstAttribute="leading" secondItem="pOl-PV-3l1" secondAttribute="leading" id="9Qa-S7-f48"/>
+                    <constraint firstAttribute="trailing" secondItem="E9G-fD-Avn" secondAttribute="trailing" constant="10" id="Dy5-D0-Q7a"/>
+                    <constraint firstAttribute="bottom" secondItem="E9G-fD-Avn" secondAttribute="bottom" id="IFF-EB-hrh"/>
+                    <constraint firstItem="E9G-fD-Avn" firstAttribute="top" secondItem="GbF-6m-GbT" secondAttribute="bottom" id="Ssj-It-ep8"/>
+                    <constraint firstAttribute="trailing" secondItem="GbF-6m-GbT" secondAttribute="trailing" id="fZA-1L-hpO"/>
+                    <constraint firstItem="GbF-6m-GbT" firstAttribute="top" secondItem="pOl-PV-3l1" secondAttribute="top" id="gNp-kB-4uz"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="imgView" destination="GbF-6m-GbT" id="gUD-qH-9Uv"/>
+                <outlet property="titleLbl" destination="E9G-fD-Avn" id="1Tq-T1-eux"/>
             </connections>
             <point key="canvasLocation" x="227" y="164"/>
         </tableViewCell>

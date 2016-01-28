@@ -12,8 +12,8 @@
 #import "tuijianViewController.h"
 #import "remenViewController.h"
 #import "zuixinViewController.h"
-
-@interface FaxianViewController ()
+#import "XQViewController.h"
+@interface FaxianViewController ()<UIScrollViewDelegate>
 {
     
     HMSegmentedControl *titleSegment;
@@ -28,37 +28,82 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //跳详情
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectFXXQObj:) name:@"didSelectFXXQObjNotification" object:nil];
+    
+    
+    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(20, 7, Main_Screen_Width - 40, 40)];
+    [btn setImage:[UIImage imageNamed:@"shous"] forState:0];
+    self.navigationItem.titleView = btn;//[self MCtiteView];
+
+    
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
+#pragma mark-监听跳详情
+-(void)didSelectFXXQObj:(NSNotification*)Notification{
+    
+    XQViewController * ctl = [[XQViewController alloc]init];
+    [self pushNewViewController:ctl];
+    
+    
+    
+}
+
 -(void)prepareUI{
-      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_search_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
-    
-    self.navigationItem.titleView = [self MCtiteView];
-    
+//      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_search_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
+//    
+   // self.navigationItem.titleView = [self MCtiteView];
+    [self addSegmentView];
     //    添加滚动
     [self addScrollView];
     [self addtuijian];
     [self addremen];
     [self addzuixin];
 }
-- (void)addScrollView
-{
-    //中间View
-    self.mainScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 44)];
-    self.mainScroll.contentSize = CGSizeMake(Main_Screen_Width * 3, 0);
-    //self.mainScroll.backgroundColor = [UIColor colorWithHexString:@"#e6e6e6"];
-    _mainScroll.contentOffset = CGPointMake(Main_Screen_Width * 0, 0);
-    _mainScroll.scrollEnabled = NO;
-    self.mainScroll.delegate = self;
-    self.mainScroll.pagingEnabled = YES;
-    self.mainScroll.showsHorizontalScrollIndicator = NO;
-    self.mainScroll.bounces = NO;
-    [self.view addSubview:self.mainScroll];
+-(void)addSegmentView{
+    //选择框
+    titleSegment = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, Main_Screen_Width, 44)];
+    titleSegment.sectionTitles = @[@"推荐", @"热门",@"最新"];
+    titleSegment.selectedSegmentIndex = 0;
+    titleSegment.backgroundColor = [UIColor whiteColor];
+    titleSegment.textColor = [UIColor darkGrayColor];
+    titleSegment.selectedTextColor = AppCOLOR;
+    titleSegment.font = [UIFont systemFontOfSize:16];
+    titleSegment.selectionIndicatorHeight = 3;
+    titleSegment.selectionIndicatorColor = AppCOLOR;
+    titleSegment.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
+    titleSegment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    
+   
+    __weak typeof(self) weakSelf = self;
+    //  __block typeof(NSInteger) weakisBianji = _isBianji;
+    
+    [titleSegment setIndexChangeBlock:^(NSInteger index) {
+        weakSelf.mainScroll.contentOffset =CGPointMake(index * Main_Screen_Width, 0);
+        
+    }];
+  
+    [self.view addSubview:titleSegment];
     
     
 }
 
+- (void)addScrollView
+{
+    //中间View
+    self.mainScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64 + 44, Main_Screen_Width, Main_Screen_Height - 44 - 64 - 49)];
+    self.mainScroll.contentSize = CGSizeMake(Main_Screen_Width * 3, 0);
+    //self.mainScroll.backgroundColor = [UIColor colorWithHexString:@"#e6e6e6"];
+    _mainScroll.contentOffset = CGPointMake(Main_Screen_Width * 0, 0);
+    self.mainScroll.delegate = self;
+    self.mainScroll.pagingEnabled = YES;
+    self.mainScroll.showsHorizontalScrollIndicator = NO;
+    [self.view addSubview:self.mainScroll];
+    
+    
+}
+/*
 -(UIView*)MCtiteView{
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width , 44)];
     
@@ -92,6 +137,7 @@
     
     
 }
+ */
 #pragma mark-addRemen
 
 -(void)addremen{
@@ -108,6 +154,15 @@
     
     _zuixinCtl = [[zuixinViewController alloc]init];
     [self.mainScroll addSubview:_zuixinCtl.view];
+    
+}
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSInteger indepage = scrollView.contentOffset.x / Main_Screen_Width;
+    
+    titleSegment.selectedSegmentIndex =indepage;
+    
+    
     
 }
 #pragma mark-搜索

@@ -83,7 +83,7 @@
 -(void)prepareUI{
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_search_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
     
-    _noDataView = [[MCNoMuiscView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64 - 44)];
+    _noDataView = [[MCNoMuiscView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64 - 49)];
     [_noDataView.btn addTarget:self action:@selector(actionBtnFX) forControlEvents:UIControlEventTouchUpInside];
 
    // _noDataView.hidden = YES;
@@ -99,7 +99,7 @@
 - (JT3DScrollView *)scrollView
 {
     if (!_scrollView) {
-        _scrollView = [[JT3DScrollView alloc]initWithFrame:CGRectMake(20, 64, Main_Screen_Width - 40, Main_Screen_Height - 64 - 44)];
+        _scrollView = [[JT3DScrollView alloc]initWithFrame:CGRectMake(20, 64, Main_Screen_Width - 40, Main_Screen_Height - 64 - 49)];
         _scrollView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         _scrollView.effect = JT3DScrollViewEffectNone;
         _scrollView.backgroundColor = [UIColor clearColor];
