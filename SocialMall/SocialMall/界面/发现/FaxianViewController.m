@@ -13,6 +13,7 @@
 #import "remenViewController.h"
 #import "zuixinViewController.h"
 #import "XQViewController.h"
+#import "SearchViewController.h"
 @interface FaxianViewController ()<UIScrollViewDelegate>
 {
     
@@ -34,6 +35,7 @@
     
     UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(20, 7, Main_Screen_Width - 40, 40)];
     [btn setImage:[UIImage imageNamed:@"shous"] forState:0];
+    [btn addTarget:self action:@selector(ActionTime) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = btn;//[self MCtiteView];
 
     
@@ -167,7 +169,7 @@
 }
 #pragma mark-搜索
 -(void)ActionTime{
-    loginViewController * ctl = [[loginViewController alloc]init];
+    SearchViewController * ctl = [[SearchViewController alloc]init];
     [self pushNewViewController:ctl];
     
     

@@ -47,6 +47,9 @@
     indexnum = 3;
     
     [self prepareUI2];
+    self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"暂时加个登录" style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
+    
+
     
     
     // Do any additional setup after loading the view.
@@ -81,7 +84,6 @@
 }
 
 -(void)prepareUI{
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_search_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
     
     _noDataView = [[MCNoMuiscView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64 - 49)];
     [_noDataView.btn addTarget:self action:@selector(actionBtnFX) forControlEvents:UIControlEventTouchUpInside];

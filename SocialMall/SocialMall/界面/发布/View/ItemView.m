@@ -99,8 +99,16 @@
         btn2.backgroundColor = [UIColor whiteColor];
     }
     btn.selected = YES;
+    if (_seleColor) {
+        btn.backgroundColor = _seleColor;
+        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
+    }
+    else
     btn.backgroundColor = AppCOLOR;
     NSLog(@"%d",btn.tag - 700);
+    if (_delegate) {
+        [_delegate seleIndex:btn.tag - 700];
+    }
 }
 
 - (void)ItemViewWithBlock:(ItemViewBlock)block {

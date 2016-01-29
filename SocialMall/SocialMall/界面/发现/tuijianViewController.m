@@ -101,18 +101,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 -(void)prepareUI{
     _scrollView = [[JT3DScrollView alloc]initWithFrame:CGRectMake(40, 64, Main_Screen_Width - 80, Main_Screen_Height - 64-1)];

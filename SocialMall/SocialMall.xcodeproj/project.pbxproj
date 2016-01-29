@@ -435,6 +435,10 @@
 		4CD3E3601C22C2C700A56EE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CD3E35F1C22C2C700A56EE0 /* Assets.xcassets */; };
 		4CD3E36E1C22C2C700A56EE0 /* SocialMallTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3E36D1C22C2C700A56EE0 /* SocialMallTests.m */; };
 		4CD3E3791C22C2C700A56EE0 /* SocialMallUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3E3781C22C2C700A56EE0 /* SocialMallUITests.m */; };
+		4CF39C8C1C5B48C2008BE212 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF39C8B1C5B48C2008BE212 /* SearchViewController.m */; };
+		4CF39C8F1C5B4949008BE212 /* fenGeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF39C8E1C5B4949008BE212 /* fenGeViewController.m */; };
+		4CF39C921C5B4954008BE212 /* pinpaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF39C911C5B4954008BE212 /* pinpaiViewController.m */; };
+		4CF39C951C5B495C008BE212 /* chengyuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF39C941C5B495C008BE212 /* chengyuanViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1087,6 +1091,14 @@
 		4CD3E3781C22C2C700A56EE0 /* SocialMallUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SocialMallUITests.m; sourceTree = "<group>"; };
 		4CD3E37A1C22C2C700A56EE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CD3E3891C22C55D00A56EE0 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		4CF39C8A1C5B48C2008BE212 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		4CF39C8B1C5B48C2008BE212 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		4CF39C8D1C5B4949008BE212 /* fenGeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fenGeViewController.h; sourceTree = "<group>"; };
+		4CF39C8E1C5B4949008BE212 /* fenGeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fenGeViewController.m; sourceTree = "<group>"; };
+		4CF39C901C5B4954008BE212 /* pinpaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinpaiViewController.h; sourceTree = "<group>"; };
+		4CF39C911C5B4954008BE212 /* pinpaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = pinpaiViewController.m; sourceTree = "<group>"; };
+		4CF39C931C5B495C008BE212 /* chengyuanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chengyuanViewController.h; sourceTree = "<group>"; };
+		4CF39C941C5B495C008BE212 /* chengyuanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = chengyuanViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1954,6 +1966,7 @@
 		4C9AFC521C22FCE20096754F /* 界面 */ = {
 			isa = PBXGroup;
 			children = (
+				4CF39C871C5B4881008BE212 /* 搜索 */,
 				4C9AFC531C22FCE20096754F /* 关注 */,
 				4C9AFC561C22FCE20096754F /* 发布 */,
 				4C9AFC591C22FCE20096754F /* 发现 */,
@@ -2376,6 +2389,37 @@
 			path = SocialMallUITests;
 			sourceTree = "<group>";
 		};
+		4CF39C871C5B4881008BE212 /* 搜索 */ = {
+			isa = PBXGroup;
+			children = (
+				4CF39C881C5B4881008BE212 /* model */,
+				4CF39C891C5B4881008BE212 /* View */,
+				4CF39C8A1C5B48C2008BE212 /* SearchViewController.h */,
+				4CF39C8B1C5B48C2008BE212 /* SearchViewController.m */,
+				4CF39C8D1C5B4949008BE212 /* fenGeViewController.h */,
+				4CF39C8E1C5B4949008BE212 /* fenGeViewController.m */,
+				4CF39C901C5B4954008BE212 /* pinpaiViewController.h */,
+				4CF39C911C5B4954008BE212 /* pinpaiViewController.m */,
+				4CF39C931C5B495C008BE212 /* chengyuanViewController.h */,
+				4CF39C941C5B495C008BE212 /* chengyuanViewController.m */,
+			);
+			path = "搜索";
+			sourceTree = "<group>";
+		};
+		4CF39C881C5B4881008BE212 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		4CF39C891C5B4881008BE212 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2760,6 +2804,7 @@
 				4C9AFBB71C22F72A0096754F /* NetworkManager.m in Sources */,
 				4C9AFBC01C22F72A0096754F /* SDWebImageManager.m in Sources */,
 				4C9AFC671C22FCFA0096754F /* loginViewController.m in Sources */,
+				4CF39C921C5B4954008BE212 /* pinpaiViewController.m in Sources */,
 				4C9AFC6A1C22FD0C0096754F /* MeViewController.m in Sources */,
 				4C9AFBC11C22F72A0096754F /* SDWebImagePrefetcher.m in Sources */,
 				4CA81C781C33A8BB0054E516 /* head2View.m in Sources */,
@@ -2794,6 +2839,7 @@
 				4C9AFC381C22FC440096754F /* MJRefreshAutoFooter.m in Sources */,
 				4C0D41171C55CF12005DEB5E /* zuopinDataView1.m in Sources */,
 				4C5147931C2AD3D300C8FB87 /* YBImgPickerViewCell.m in Sources */,
+				4CF39C951C5B495C008BE212 /* chengyuanViewController.m in Sources */,
 				4C2074651C59E6C200FFC806 /* QX5TableViewCell.m in Sources */,
 				4C9AFC471C22FC440096754F /* MJRefreshConst.m in Sources */,
 				4C9AFC2D1C22FC440096754F /* MJDictionaryCache.m in Sources */,
@@ -2881,6 +2927,7 @@
 				4C0D414A1C560A5F005DEB5E /* jubao_View.m in Sources */,
 				4C92A56E1C32BEC100AC5F55 /* headView.m in Sources */,
 				4C9AFC361C22FC440096754F /* NSObject+MJProperty.m in Sources */,
+				4CF39C8C1C5B48C2008BE212 /* SearchViewController.m in Sources */,
 				4C9AFBA21C22F72A0096754F /* AFURLRequestSerialization.m in Sources */,
 				4CA81C581C33861E0054E516 /* tixingViewController.m in Sources */,
 				4CA6D7E51C2D2CE3007B70AE /* Fabu2ViewController.m in Sources */,
@@ -2925,6 +2972,7 @@
 				4C3BA5DC1C2A621500166ED4 /* zhuceViewController.m in Sources */,
 				4CA81C801C33B3EC0054E516 /* HHContentCollectionView.m in Sources */,
 				4C9AFC3F1C22FC440096754F /* MJRefreshAutoStateFooter.m in Sources */,
+				4CF39C8F1C5B4949008BE212 /* fenGeViewController.m in Sources */,
 				4C9AFBDC1C22F72A0096754F /* MCTabButton.m in Sources */,
 				4C9AFC3D1C22FC440096754F /* MJRefreshAutoGifFooter.m in Sources */,
 				4CD3E3551C22C2C600A56EE0 /* main.m in Sources */,
@@ -3049,13 +3097,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: GuangZhou DianDuo Software Technology Co.,Ltd (967UFS6SL4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SocialMall/PrefixHeader.pch";
 				INFOPLIST_FILE = SocialMall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MC.SocialMall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -3063,13 +3113,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: GuangZhou DianDuo Software Technology Co.,Ltd (967UFS6SL4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SocialMall/PrefixHeader.pch";
 				INFOPLIST_FILE = SocialMall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MC.SocialMall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

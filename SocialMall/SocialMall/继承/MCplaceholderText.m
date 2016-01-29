@@ -21,15 +21,16 @@
 
 
 - (void)drawPlaceholderInRect:(CGRect)rect{
-    UIColor *placeholderColor = [UIColor whiteColor];//设置颜色
+    UIColor *placeholderColor = [UIColor grayColor];//设置颜色
     [placeholderColor setFill];
 
-    CGRect placeholderRect = CGRectMake(rect.origin.x,rect.origin.y + 6, rect.size.width , 20);//设置距离
+    CGRect placeholderRect = CGRectMake(rect.origin.x,rect.origin.y, rect.size.width ,rect.size.height );//设置距离
 
 
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
    // style.lineBreakMode = NSLineBreakByTruncatingTail;
-    style.alignment = self.textAlignment;
+    //style.alignment = self.textAlignment;
+    
     NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:style,NSParagraphStyleAttributeName, self.font, NSFontAttributeName, placeholderColor, NSForegroundColorAttributeName, nil];
 
     [self.placeholder drawInRect:placeholderRect withAttributes:attr];

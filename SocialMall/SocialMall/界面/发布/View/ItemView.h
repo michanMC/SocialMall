@@ -12,6 +12,8 @@
 
 -(void)itemH:(CGFloat)itemh;
 
+@optional
+-(void)seleIndex:(NSInteger)index;
 
 @end
 
@@ -28,7 +30,7 @@ typedef void(^ItemViewBlock)(id obj);
 
 @property (nonatomic,copy) __block ItemViewBlock block;
 @property (nonatomic,weak) id<ItemViewDelegate>delegate;
-
+@property (nonatomic,strong)UIColor*  seleColor;
 
 
 /**
