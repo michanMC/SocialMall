@@ -15,7 +15,8 @@
 #import "QX3TableViewCell.h"
 #import "QX4TableViewCell.h"
 #import "QX5TableViewCell.h"
-
+#import "CommentModel.h"
+#import "MatchListModel.h"
 #import "zuopinDataView3Cell.h"
 #import "FenGuanViewController.h"
 #import "GerenViewController.h"
@@ -30,10 +31,16 @@
     UIView * _pinlunBgview;
     UITextView *_pinLunTextView;
     NSString *_textViewStr;
-    
-    
-    
+
     UIButton *_zhidingBtn;
+    
+    
+    faXianModel * _XQModel;
+    NSMutableArray * _CommentArray;
+    NSMutableArray * _MatchListArray;
+
+    NSInteger pagenum;
+    
 }
 @property(nonatomic,strong) UITableView *firstViewTableView;
 @property(nonatomic,strong) UITableView *secondViewTableView;
@@ -54,8 +61,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _CommentArray = [NSMutableArray array];
+    _MatchListArray = [NSMutableArray array];
+
     self.title = @"详情";
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"share_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(fenxiang)];
+    pagenum = 0;
     [self prepareFirstView];
     [self prepareSecondView];
     currentViewController=_firstViewController;
@@ -99,7 +110,7 @@
     _firstViewTableView.tableFooterView = _firstViewPullview;
     [_firstViewController.view addSubview:_firstViewTableView];
     [self.view addSubview:self.firstViewController.view];
-    
+    [self load_Data:YES];
     
 }
 #pragma mark-第2个
@@ -118,7 +129,9 @@
     [_pinlunBgview addSubview:lineview];
     _pinlunBgview.backgroundColor = [UIColor whiteColor];
     _pinglunHeadImg = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 28, 28)];
-    _pinglunHeadImg.image = [UIImage imageNamed:@"Avatar_46"];
+    //_pinglunHeadImg.image = [UIImage imageNamed:@"Avatar_46"];
+    [_pinglunHeadImg sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_46"]];
+    ViewRadius(_pinglunHeadImg, 28/2);
     [_pinlunBgview addSubview:_pinglunHeadImg];
     
     
@@ -135,6 +148,7 @@
     UIButton * sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 50, 0, 50, 48)];
     [sendBtn setTitle:@"发送" forState:0];
     [sendBtn setTitleColor:UIColorFromRGB(0x29477d) forState:0];
+    [sendBtn addTarget:self action:@selector(actionSend) forControlEvents:UIControlEventTouchUpInside];
     [_pinlunBgview addSubview:sendBtn];
     
     
@@ -156,7 +170,7 @@
 
     [_secondViewController.view addSubview:_zhidingBtn];
     
-
+    _secondViewTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(actioncomFooer)];
     
 }
 -(UIView*)secondViewPullview{
@@ -250,9 +264,16 @@
                     
                     if (finished) {
                         currentViewController=_secondViewController;
+                        if (!_CommentArray.count){
+                            pagenum = 0;
+                            [self matchList:YES];
+                            
+                        }
                     }else{
                         currentViewController=oldViewController;
                     }
+                    
+                    
                 }];
                 
             }
@@ -342,13 +363,16 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _firstViewTableView) {
         if (indexPath.row == 0) {
+            
             return 64;
         }
         if (indexPath.row == 1) {
             return Main_Screen_Width;
         }
         if (indexPath.row == 2) {
-            NSString *titleStr = @"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
+         //   NSString *titleStr = @"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
+            NSString *titleStr = _XQModel.content;
+
             CGFloat h = [MCIucencyView heightForString:titleStr fontSize:14 andWidth:Main_Screen_Width - 20] + 20;
 
             return h;
@@ -371,13 +395,24 @@
         }
         if (indexPath.section == 2) {
             if (indexPath.row == 0) {
+                if (!_CommentArray.count)
                 return 50;
             }
+            else
+            {
+            CGFloat h = 0;
+            if (_CommentArray.count > indexPath.row -1) {
+                
             
-            NSString *titleStr = @"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
-            CGFloat h = [MCIucencyView heightForString:titleStr fontSize:14 andWidth:Main_Screen_Width - 10 - 48] ;
+            CommentModel * model = _CommentArray[indexPath.row-1];
+            NSString *titleStr =model.comment;
             
+          //titleStr = @"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
+            h = [MCIucencyView heightForString:titleStr fontSize:14 andWidth:Main_Screen_Width - 10 - 48] ;
+                
+            }
             return 40 + h + 10 + .5;
+        }
         }
         
     }
@@ -411,17 +446,20 @@
     }
     if (_secondViewTableView==tableView) {
         if (section == 0) {
+            if (_XQModel.like_listArray.count)
             return 2;
+            else
+                return 1;
         }
         if (section == 1) {
-            return 4;//搭配
+            return _MatchListArray.count+1;//搭配
         }
-        return 10;//评论
+        if (section == 2) {
+            return _CommentArray.count + 1;//评论
+
+        }
         
-        
-        
-        
-        
+    
     }
     return 1;
 }
@@ -440,7 +478,41 @@
             }
             cell.headImgBtn.tag = 90000;
            // [cell.headImgBtn addTarget:self action:@selector(actionHeadbtn:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.headImgBtn sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] forState:0 placeholderImage:[UIImage imageNamed:@"Avatar_76"]];
+            ViewRadius(cell.headImgBtn, 40/2);
+
+            //[cell.headImgBtn sd_setImageWithURL:<#(NSURL *)#> forState:<#(UIControlState)#> placeholderImage:<#(UIImage *)#>]
+            cell.nameLbl.text = _XQModel.nickname;
+            cell.timeLbl.text =  [CommonUtil daysAgoAgainst:[_XQModel.add_time longLongValue]];//[CommonUtil getStringWithLong:model.createDate Format:@"MM-dd"];
+
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.guanzhuBtn addTarget:self action:@selector(ACtionGuanzhu) forControlEvents:UIControlEventTouchUpInside];
+            
+            if (_XQModel.isFans) {
+                [cell.guanzhuBtn setTitle:@"已关注" forState:0];
+                cell.guanzhuBtn.backgroundColor = [UIColor whiteColor];
+                [cell.guanzhuBtn setTitleColor:UIColorFromRGB(0x29477d) forState:0 ];
+
+
+            }
+            
+            else
+            {
+                [cell.guanzhuBtn setTitle:@"关注" forState:0];
+                cell.guanzhuBtn.backgroundColor = AppCOLOR;
+                [cell.guanzhuBtn setTitleColor:[UIColor whiteColor] forState:0 ];
+            }
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            NSString * userid = [defaults objectForKey:@"userId"];
+            if ([_XQModel.user_id isEqualToString:userid]) {
+                cell.guanzhuBtn.hidden = YES;
+            }
+            else
+            {
+                cell.guanzhuBtn.hidden = NO;
+ 
+            }
+            
             return cell;
 
         }
@@ -450,6 +522,7 @@
                 cell = [[[NSBundle mainBundle]loadNibNamed:cellid2 owner:self options:nil]lastObject];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:_XQModel.image] placeholderImage:[UIImage imageNamed:@"home_default-photo"]];
             return cell;
         }
  
@@ -459,7 +532,8 @@
                 cell = [[QX2TableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid3];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.titleStr = @"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
+            cell.titleStr = _XQModel.content;//@"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
+
             return cell;
         }
         if (indexPath.row == 3) {
@@ -468,11 +542,27 @@
                 cell = [[[NSBundle mainBundle]loadNibNamed:cellid4 owner:self options:nil]lastObject];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            NSString * str = [NSString stringWithFormat:@"喜欢%@",_XQModel.like];
+            [cell.xihuanBTn setTitle:str forState:0];
+//            if (_XQModel.isFans) {
+//                cell.xihuanBTn.tintColor = [UIColor redColor];
+//                
+//                [cell.xihuanBTn setImage:[UIImage imageNamed:@"favorite_icon_pressed"] forState:0];
+//            }
+//            else
+//            {
+//                cell.xihuanBTn.tintColor = [UIColor whiteColor];
+//
+//                [cell.xihuanBTn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:0];
+// 
+//            }
+
+
+            [cell.xihuanBTn addTarget:self action:@selector(ActionDianzan) forControlEvents:UIControlEventTouchUpInside];
             return cell;
 
         }
 
-        
     }
     if (tableView == _secondViewTableView) {
         static NSString *cellid5 = @"mc5";
@@ -487,7 +577,7 @@
                 if (!cell) {
                     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid5];
                 }
-                cell.textLabel.text = @"15人喜欢";
+                cell.textLabel.text = [NSString stringWithFormat:@"%@人喜欢",_XQModel.like];
                 cell.textLabel.textColor = [UIColor darkGrayColor];
                 cell.textLabel.font = AppFont;
                 return cell;
@@ -501,7 +591,7 @@
                     
                 }
                 cell.isQX = YES;
-                [cell prepareUI];
+                [cell prepareUI:_XQModel];
                 cell.deleGate =self;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
@@ -532,10 +622,14 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.contentView.backgroundColor = [UIColor whiteColor];
-            cell.nameStr = @"xxxxxxxxx";
+            if (_MatchListArray.count > indexPath.row-1) {
+                MatchListModel * model = _MatchListArray[indexPath.row-1];
+
+            cell.nameStr = model.goods_name;
             cell.deleBtn.hidden = YES;
 
-            cell.mashuStr = @"GAP M码";
+                cell.mashuStr =model.model;// @"GAP M码";
+            }
            // cell.deleBtn.tag = 800 + indexPath.row;
            // [cell.deleBtn addTarget:self action:@selector(ACtionDeleBtn:) forControlEvents:UIControlEventTouchUpInside];
 //            if (indexPath.row == _xuanzheIndedx) {
@@ -554,9 +648,17 @@
                 if (!cell) {
                     cell = [[[NSBundle mainBundle]loadNibNamed:cellid8 owner:self options:nil]lastObject];
                 }
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;                cell.titleLbl.text = @"评论(22)";
-                cell.imgView1.hidden = YES;
-                cell.imgView2.hidden = NO;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;                cell.titleLbl.text = [NSString stringWithFormat:@"评论(%ld)",(unsigned long)[_CommentArray count]];//@"评论(22)";
+                if (_CommentArray.count) {
+                    cell.imgView1.hidden = YES;
+                    cell.imgView2.hidden = NO;
+
+                }
+                else {
+                    cell.imgView1.hidden = YES;
+                    cell.imgView2.hidden = YES;
+
+                }
                 cell.textLabel.font = AppFont;
                 return cell;
 
@@ -569,10 +671,17 @@
 
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                NSString *titleStr = @"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
+                if (_CommentArray.count > indexPath.row-1) {
+                    
+                    CommentModel * model = _CommentArray[indexPath.row-1];
+                    NSString *titleStr =model.comment;// @"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
                 cell.titleStr = titleStr;
              //  cell.headImgBtn.tag =
                 [cell.headImgBtn addTarget:self action:@selector(ACtionBtnGeren:) forControlEvents:UIControlEventTouchUpInside];
+                    cell.nameStr = model.nickname;
+                    [cell.headImgBtn sd_setImageWithURL:[NSURL URLWithString:model.headimgurl] forState:0 placeholderImage:[UIImage imageNamed:@"Avatar_46"]];
+                    cell.timeStr = [CommonUtil getStringWithLong:model.add_time Format:@"yyyy.MM.dd"];//[[CommonUtil getStringWithLong:model.last_login_time] Format:@"yyyy.MM.dd"];
+                }
                 return cell;
                 
                 
@@ -611,7 +720,7 @@
     
 }
 #pragma mark-赞个人信息
--(void)actionZanBtn:(BOOL)isAll
+-(void)actionZanBtn:(BOOL)isAll likelist:(like_list *)model
 {
     if (isAll) {
         FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
@@ -622,9 +731,14 @@
     }
     else
     {
+        if (model) {
+            
+            NSLog(@"%@",model.user_id);
         GerenViewController *ctl = [[GerenViewController alloc]init];
+            ctl.user_id = model.user_id;
+
         [self pushNewViewController:ctl];
-        
+        }
     }
 }
 -(void)ACtionBtnGeren:(UIButton*)btn{
@@ -667,7 +781,283 @@
    
     
 }
+#pragma mark-获取数据
+-(void)load_Data:(BOOL)Refresh{
+    
+    if (!_faxianModel.id&&!_faxianModel.msg_id) {
+        [self showAllTextDialog:@"无效ID"];
 
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+
+        return;
+    }
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_faxianModel.id ?  _faxianModel.id :_faxianModel.msg_id
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"Msg/showMessageDetail" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+       // [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSDictionary * messageList = resultDic[@"data"][@"messageList"];
+       _XQModel =  [faXianModel mj_objectWithKeyValues:messageList];
+        for (NSDictionary * dic in messageList[@"like_list"]) {
+            [_XQModel addlike_listDic:dic];
+
+        }
+        [self checkFans:NO];
+        [_pinglunHeadImg sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_46"]];
+
+       // [_firstViewTableView reloadData];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        NSLog(@"失败");
+        
+    }];
+
+}
+#pragma mark-检查是否关注
+-(void)checkFans:(BOOL)Refresh{
+    
+    if (!_faxianModel.id &&!_faxianModel.msg_id) {
+        return;
+    }
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString * userid = [defaults objectForKey:@"userId"];
+    NSDictionary * Parameterdic = @{
+                                    @"toId":_faxianModel.id ?_faxianModel.id: _faxianModel.msg_id,
+                                    @"fromId":userid?userid:@""
+                                    
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"Msg/checkFans" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSDictionary * messageList = resultDic[@"data"];
+        _XQModel.isFans = [messageList[@"isFans"] boolValue];
+
+        
+        
+        [_firstViewTableView reloadData];
+        [_secondViewTableView reloadData];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        NSLog(@"失败");
+        
+    }];
+    
+}
+
+#pragma mark-获取评论
+-(void)showMessageComment:(BOOL)Refresh{
+    
+    if (!_faxianModel.id &&!_faxianModel.msg_id) {
+        return;
+    }
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_faxianModel.id ? _faxianModel.id :_faxianModel.msg_id,
+                                    @"page":@(pagenum)
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"Msg/showMessageComment" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSArray * array = resultDic[@"data"][@"commentData"];
+        if (array.count) {
+            
+        for (NSDictionary * dic in array) {
+            CommentModel * model = [CommentModel mj_objectWithKeyValues:dic];
+            [_CommentArray addObject:model];
+        }
+        [_secondViewTableView reloadData];
+        }
+        [_secondViewTableView.mj_footer endRefreshing];
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        NSLog(@"失败");
+        [_secondViewTableView.mj_footer endRefreshing];
+
+        
+    }];
+
+    
+}
+#pragma mark- 获取搭配列表
+-(void)matchList:(BOOL)Refresh{
+    
+    if (!_faxianModel.id &&!_faxianModel.msg_id) {
+        return;
+    }
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_faxianModel.id ? _faxianModel.id :_faxianModel.msg_id,
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"Msg/matchList" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        //[self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSArray * array = resultDic[@"data"][@"matchList"];
+        if (array.count&&_MatchListArray.count<1) {
+            
+            for (NSDictionary * dic in array) {
+                MatchListModel * model = [MatchListModel mj_objectWithKeyValues:dic];
+                [_MatchListArray addObject:model];
+            }
+        }
+        [self showMessageComment:NO];
+
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        NSLog(@"失败");
+       
+        [self showMessageComment:NO];
+
+        
+    }];
+    
+    
+}
+
+
+
+-(void)actioncomFooer{
+    [_CommentArray removeAllObjects];
+    pagenum++;
+    [self showMessageComment:NO];
+    
+    
+    
+}
+#pragma mark-关注
+-(void)ACtionGuanzhu{
+    
+    
+    if (!_faxianModel.id &&!_faxianModel.msg_id) {
+        return;
+    }
+    NSDictionary * Parameterdic = @{
+                                    @"to_id":_faxianModel.id ? _faxianModel.id : _faxianModel.msg_id
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+[self.requestManager requestWebWithParaWithURL:@"Friends/toFriend" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+    [self hideHud];
+    NSLog(@"成功");
+    NSLog(@"返回==%@",resultDic);
+    
+    //[self showAllTextDialog:@"点赞成功"];
+    [self load_Data:YES];
+
+    
+
+} Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+    [self hideHud];
+    [self showAllTextDialog:description];
+
+}];
+    
+    
+    
+    
+}
+#pragma mark-点赞
+-(void)ActionDianzan{
+    if (!_faxianModel.id &&!_faxianModel.msg_id) {
+        return;
+    }
+    
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_faxianModel.id ? _faxianModel.id : _faxianModel.msg_id
+};
+    
+    
+    [self showLoading:YES AndText:nil];
+    
+    [self.requestManager requestWebWithParaWithURL:@"Msg/messageLike" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        //[self showAllTextDialog:@"点赞成功"];
+        [self load_Data:YES];
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+
+}
+#pragma mark-发送
+-(void)actionSend{
+    
+    
+    [_pinLunTextView resignFirstResponder];
+    if (!_pinLunTextView.text.length) {
+        return;
+    }
+    
+    if (!_faxianModel.id &&!_faxianModel.msg_id) {
+        return;
+    }
+    
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_faxianModel.id ? _faxianModel.id : _faxianModel.msg_id,
+                                    @"comment":_pinLunTextView.text
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    
+    [self.requestManager requestWebWithParaWithURL:@"Msg/addMessageComment" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [self showAllTextDialog:@"评论成功"];
+        pagenum = 0;
+        [self showMessageComment:YES];
+       // -(void)showMessageComment:(BOOL)Refresh{
+
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
+
+    
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

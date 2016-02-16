@@ -13,5 +13,6 @@
 @property (nonatomic, strong) JT3DScrollView *scrollView;
 @property (nonatomic, strong) MCBannerFooter *McFooter;
 @property(nonatomic,assign)NSInteger index;
+@property(nonatomic,strong)NSMutableArray *dataArray;
 
 @end

@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "faXianModel.h"
 @interface zuopinDataView : UIView
 @property(nonatomic,strong)UITableView*tableView;
--(void)prepareUI;
+-(void)prepareUI:(faXianModel*)model;
 @end

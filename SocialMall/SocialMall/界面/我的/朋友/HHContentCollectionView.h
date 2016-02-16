@@ -10,8 +10,11 @@
 
 @interface HHContentCollectionView : UICollectionView
 @property(nonatomic,copy) NSString * keyStr;//1:赞过 2：展示
+@property (nonatomic,strong) NetworkManager *requestManager;
+@property(nonatomic,strong)NSMutableArray * zanguoArray;
+@property(nonatomic,strong)NSMutableArray * zhanshiArray;
 
 + (HHContentCollectionView *)contentCollectionViewKey:(NSString*)keystr;
--(void)loadData;
+-(void)loadData:(NSString*)user_id;
 
 @end

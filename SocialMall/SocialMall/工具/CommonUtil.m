@@ -878,5 +878,43 @@
     [attString addAttributes:attribute range:NSMakeRange(0, attString.length)];
     return attString;
 }
++(NSString*)daysAgoAgainst:(long long)time{
+    
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:time / 1000];
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    
+    
+    
+    NSDateFormatter *date=[[NSDateFormatter alloc] init];
+    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSCalendar *cal=[NSCalendar currentCalendar];
+    
+    
+    unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
+    
+    NSDateComponents *d = [cal components:unitFlags fromDate:confromTimesp toDate:dat options:0];
+    //  NSLog(@"%d天%d小时%d分钟%d秒",[d day],[d hour],[d minute],[d second]);
+    
+    if ([d day]) {
+        return [NSString stringWithFormat:@"%d天前",[d day]];
+    }
+    else if([d hour])
+    {
+        return [NSString stringWithFormat:@"%d小时前",[d hour]];
+        
+    }
+    else if([d minute]){
+        return [NSString stringWithFormat:@"%d分钟前",[d minute]];
+        
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"%d秒前",[d second]];
+    }
+    
+    
+    
+    return @"未知";
+}
 
 @end

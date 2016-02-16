@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface tuijianViewController : BaseViewController
-
+@property(nonatomic,strong)NSMutableArray *dataArray;
+-(void)load_Data:(BOOL)Refresh;
 @end

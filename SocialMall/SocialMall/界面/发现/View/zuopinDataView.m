@@ -19,6 +19,7 @@
 @interface zuopinDataView ()<UITableViewDataSource,UITableViewDelegate,zuopinDataView3CellDelegate>{
     CGRect _viewFrame;
     jubao_View *shareView;
+    faXianModel *_homeModel;
 }
 
 @end
@@ -36,7 +37,8 @@
     
     return self;
 }
--(void)prepareUI{
+-(void)prepareUI:(faXianModel*)model{
+    _homeModel = model;
    self.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, _viewFrame.size.width, _viewFrame.size.height ) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor clearColor];
@@ -91,7 +93,12 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:cellid1 owner:self options:nil]lastObject];
         }
         cell.headImgBtn.tag = 90000;
+        ViewRadius(cell.headImgBtn, 20);
         [cell.headImgBtn addTarget:self action:@selector(actionHeadbtn:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.headImgBtn sd_setImageWithURL:[NSURL URLWithString:_homeModel.headimgurl] forState:0 placeholderImage:[UIImage imageNamed:@"Avatar_76"]];
+        cell.nameLbl.text = _homeModel.nickname;
+        cell.timeLbl.text = [CommonUtil daysAgoAgainst:[_homeModel.add_time longLongValue]];
+        cell.guanzhuBtn.hidden = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -101,7 +108,9 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:cellid2 owner:self options:nil]lastObject];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:_homeModel.image] placeholderImage:[UIImage imageNamed:@"home_default-photo"]];
+        cell.titleLbl.text = _homeModel.content;
+        
         return cell;
     }
     if (indexPath.row == 2) {
@@ -110,7 +119,8 @@
             cell = [[zuopinDataView3Cell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid3];
             
         }
-        [cell prepareUI];
+        
+        [cell prepareUI:_homeModel];
         cell.deleGate =self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -128,6 +138,14 @@
         [cell.jubaoBtn addTarget:self action:@selector(actionjubao) forControlEvents:UIControlEventTouchUpInside];
         [cell.zhuanfaBtn addTarget:self action:@selector(ActionAhuanfa) forControlEvents:UIControlEventTouchUpInside];
         cell.bgView.tag = 500;
+        
+        cell.pinlunLbl.text = _homeModel.comments;
+        cell.zanLbl.text = _homeModel.like;
+        
+        
+        
+        
+        
         return cell;
     }
 
@@ -135,10 +153,12 @@
     return [[UITableViewCell alloc]init];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 1)
+    if (indexPath.row == 1 || indexPath.row == 2)
+        if (_homeModel) {
+            
     //发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectXQObjNotification" object:@"1"];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectXQObjNotification" object:_homeModel];
+        }
     
 }
 #pragma mark-举报
@@ -171,7 +191,7 @@
 
 }
 #pragma mark-赞个人信息
--(void)actionZanBtn:(BOOL)isAll
+-(void)actionZanBtn:(BOOL)isAll likelist:(like_list *)model
 {
     if (isAll) {
         //发送通知
@@ -179,9 +199,12 @@
     }
     else
     {
+        if (model) {
+            
+        
         //发送通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectgerenDataObjNotification" object:@"0"];
-   
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectgerenDataObjNotification" object:model];
+        }
     }
 }
 #pragma mark-个人信息

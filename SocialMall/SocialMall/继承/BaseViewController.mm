@@ -128,7 +128,7 @@
     }
     else
         _AppleLanguages = NO;
-    _userid = _user.userid;
+    _userid = _user.userId;
     
     _userphone = [defaults objectForKey:@"mobile"];
     

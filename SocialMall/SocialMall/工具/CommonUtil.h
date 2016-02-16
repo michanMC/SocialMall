@@ -148,5 +148,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
  *  @since 1.0
  */
 +(NSAttributedString *)formatString:(NSString *)str textColor:(UIColor *)acolor font:(UIFont *)afont image:(UIImage *)image;
++(NSString*)daysAgoAgainst:(long long)time;
 
 @end

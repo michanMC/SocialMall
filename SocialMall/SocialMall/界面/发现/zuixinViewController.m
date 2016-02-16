@@ -11,6 +11,7 @@
 
 @interface zuixinViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
     UICollectionView *_collectionView;
+    NSInteger pageNum;
 
 }
 
@@ -22,8 +23,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        
-        
+        _dataArray = [NSMutableArray array];
+
+        pageNum = 0;
     }
     return self;
 }
@@ -47,11 +49,66 @@
     _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, self.view.frame.size.height) collectionViewLayout:layout];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
-    
+    _collectionView.alwaysBounceVertical = YES;
+
     [_collectionView registerClass:[faxianCollectionViewCell class] forCellWithReuseIdentifier:@"mc"];
-    
+    _collectionView.mj_header  = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(actionheadRefresh)];
+    _collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(actionFooer)];
     _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:_collectionView];
+    
+    
+}
+-(void)actionheadRefresh{
+    [_dataArray removeAllObjects];
+    pageNum = 0;
+    [self load_Data:NO];
+    
+    
+}
+-(void)actionFooer{
+    [_dataArray removeAllObjects];
+
+    pageNum ++;
+    [self load_Data:NO];
+    
+    
+    
+}
+
+-(void)load_Data:(BOOL)Refresh{
+    NSDictionary * Parameterdic = @{
+                                    @"page":@(0)
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"Msg/unfriendShowNewMessage" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSArray *  messageList = resultDic[@"data"][@"messageList"];
+        for (NSDictionary* dic in messageList) {
+            
+            faXianModel * model = [faXianModel mj_objectWithKeyValues:dic];
+            [_dataArray addObject:model];
+        }
+        
+        [_collectionView reloadData];
+        [_collectionView.mj_footer endRefreshing];
+        [_collectionView.mj_header endRefreshing];
+
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        [_collectionView.mj_footer endRefreshing];
+        [_collectionView.mj_header endRefreshing];
+
+        NSLog(@"失败");
+        
+    }];
     
     
     
@@ -65,7 +122,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 30;
+    return _dataArray.count;
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -83,13 +140,21 @@
         
     }
     //cell.contentView.backgroundColor = [UIColor blackColor];
-    [cell prepareUI];
+    if (_dataArray.count > indexPath.row) {
+        [cell prepareUI:_dataArray[indexPath.row]];
+        
+    }
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFXXQObjNotification" object:@""];
+    if (_dataArray.count > indexPath.row) {
+        faXianModel * model = _dataArray[indexPath.row];
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFXXQObjNotification" object:model];
+        
+    }
+
 
 }
 

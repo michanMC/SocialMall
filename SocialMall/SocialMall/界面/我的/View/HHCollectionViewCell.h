@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "zhanshiModel.h"
 
 @interface HHCollectionViewCell : UICollectionViewCell
 @property(nonatomic,strong)UIButton* aixinBtn;
@@ -25,7 +26,7 @@
 
 
 
--(void)prepareUI;
+-(void)prepareUI:(zhanshiModel*)model;
 
 
 

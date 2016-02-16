@@ -17,14 +17,16 @@
 #import "FenGuanViewController.h"
 #import "zhanshiViewController.h"
 #import "me4TableViewCell.h"
+#import "loginViewController.h"
+#import "userDatamodel.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     
     UITableView *_tableView;
     NSArray *_titleArray;
     NSArray *_imgArray;
-
-    
+    userDatamodel * _usermodel;
+    BOOL _Refresh;
     
 }
 
@@ -32,12 +34,40 @@
 
 @implementation MeViewController
 
+
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        //跳登录
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login:) name:@"didSelectDLNotification" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData2:) name:@"didSelectloadData2Notification" object:nil];
+
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
+    
     _titleArray = @[@"我的收益",@"收货地址管理",@"消息提醒",@"我的收藏",@"我的订单"];
     _imgArray = @[@"income_icon",@"mine_address_icon",@"mine_message_icon",@"mine_collect_icon",@"mine_order_icon"];
     [self prepareUI];
     // Do any additional setup after loading the view.
+}
+-(void)login:(NSNotification*)Notification{
+    
+    loginViewController * ctl = [[loginViewController alloc]init];
+    ctl.isMeCtl = YES;
+    [self pushNewViewController:ctl];
+
+    
+}
+-(void)loadData2:(NSNotification*)Notification{
+    if (!_Refresh)
+    [self loadaData:YES];
+    
 }
 -(void)prepareUI{
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_set-up_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionrightBar)];
@@ -47,6 +77,53 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+//    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+//    if ([defaults objectForKey:@"sessionId"]) {
+//        // [self prepareUI2];
+//        [self loadaData:YES];
+//
+//
+//    }
+    
+}
+-(void)loadaData:(BOOL)Refresh{
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
+    if (![defaults objectForKey:@"userId"]) {
+        // [self prepareUI2];
+        [self showAllTextDialog:@"没登陆"];
+        return;
+        
+        
+    }
+    NSString * userId = [defaults objectForKey:@"userId"];
+    
+    
+    NSDictionary * Parameterdic = @{
+                                    @"userId":userId
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    _Refresh = YES;
+    [self.requestManager requestWebWithGETParaWith:@"User/userInfo" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        _Refresh = NO;
+
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        _usermodel = [userDatamodel mj_objectWithKeyValues:resultDic[@"data"][@"data"]];
+        [_tableView reloadData];
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        
+        [self showAllTextDialog:description];
+        _Refresh = NO;
+        NSLog(@"失败");
+        
+    }];
+ 
     
     
 }
@@ -114,7 +191,21 @@
         [cell.shoudaozanBtn addTarget:self action:@selector(actionCell1:) forControlEvents:UIControlEventTouchUpInside];
 
         
+        [cell.headImgview sd_setImageWithURL:[NSURL URLWithString:_usermodel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_136"]];
+        ViewRadius(cell.headImgview, 70/2);
+
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
+        NSString * userPhone =[defaults objectForKey:@"UserPhone"];
+        cell.nameLbl.text = _usermodel.nickname ? _usermodel.nickname:userPhone;
         
+        cell.qianmingLbl.text = [NSString stringWithFormat:@"个性签名:%@",_usermodel.autograph];
+        
+        cell.guanzhuLbl.text = _usermodel.follows;
+        cell.fensiLbl.text = _usermodel.fans;
+        cell.zanLbl.text = _usermodel.likeds;
+        cell.zhanshiLbl.text = _usermodel.messages;
+        cell.sexLbl.text = [_usermodel.sex isEqualToString:@"0"]? @"男":@"女";
         
         
         
@@ -229,6 +320,7 @@
         //人头
         yonghuViewController * ctl = [[yonghuViewController alloc]init];
         ctl.isMy = YES;
+        ctl.userModel = _usermodel;
         [self pushNewViewController:ctl];
         
     }

@@ -66,7 +66,7 @@ typedef void (^ADBlock)(NSString *imageUrl);
 - (void)requestWebWithParaWithURL_NotResponseJson:(NSString*)webApi Parameter:(NSDictionary *)para Finish:(HttpResponseSucBlock)completeBlock Error:(HttpResponseErrBlock)errorBlock;
 
 
-- (void)requestWebWithGETParaWith:(NSString*)webApi Parameter:(NSDictionary *)para Finish:(HttpResponseSucBlock)completeBlock Error:(HttpResponseErrBlock)errorBlock;
+- (void)requestWebWithGETParaWith:(NSString*)webApi Parameter:(NSDictionary *)para IsLogin:(BOOL)islogin Finish:(HttpResponseSucBlock)completeBlock Error:(HttpResponseErrBlock)errorBlock;
 
 
 

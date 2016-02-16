@@ -9,6 +9,8 @@
 #import "pinpaiViewController.h"
 #import "ItemView.h"
 #import "faxianCollectionViewCell.h"
+#import "KeywordModel.h"
+#import "faXianModel.h"
 
 @interface pinpaiViewController ()<ItemViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
     
@@ -23,7 +25,9 @@
     UIButton * _timeBtn;
     
     
-    
+    NSMutableArray *_keywordArray;
+    NSMutableArray *_dataarray;
+
     UICollectionView *_collectionView;
 
 }
@@ -34,6 +38,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _keywordArray = [NSMutableArray array];
+    _dataarray = [NSMutableArray array];
+
         self.view.frame = CGRectMake(Main_Screen_Width * 1, 0, Main_Screen_Width, Main_Screen_Height - 44 - 64);
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self prepareUI];
@@ -46,9 +53,9 @@
     
     
     
+    [self searchTagFG:YES];
     
-    
-    [self nosearchView];
+//    [self nosearchView];
     [self hasSearchView];
 
 }
@@ -111,6 +118,86 @@
     
     
 }
+#pragma mark-获取标签
+-(void)searchTagFG:(BOOL)Refresh{
+    
+    NSDictionary * Parameterdic = @{
+                                    @"searchType":@"brand"
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"System/searchTag" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSArray *  messageList = resultDic[@"data"][@"keyword"];
+        for (NSDictionary * dic in messageList) {
+            KeywordModel * model = [KeywordModel mj_objectWithKeyValues:dic];
+            [_keywordArray addObject:model];
+            
+        }
+        [self nosearchView];
+        
+        
+        
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        NSLog(@"失败");
+        
+    }];
+    
+    
+    
+    
+    
+    
+    
+    
+}
+#pragma mark-获取数据
+-(void)searchsearch:(BOOL)Refresh Seachstr:(NSString*)seachstr{
+    
+    NSDictionary * Parameterdic = @{
+                                    @"searchType":@"brand",
+                                    @"keyword":seachstr,
+                                    @"page":@(0)
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"System/search" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSArray *  messageList = resultDic[@"data"][@"returnList"];
+        for (NSDictionary * dic in messageList) {
+            faXianModel * model = [faXianModel mj_objectWithKeyValues:dic];
+            [_dataarray addObject:model];
+            
+        }
+        [_collectionView reloadData ];
+        
+        
+        
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        NSLog(@"失败");
+        
+    }];
+    
+    
+}
 
 -(void)nosearchView{
     
@@ -130,7 +217,13 @@
     _itemView.delegate = self;
     _itemView.seleColor = [UIColor whiteColor];
     _itemView.itemHeith = 25;
-    _itemView.itemArray = @[@"的萨芬",@"撒旦飞洒地方",@"阿斯顿",@"撒地方",@"阿斯顿发送到",@"阿斯蒂芬斯蒂芬",@"撒地方",@"撒地方都是"];
+    NSMutableArray * arr = [NSMutableArray array];
+    for (KeywordModel * model in _keywordArray) {
+        [arr addObject:model.tag];
+        
+    }
+
+    _itemView.itemArray =arr;// @[@"的萨芬",@"撒旦飞洒地方",@"阿斯顿",@"撒地方",@"阿斯顿发送到",@"阿斯蒂芬斯蒂芬",@"撒地方",@"撒地方都是"];
     
     [_headView addSubview:_itemView];
     _itemView.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -159,7 +252,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 30;
+    return _dataarray.count;
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -177,7 +270,11 @@
         
     }
     //cell.contentView.backgroundColor = [UIColor blackColor];
-    [cell prepareUI];
+    if (_dataarray.count > indexPath.row) {
+        faXianModel * model = _dataarray[indexPath.row];
+        [cell prepareUI:model];
+        
+    }
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -204,6 +301,7 @@
     _headView.hidden = YES;
     _bgView.hidden = NO;
 
+    [self searchsearch:YES Seachstr:ss];
 
 }
 -(void)rentimeBtn:(UIButton*)btn{

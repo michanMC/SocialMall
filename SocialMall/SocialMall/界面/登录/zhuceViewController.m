@@ -105,12 +105,15 @@
         cell.textField.text = _phoneStr;
         cell.textField.keyboardType = UIKeyboardTypeNumberPad;
         cell.fasongBtn.hidden = YES;
-
+        //设置密码输入
+        cell.textField.secureTextEntry = NO;
     }
     else if(indexPath.row == 1){
         cell.textField.placeholder = @"请输入验证码";
         cell.textField.tag = 301;
         cell.textField.text = _yanzhenStr;
+        //设置密码输入
+        cell.textField.secureTextEntry = NO;
         cell.textField.keyboardType = UIKeyboardTypeDefault;
         cell.fasongBtn.tag = 401;
         cell.fasongBtn.hidden = NO;
@@ -124,6 +127,8 @@
         cell.textField.tag = 302;
         cell.textField.text = _pwd1Str;
         cell.textField.keyboardType = UIKeyboardTypeDefault;
+        //设置密码输入
+        cell.textField.secureTextEntry = YES;
         cell.fasongBtn.hidden = YES;
 
         
@@ -134,6 +139,8 @@
         cell.textField.tag = 303;
         cell.textField.text = _pwd2Str;
         cell.textField.keyboardType = UIKeyboardTypeDefault;
+        //设置密码输入
+        cell.textField.secureTextEntry = YES;
         cell.fasongBtn.hidden = YES;
 
         
@@ -231,7 +238,7 @@
                 return;
             }
 
-            
+            [self zhuceLoad];
             
             
             
@@ -255,17 +262,6 @@
             NSLog(@"返回==%@",resultDic);
             [self showAllTextDialog:@"发送成功，请留意你的手机短信"];
             _gameTimer= [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
-//            if (resultDic[@"data"][@"sessionId"]) {
-//            
-//            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-//                [defaults setObject:resultDic[@"data"][@"sessionId"] forKey:@"sessionId"];
-//            
-//            //强制让数据立刻保存
-//            [defaults synchronize];
-//            }
-            
-            
-            
             
         } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
             [self hideHud];
@@ -280,6 +276,69 @@
         
         
     }
+}
+#pragma mark-注册接口
+-(void)zhuceLoad{
+    
+    
+    NSDictionary * Parameterdic = @{
+                                    @"phone":_phoneStr,
+                                    @"verify":_yanzhenStr,
+                                    @"password":_pwd1Str,
+                                    @"repassword":_pwd2Str                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    
+    [self.requestManager requestWebWithParaWithURL:@"Login/register" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [MCUser sharedInstance].sessionId = resultDic[@"data"][@"sessionId"];
+        [MCUser sharedInstance].userId = resultDic[@"data"][@"userId"];
+        
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:resultDic[@"data"][@"sessionId"] forKey:@"sessionId"];
+        [defaults setObject :resultDic[@"data"][@"userId"] forKey:@"userId"];
+        
+        [defaults setObject:_phoneStr forKey:@"UserPhone"];
+        [defaults setObject:_pwd1Str forKey:@"Pwd"];
+        
+        //强制让数据立刻保存
+        [defaults synchronize];
+
+        [self showAllTextDialog:@"注册成功"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (_isMeCtl) {
+                self.navigationController.tabBarController.selectedIndex = 4;
+
+                //发送通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectloadData2Notification" object:@""];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+
+
+                //[self.navigationController popToRootViewControllerAnimated:YES];
+            }
+            else
+
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+        
+        });
+
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+
+    
+    
+    
 }
 // 时钟触发执行的方法
 - (void)updateTimer:(NSTimer *)sender

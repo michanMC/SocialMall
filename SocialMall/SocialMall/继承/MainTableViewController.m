@@ -70,6 +70,32 @@
     }
     else
     {
+        if (item.tag == 90004) {
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            
+            
+            if ([defaults objectForKey:@"sessionId"]) {
+                // [self prepareUI2];
+                //发送通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectloadData2Notification" object:@""];
+                MCUser * mc = [MCUser sharedInstance];
+                mc.tabIndex = item.tag -90000;
+
+            }else
+            {
+                //发送通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectDLNotification" object:@""];
+                
+                return;
+                
+            }
+            
+        }
+        else if(item.tag == 90000){
+            
+            //发送通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"didRefreshDataObjNotification" object:@""];
+        }
         MCUser * mc = [MCUser sharedInstance];
         mc.tabIndex = item.tag -90000;
     }

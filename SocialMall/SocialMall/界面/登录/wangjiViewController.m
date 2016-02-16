@@ -107,6 +107,8 @@
         cell.textField.text = _phoneStr;
         cell.textField.keyboardType = UIKeyboardTypeNumberPad;
         cell.fasongBtn.hidden = YES;
+        //设置密码输入
+        cell.textField.secureTextEntry = NO;
         
     }
     else if(indexPath.row == 1){
@@ -118,7 +120,8 @@
         cell.fasongBtn.hidden = NO;
         [cell.fasongBtn addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
         
-        
+        //设置密码输入
+        cell.textField.secureTextEntry = NO;
         
     }
     else if(indexPath.row == 2){
@@ -128,7 +131,8 @@
         cell.textField.keyboardType = UIKeyboardTypeDefault;
         cell.fasongBtn.hidden = YES;
         
-        
+        //设置密码输入
+        cell.textField.secureTextEntry = YES;
         
     }
     else if(indexPath.row == 3){
@@ -138,7 +142,8 @@
         cell.textField.keyboardType = UIKeyboardTypeDefault;
         cell.fasongBtn.hidden = YES;
         
-        
+        //设置密码输入
+        cell.textField.secureTextEntry = YES;
         
     }
     
@@ -233,7 +238,7 @@
                 return;
             }
             
-            
+             [self zhuceLoad];
             
             
             
@@ -243,36 +248,85 @@
     } else if(btn.tag == 501){
         
         _gameStartTime=[NSDate date];
-        _gameTimer= [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
-        //
-        //        NSDictionary * Parameterdic = @{
-        //                                        @"phone":_phoneText.text,
-        //                                        @"type":@(0)
-        //                                        };
-        //
-        //
-        //        [self showLoading:YES AndText:nil];
-        //        [self.requestManager requestWebWithParaWithURL:@"api/user/genCode.json" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
-        //            [self hideHud];
-        //            NSLog(@"成功");
-        //            NSLog(@"返回==%@",resultDic);
-        //            [self showAllTextDialog:@"发送成功，请留意你的手机短信"];
-        //            _gameTimer= [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
-        //
-        //        } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
-        //            [self hideHud];
-        //            [self showAllTextDialog:description];
-        //
-        //            NSLog(@"失败");
-        //        }];
-        //
-        //
-        //
+       
+        NSDictionary * Parameterdic = @{
+                                        @"phone":_phoneStr
+                                        };
+        
+        
+        [self showLoading:YES AndText:nil];
+        [self.requestManager requestWebWithParaWithURL:@"Login/getPhoneVerify" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
+            [self hideHud];
+            NSLog(@"成功");
+            NSLog(@"返回==%@",resultDic);
+            [self showAllTextDialog:@"发送成功，请留意你的手机短信"];
+            _gameTimer= [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
+            
+        } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+            [self hideHud];
+            [self showAllTextDialog:description];
+            
+            NSLog(@"失败");
+        }];
         
         
         
     }
 }
+#pragma mark-设置密码接口
+-(void)zhuceLoad{
+    
+    
+    NSDictionary * Parameterdic = @{
+                                    @"phone":_phoneStr,
+                                    @"verify":_yanzhenStr,
+                                    @"password":_pwd1Str
+                                    };
+//                                    @"repassword":_pwd2Str                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    
+    [self.requestManager requestWebWithParaWithURL:@"Login/forgetPass" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [MCUser sharedInstance].sessionId = resultDic[@"data"][@"sessionId"];
+        [MCUser sharedInstance].userId = resultDic[@"data"][@"userId"];
+        
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:resultDic[@"data"][@"sessionId"] forKey:@"sessionId"];
+        [defaults setObject :resultDic[@"data"][@"userId"] forKey:@"userId"];
+        
+        [defaults setObject:_phoneStr forKey:@"UserPhone"];
+        [defaults setObject:_pwd1Str forKey:@"Pwd"];
+        
+        //强制让数据立刻保存
+        [defaults synchronize];
+        
+        [self showAllTextDialog:@"密码修改成功,请重新登录"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            
+        });
+        
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
+    
+    
+    
+}
+
 // 时钟触发执行的方法
 - (void)updateTimer:(NSTimer *)sender
 {

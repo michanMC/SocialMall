@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "faXianModel.h"
 @protocol zuopinDataView3CellDelegate <NSObject>
 
--(void)actionZanBtn:(BOOL)isAll;
+-(void)actionZanBtn:(BOOL)isAll likelist:(like_list*)model;
 
 @end
 
@@ -18,6 +18,6 @@
 @interface zuopinDataView3Cell : UITableViewCell
 @property (nonatomic,assign) BOOL isQX;
 @property(nonatomic,weak)id<zuopinDataView3CellDelegate>deleGate;
--(void)prepareUI;
+-(void)prepareUI:(faXianModel*)model;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-
+#import "userDatamodel.h"
 @interface GerenViewController : BaseViewController
-
+@property (nonatomic,copy)NSString * user_id;
 @end

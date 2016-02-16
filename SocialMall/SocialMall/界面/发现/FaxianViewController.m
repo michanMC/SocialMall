@@ -45,8 +45,12 @@
 #pragma mark-监听跳详情
 -(void)didSelectFXXQObj:(NSNotification*)Notification{
     
-    XQViewController * ctl = [[XQViewController alloc]init];
-    [self pushNewViewController:ctl];
+    if ([Notification.object isKindOfClass:[faXianModel class]]) {
+        XQViewController * ctl = [[XQViewController alloc]init];
+        ctl.faxianModel = Notification.object;
+        [self pushNewViewController:ctl];
+
+    }
     
     
     
@@ -56,12 +60,13 @@
 //      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_search_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
 //    
    // self.navigationItem.titleView = [self MCtiteView];
-    [self addSegmentView];
+   
     //    添加滚动
     [self addScrollView];
     [self addtuijian];
     [self addremen];
     [self addzuixin];
+     [self addSegmentView];
 }
 -(void)addSegmentView{
     //选择框
@@ -79,11 +84,36 @@
     
    
     __weak typeof(self) weakSelf = self;
-    //  __block typeof(NSInteger) weakisBianji = _isBianji;
-    
+//    __block typeof(NSInteger) weakisBianji = _isBianji;
+    __weak typeof(tuijianViewController*) weaktui = _tuijianCtl;
+    __weak typeof(remenViewController*) weakremen = _remenCtl;
+    __weak typeof(zuixinViewController*) weakzuixin = _zuixinCtl;
+
     [titleSegment setIndexChangeBlock:^(NSInteger index) {
         weakSelf.mainScroll.contentOffset =CGPointMake(index * Main_Screen_Width, 0);
         
+        if (index == 0) {
+            if(!weaktui.dataArray.count){
+                [weaktui load_Data:YES];
+                
+                
+            }
+        }
+        if (index == 1) {
+            if(!weakremen.dataArray.count){
+                [weakremen load_Data:YES];
+            }
+            
+            
+        } if (index == 2) {
+            if(!weakzuixin.dataArray.count){
+                [weakzuixin load_Data:YES];
+                
+            }
+            
+            
+        }
+
     }];
   
     [self.view addSubview:titleSegment];
@@ -163,6 +193,24 @@
     NSInteger indepage = scrollView.contentOffset.x / Main_Screen_Width;
     
     titleSegment.selectedSegmentIndex =indepage;
+    if (indepage == 0) {
+        if(!_tuijianCtl.dataArray.count){
+            [_tuijianCtl load_Data:YES];
+        }
+    }
+    if (indepage == 1) {
+        if(!_remenCtl.dataArray.count){
+            [_remenCtl load_Data:YES];
+        }
+
+        
+    } if (indepage == 2) {
+        if(!_zuixinCtl.dataArray.count){
+            [_zuixinCtl load_Data:YES];
+        }
+        
+ 
+    }
     
     
     

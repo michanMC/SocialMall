@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface loginViewController : BaseViewController
-
+@property(nonatomic,assign)BOOL isMeCtl;
 @end

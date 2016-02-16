@@ -30,6 +30,7 @@
         CGFloat height = 28;
         _headImgBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y,width , height)];
         [_headImgBtn setImage:[UIImage imageNamed:@"Avatar_46"] forState:0];
+        ViewRadius(_headImgBtn, 28/2);
         [self.contentView addSubview:_headImgBtn ];
         
         

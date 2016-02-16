@@ -7,8 +7,9 @@
 //
 
 #import "BaseViewController.h"
-
+#import "faXianModel.h"
 @interface XQViewController : BaseViewController
+@property (nonatomic,strong)faXianModel *faxianModel;
 @property(nonatomic,strong)UIViewController * firstViewController;//第一个视图
 @property(nonatomic,strong)UIViewController * secondViewController;//第二个视图（TableView）
 

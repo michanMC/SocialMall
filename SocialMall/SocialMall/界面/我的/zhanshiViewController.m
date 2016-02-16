@@ -8,9 +8,11 @@
 
 #import "zhanshiViewController.h"
 #import "zhanshiTableViewCell.h"
+#import "zhanshiModel.h"
 @interface zhanshiViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
+    NSMutableArray *_dataArray;
 }
 
 @end
@@ -19,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _dataArray = [NSMutableArray array];
     if ([_keyStr isEqualToString:@"1"]) {
       self.title = @"发布列表";
     }
@@ -41,6 +44,67 @@
     _tableView.dataSource= self;
     [self.view addSubview:_tableView ];
     
+    [self loadata:YES];
+    
+    
+}
+-(void)loadata:(BOOL)Refresh{
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
+    if (![defaults objectForKey:@"userId"]) {
+        // [self prepareUI2];
+        [self showAllTextDialog:@"没登陆"];
+        return;
+        
+        
+    }
+    NSString * userId = [defaults objectForKey:@"userId"];
+    
+    
+
+    NSDictionary * Parameterdic = @{
+                                    @"userId":userId
+                                    };
+    
+    NSString * urlstr;
+    if ([_keyStr isEqualToString:@"1"]) {
+        urlstr = @"Msg/showMessage";
+
+    }
+    else if ([_keyStr isEqualToString:@"2"])
+    {
+        urlstr = @"Msg/messageLiked";
+        
+    }
+    else if ([_keyStr isEqualToString:@"3"])
+    {
+        urlstr = @"Msg/messageLiked";
+
+    }
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:urlstr Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSArray *messageList = resultDic[@"data"][@"messageList"];
+        for (NSDictionary * dic in messageList) {
+            zhanshiModel * model = [zhanshiModel mj_objectWithKeyValues:dic];
+            [_dataArray addObject:model];
+        }
+        
+        
+        
+        [_tableView reloadData];
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+        
+    }];
+
     
     
     
@@ -51,7 +115,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 20;
+    return _dataArray.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;
@@ -67,6 +131,9 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"zhanshiTableViewCell" owner:self options:nil]lastObject];
     }
+    if (_dataArray.count > indexPath.row) {
+        
+    
     if (indexPath.row == 0) {
         cell.fenxianBtn.hidden = YES;
     }
@@ -75,6 +142,30 @@
         cell.fenxianBtn.hidden = NO;
 
         
+    }
+        zhanshiModel * model = _dataArray [indexPath.row];
+        [cell.imgView sd_setImageWithURL:[NSURL URLWithString:model.image] placeholderImage:[UIImage imageNamed:@"releaes_default-photo"]];
+        
+        cell.titleLbl.text = model.content;
+        [cell.pinglunBtn setTitle:model.comments forState:0];
+        [cell.aixinBtn setTitle:model.like forState:0];
+        
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        
+        
+        NSString * userId = [defaults objectForKey:@"userId"];
+        if ([userId isEqualToString:model.user_id]) {
+            cell.fenxianBtn.hidden = NO;
+
+        }
+        else
+        {
+            cell.fenxianBtn.hidden = YES;
+
+        }
+    
+    
     }
     return cell;
     

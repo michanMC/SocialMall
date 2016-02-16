@@ -10,6 +10,13 @@
 #import "yonghuViewController.h"
 #import "xinxiViewController.h"
 #import "yijianViewController.h"
+#import "GuanzhuViewController.h"
+//#import "XZMTabbarExtension.h"
+#import "FabuViewController.h"
+#import "FaxianViewController.h"
+#import "MallViewController.h"
+#import "MeViewController.h"
+
 @interface settgViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     
@@ -95,6 +102,63 @@
         // ctl.isMy = YES;
         [self pushNewViewController:ctl];
     }
+
+    if (indexPath.section == 2) {
+        [self logout];
+    }
+    
+}
+#pragma mark-退出登录
+-(void)logout{
+    [self showLoading:YES AndText:nil];
+    [ self.requestManager requestWebWithParaWithURL:@"Login/logout" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [MCUser sharedInstance].sessionId = nil;
+        [MCUser sharedInstance].userId = nil;
+        
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:nil forKey:@"sessionId"];
+        [defaults setObject :nil forKey:@"userId"];
+        
+        [defaults setObject:nil forKey:@"Pwd"];
+        
+        //强制让数据立刻保存
+        [defaults synchronize];
+#import "GuanzhuViewController.h"
+        //#import "XZMTabbarExtension.h"
+#import "FabuViewController.h"
+#import "FaxianViewController.h"
+#import "MallViewController.h"
+#import "MeViewController.h"
+
+        [self showAllTextDialog:@"成功退出"];
+        for (UIViewController *vc in self.navigationController.viewControllers) {
+            if ([vc isKindOfClass:[GuanzhuViewController class]] ||[vc isKindOfClass:[FabuViewController class]] ||[vc isKindOfClass:[FaxianViewController class]]||[vc isKindOfClass:[MeViewController class]]||[vc isKindOfClass:[MallViewController class]]
+                ) {
+                //设置tabBarController的下标 0:首页
+                vc.tabBarController.selectedIndex = 1;
+                //发送通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"didRefreshDataObjNotification" object:@""];
+                //跳转到订单列表
+                [self.navigationController popToViewController:vc animated:NO];
+                
+                
+                
+            }
+        }
+        
+
+        
+
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showHint:description];
+        NSLog(@"%@",description);
+    }];
+    
 
     
     

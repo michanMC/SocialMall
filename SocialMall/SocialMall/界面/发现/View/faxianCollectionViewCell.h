@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "faXianModel.h"
 @interface faxianCollectionViewCell : UICollectionViewCell
--(void)prepareUI;
+-(void)prepareUI:(faXianModel*)model;
 
 @end

@@ -7,7 +7,8 @@
 //
 
 #import "BaseViewController.h"
-
+#import "userDatamodel.h"
 @interface yonghuViewController : BaseViewController
 @property(nonatomic,assign)BOOL isMy;
+@property(nonatomic,strong)userDatamodel *userModel;
 @end

@@ -13,6 +13,7 @@
 #import "zuopinDataView.h"
 #import "FenGuanViewController.h"
 #import "XQViewController.h"
+#import "faXianModel.h"
 @interface GuanzhuViewController ()<UIScrollViewDelegate>
 {
     
@@ -25,6 +26,7 @@
     
     NSMutableArray *_arrayView;
     BOOL _isRefresh;
+    NSInteger pageNum;
 }
 
 @end
@@ -37,6 +39,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    pageNum = 0;
+    _dataArray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _arrayView = [NSMutableArray array];
     //跳个人信息
@@ -44,10 +48,26 @@
     //跳详情
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectXQObj:) name:@"didSelectXQObjNotification" object:nil];
 
-    indexnum = 3;
     
-    [self prepareUI2];
-    self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"暂时加个登录" style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
+    //刷新数据
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RefreshData:) name:@"didRefreshDataObjNotification" object:nil];
+    
+
+    
+    
+    
+    indexnum = 3;
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"sessionId"]) {
+        // [self prepareUI2];
+        [self friendShowMessage:YES];
+    }else
+    {
+        [self prepareUI];
+    }
+
+    
+   // self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"暂时加个登录" style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
     
 
     
@@ -56,35 +76,58 @@
 }
 #pragma mark-监听跳详情
 -(void)didSelectXQObj:(NSNotification*)Notification{
-    
+    if (Notification.object) {
+        
+        faXianModel * model = Notification.object;
     XQViewController * ctl = [[XQViewController alloc]init];
+        ctl.faxianModel = model;
     NSLog(@"跳第%ld",(long)_index);
     [self pushNewViewController:ctl];
 
+    }
+    
+}
+#pragma mark-刷新数据
+-(void)RefreshData:(NSNotification*)Notification{
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"sessionId"]) {
+        // [self prepareUI2];
+        pageNum = 0;
+        [_dataArray removeAllObjects];
+        [self friendShowMessage:YES];
+    }else
+    {
+        [self prepareUI];
+    }
+    
+
+    
     
     
 }
-
 #pragma mark-监听跳个人信息
 -(void)didSelectgerenDataObj:(NSNotification*)Notification{
-    if ([Notification.object isEqualToString:@"1"]) {
-        //
-        FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
-        ctl.titleStr = @"3";
-        [self pushNewViewController:ctl];
-
-    }
-    else
-    {
-    
+        if (Notification.object) {
+            
+            like_list * model = Notification.object;
     GerenViewController *ctl = [[GerenViewController alloc]init];
+            ctl.user_id = model.user_id;
     [self pushNewViewController:ctl];
-    }
+        }
+        else
+        {
+            FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
+            ctl.titleStr = @"3";
+            [self pushNewViewController:ctl];
+            
+
+        }
     
 }
 
 -(void)prepareUI{
-    
+    [_scrollView removeFromSuperview];
+
     _noDataView = [[MCNoMuiscView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64 - 49)];
     [_noDataView.btn addTarget:self action:@selector(actionBtnFX) forControlEvents:UIControlEventTouchUpInside];
 
@@ -131,11 +174,73 @@
 
     return _McFooter;
 }
+#pragma mark- 4.3.	好友消息接口
+-(void)friendShowMessage:(BOOL)Refresh{
+    
+    NSDictionary * Parameterdic = @{
+                                    @"page":@(pageNum)
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"Msg/friendShowMessage" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+        NSArray *  messageList = resultDic[@"data"][@"messageList"];
+        if (messageList.count) {
+            
+            _index =_dataArray.count;
+            pageNum++;
+            //indexnum += 2;
+            
+            // [self showLoading:YES AndText:nil];
+            for (zuopinDataView * view in _arrayView) {
+                [view removeFromSuperview];
+            }
+            [_arrayView removeAllObjects];
+            // [self prepareUI2];
+            for (NSDictionary* dic in messageList) {
+                
+                faXianModel * model = [faXianModel mj_objectWithKeyValues:dic];
+                
+                for (NSDictionary * dic1 in dic[@"like_list"]) {
+                    [model addlike_listDic:dic1];
+                    
+                }
+                [_dataArray addObject:model];
+            }
 
+            [self prepareUI2];
+
+        }
+        else if(!messageList.count && pageNum == 0){
+             [self prepareUI];
+        }
+        _isRefresh = NO;
+
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        [self prepareUI];
+        _isRefresh = NO;
+
+        NSLog(@"失败");
+        
+    }];
+    
+
+    
+}
 -(void)prepareUI2{
 
+    [_noDataView removeFromSuperview];
+    
     [self.view addSubview:self.scrollView];
-    for (int i = 0; i < indexnum; i ++) {
+    for (int i = 0; i < _dataArray.count; i ++) {
         [self createCardWithColor:i];
     }
     _scrollView.contentOffset = CGPointMake(_index * (Main_Screen_Width - 40), 0);
@@ -165,7 +270,10 @@
     zuopinDataView * zuoView = [[zuopinDataView alloc]initWithFrame:CGRectMake(x, 0, width, height)];
     ViewRadius(zuoView, 5);
        // contr.view.backgroundColor = [UIColor yellowColor];//
-    [zuoView prepareUI];
+    
+    
+    faXianModel * model = _dataArray[index];
+    [zuoView prepareUI:model];
     [_scrollView addSubview:zuoView];
     [_arrayView addObject:zuoView];
    
@@ -199,22 +307,31 @@
             NSLog(@"1");
         } else {
             _isRefresh = YES;
-            _index =indexnum;
-            indexnum += 2;
-            
-            [self showLoading:YES AndText:nil];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
-                for (zuopinDataView * view in _arrayView) {
-                    [view removeFromSuperview];
-                }
-                [_arrayView removeAllObjects];
-                [self prepareUI2];
-                _isRefresh = NO;
-                [self stopshowLoading];
-                NSLog(@"刷新");
 
-            });
+            [self friendShowMessage:YES ];
+
+//            _isRefresh = YES;
+//            _index =_dataArray.count;
+//            pageNum++;
+//            //indexnum += 2;
+//            
+//           // [self showLoading:YES AndText:nil];
+//            for (zuopinDataView * view in _arrayView) {
+//                [view removeFromSuperview];
+//            }
+//            [_arrayView removeAllObjects];
+//           // [self prepareUI2];
+//            _isRefresh = NO;
+           // [self stopshowLoading];
+
+            
+            
+//            
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                
+//                NSLog(@"刷新");
+//
+//            });
 
             
         }
@@ -230,10 +347,12 @@
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    
     _index = (scrollView.contentOffset.x  )/(Main_Screen_Width - 40);
+    if (_arrayView.count >_index ) {
+        zuopinDataView * view = _arrayView[_index];
 
-    zuopinDataView * view = _arrayView[_index];
+    }
+
     
 //    if ( !view.isLoda) {
 //        

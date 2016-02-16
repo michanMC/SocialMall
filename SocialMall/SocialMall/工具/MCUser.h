@@ -43,7 +43,7 @@
 /**
  用户id
  */
-@property(nonatomic,copy)NSString*  userid;//用户账号
+@property(nonatomic,copy)NSString*  userId;//用户账号
 /**
  用户手机号
  */
@@ -51,7 +51,7 @@
 /**
  用户sessionId
  */
-@property(nonatomic,copy)NSString*  userSessionId;//
+@property(nonatomic,copy)NSString*  sessionId;//
 
 /**
  用户expire

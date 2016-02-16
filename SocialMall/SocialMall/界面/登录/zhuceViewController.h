@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface zhuceViewController : BaseViewController
+@property(nonatomic,assign)BOOL isMeCtl;
 
 @end

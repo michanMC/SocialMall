@@ -9,5 +9,7 @@
 #import "BaseViewController.h"
 
 @interface remenViewController : BaseViewController
+@property(nonatomic,strong)NSMutableArray *dataArray;
+-(void)load_Data:(BOOL)Refresh;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "HHContentCollectionView.h"
 #import "HHCollectionViewCell.h"
+#import "zhanshiModel.h"
 @interface HHContentCollectionView () <UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
     
@@ -40,18 +41,88 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
     
     [collectionView registerClass:[HHCollectionViewCell class] forCellWithReuseIdentifier:collectionViewCellIdentifier];
     collectionView.keyStr = keystr;
+    collectionView.requestManager = [NetworkManager instanceManager];
+    collectionView.requestManager.needSeesion = YES;
+    collectionView.zanguoArray = [NSMutableArray array];
+    collectionView.zhanshiArray = [NSMutableArray array];
+
     return collectionView;
 }
--(void)loadData{
-    
-    if ([_keyStr isEqualToString:@"1"]) {//赞过
-      //  self.backgroundColor = [UIColor redColor];
+-(void)loadData:(NSString*)user_id{
+    if (!user_id) {
+        return;
+        
+        
     }
+
+    if ([_keyStr isEqualToString:@"1"]) {//赞过
+        NSDictionary * Parameterdic = @{
+                                        @"userId":user_id
+                                        };
+        
+        NSString * urlstr;
+            urlstr = @"Msg/messageLiked";
+            
+       // [self showLoading:Refresh AndText:nil];
+        
+        
+        [self.requestManager requestWebWithGETParaWith:urlstr Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+            NSLog(@"成功");
+            NSLog(@"返回==%@",resultDic);
+            NSArray *messageList = resultDic[@"data"][@"messageList"];
+            for (NSDictionary * dic in messageList) {
+                zhanshiModel * model = [zhanshiModel mj_objectWithKeyValues:dic];
+                [_zanguoArray addObject:model];
+                
+            }
+            [self reloadData];
+
+//
+//            
+//            
+//            [_tableView reloadData];
+        } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+//            [self hideHud];
+//            [self showAllTextDialog:description];
+//            
+            NSLog(@"失败");
+            
+        }];
+     }
     else
     {
        // self.backgroundColor = [UIColor yellowColor];
+        NSDictionary * Parameterdic = @{
+                                        @"userId":user_id
+                                        };
+        
+        NSString * urlstr;
+        urlstr = @"Msg/showMessage";
+        
+        // [self showLoading:Refresh AndText:nil];
+        
+        
+        [self.requestManager requestWebWithGETParaWith:urlstr Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+            NSLog(@"成功");
+            NSLog(@"返回==%@",resultDic);
+            NSArray *messageList = resultDic[@"data"][@"messageList"];
+                        for (NSDictionary * dic in messageList) {
+                            zhanshiModel * model = [zhanshiModel mj_objectWithKeyValues:dic];
+                            [_zhanshiArray addObject:model];
+                        }
+            //
+            //
+            //
+            //            [_tableView reloadData];
+        } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+            //            [self hideHud];
+            //            [self showAllTextDialog:description];
+            //            
+            NSLog(@"失败");
+            
+        }];
+
     }
-    [self reloadData];
     
     
 }
@@ -63,6 +134,14 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    if ([_keyStr isEqualToString:@"1"]) {
+        
+        return _zanguoArray.count;
+    }
+    else
+    {
+        return _zhanshiArray.count;
+            }
     return 20;
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -85,7 +164,21 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
         cell = [[HHCollectionViewCell alloc]init];
         
     }
-    [cell prepareUI];
+    if ([_keyStr isEqualToString:@"1"]) {
+        if (_zanguoArray.count > indexPath.row) {
+            zhanshiModel * model = _zanguoArray[indexPath.row];
+            [cell prepareUI:model];
+
+        }
+    }
+    if ([_keyStr isEqualToString:@"2"]) {
+        if (_zhanshiArray.count > indexPath.row) {
+            zhanshiModel * model = _zhanshiArray[indexPath.row];
+            [cell prepareUI:model];
+            
+        }
+    }
+
     return cell;
     
 }

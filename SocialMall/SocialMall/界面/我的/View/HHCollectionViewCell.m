@@ -22,7 +22,7 @@
 @end
 
 @implementation HHCollectionViewCell
--(void)prepareUI{
+-(void)prepareUI:(zhanshiModel*)model{
     for (UIView* obj in self.contentView.subviews)
         [obj removeFromSuperview];
 
@@ -40,6 +40,7 @@
     
     _imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, bgView.frame.size.width, bgView.frame.size.width-5)];
     _imgView.image = [UIImage imageNamed:@"releaes_default-photo"];
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:model.image] placeholderImage:[UIImage imageNamed:@"releaes_default-photo"]];
     [bgView addSubview:_imgView];
     CGFloat x = 0;
     CGFloat y = bgView.frame.size.width-5;
@@ -54,7 +55,7 @@
     height = 20;
     _titleLbl = [[UILabel alloc]initWithFrame:CGRectMake(x, y, width, height)];
     
-    _titleLbl.text = @"民族风可爱";
+    _titleLbl.text = model.content;//@"民族风可爱";
     _titleLbl.font = AppFont;
     _titleLbl.textAlignment = NSTextAlignmentCenter;
     _titleLbl.textColor = [UIColor darkTextColor];
@@ -67,7 +68,8 @@
     _timeLbl = [[UILabel alloc]initWithFrame:CGRectMake(x+5, y, width - 5, height)];
     _timeLbl.font = [UIFont systemFontOfSize:13];
     _timeLbl.textColor = [UIColor lightGrayColor];
-    _timeLbl.text = @"2016-01-04";
+    _timeLbl.text = [CommonUtil getStringWithLong:[model.add_time longLongValue] Format:@"yyyy-MM-dd"];//@"2016-01-04";
+
     [bgView addSubview:_timeLbl];
     
     y += height + 5;
@@ -90,7 +92,8 @@
     x = 0;
     _aixinBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
     [_aixinBtn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:UIControlStateNormal];
-    [_aixinBtn setTitle:@"10" forState:UIControlStateNormal];
+    [_aixinBtn setTitle:model.like forState:0];
+    //[_aixinBtn setTitle:@"10" forState:UIControlStateNormal];
     _aixinBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [_aixinBtn setTitleColor:[UIColor lightGrayColor] forState:0];
     [bgView addSubview:_aixinBtn];
@@ -98,7 +101,9 @@
     x += width;
     _pinglunBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
     [_pinglunBtn setImage:[UIImage imageNamed:@"comment_icon_normal"] forState:UIControlStateNormal];
-    [_pinglunBtn setTitle:@"10" forState:UIControlStateNormal];
+    //[_pinglunBtn setTitle:@"10" forState:UIControlStateNormal];
+    [_pinglunBtn setTitle:model.comments forState:UIControlStateNormal];
+
     _pinglunBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [_pinglunBtn setTitleColor:[UIColor lightGrayColor] forState:0];
     [bgView addSubview:_pinglunBtn];
