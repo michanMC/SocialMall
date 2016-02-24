@@ -10,5 +10,10 @@
 
 @interface tixianTableView : UITableView
 + (tixianTableView *)contentTableView;
+-(void)loadData;
+@property(nonatomic,strong)NSDictionary * KeyDic;
+
+@property (nonatomic,strong) NetworkManager *requestManager;
+@property (nonatomic,strong)NSMutableArray * dataArray;
 
 @end

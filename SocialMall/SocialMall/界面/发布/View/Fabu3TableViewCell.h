@@ -14,7 +14,7 @@
 @end
 
 @interface Fabu3TableViewCell : UITableViewCell
--(void)prepareUI:(NSArray*)photoArray;
+-(void)prepareUI:(NSMutableArray*)photoArray;
 @property(weak,nonatomic)id<Fabu3ViewDelegate>delagate;
 
 @end

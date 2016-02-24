@@ -158,6 +158,24 @@
 }
 #pragma mark-取消
 -(void)rightBarButton{
+    if (_searchtext.text.length) {
+        [_searchtext resignFirstResponder];
+        NSString * text = _searchtext.text;
+    NSInteger indepage = _mainScroll.contentOffset.x / Main_Screen_Width;
+    if (indepage==0) {
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFGObjNotification" object:text];
+    }
+    else if(indepage == 1){
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectPPObjNotification" object:text];
+    }
+    else
+    {
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectCYObjNotification" object:text];
+    }
+    }
     
     
     
@@ -168,7 +186,7 @@
         
         _searchtext.text = Notification.object;
         _searchStr = _searchtext.text;
-         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButton)];
+       //  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButton)];
         
         NSInteger indexpage = _mainScroll.contentOffset.x / Main_Screen_Width;
         
@@ -203,6 +221,7 @@
 -(void)didSelecsearchtFXXQObj:(NSNotification*)Notification{
     
     XQViewController * ctl = [[XQViewController alloc]init];
+    ctl.faxianModel = Notification.object;
     [self pushNewViewController:ctl];
 
 }

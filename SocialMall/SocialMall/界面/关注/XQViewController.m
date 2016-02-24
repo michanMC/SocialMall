@@ -82,7 +82,7 @@
     //再准备一下准背景视图
     //让这个view初始状态，是显示在屏幕外面的，当下拉时，才被显示进来
     _firstViewPullview= [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, 50)];
-    _firstViewPullview.backgroundColor = [UIColor whiteColor];
+    _firstViewPullview.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     _foortimg = [[UIImageView alloc]initWithFrame:CGRectMake((Main_Screen_Width - 25)/2,( 50 - 25)/2, 25, 25)];
     _foortimg.image =[UIImage imageNamed:@"arrow_pull-down"];
@@ -367,7 +367,30 @@
             return 64;
         }
         if (indexPath.row == 1) {
-            return Main_Screen_Width;
+            UIImageView * viewimg = [[UIImageView alloc]init];
+            CGFloat hh;
+            __block typeof (CGFloat)hhh = hh;
+            [viewimg sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_76"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                if (image) {
+                    CGFloat w = image.size.width;
+                    CGFloat h = image.size.height;
+                   
+                   hhh = Main_Screen_Width * h / w;
+                }
+                NSLog(@"%zd",image.size);
+                
+                
+                
+                
+            }];
+            if (!hhh) {
+                return Main_Screen_Width;
+            }
+            return hhh;
+
+
+          //  return Main_Screen_Width;
+            
         }
         if (indexPath.row == 2) {
          //   NSString *titleStr = @"iPhone7将会是苹果今年重磅推出的一款新机，而最近有关苹果iPhone7的各种曝光消息层出不穷，但是大多都是网友臆想出来或者是概念设计。而最新一款iPhone7概念设计曝光，也让大家再次惊艳到了。";
@@ -544,18 +567,18 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             NSString * str = [NSString stringWithFormat:@"喜欢%@",_XQModel.like];
             [cell.xihuanBTn setTitle:str forState:0];
-//            if (_XQModel.isFans) {
-//                cell.xihuanBTn.tintColor = [UIColor redColor];
-//                
-//                [cell.xihuanBTn setImage:[UIImage imageNamed:@"favorite_icon_pressed"] forState:0];
-//            }
-//            else
-//            {
-//                cell.xihuanBTn.tintColor = [UIColor whiteColor];
-//
-//                [cell.xihuanBTn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:0];
-// 
-//            }
+            if (_XQModel.islike) {
+                cell.xihuanBTn.tintColor = [UIColor redColor];
+                
+                [cell.xihuanBTn setImage:[UIImage imageNamed:@"favorite_icon_pressed"] forState:0];
+            }
+            else
+            {
+                cell.xihuanBTn.tintColor = [UIColor whiteColor];
+
+                [cell.xihuanBTn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:0];
+ 
+            }
 
 
             [cell.xihuanBTn addTarget:self action:@selector(ActionDianzan) forControlEvents:UIControlEventTouchUpInside];
@@ -628,7 +651,7 @@
             cell.nameStr = model.goods_name;
             cell.deleBtn.hidden = YES;
 
-                cell.mashuStr =model.model;// @"GAP M码";
+                cell.mashuStr =[NSString stringWithFormat:@"%@ %@",model.brand_name,model.model];//model.model;// @"GAP M码";
             }
            // cell.deleBtn.tag = 800 + indexPath.row;
            // [cell.deleBtn addTarget:self action:@selector(ACtionDeleBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -678,6 +701,7 @@
                 cell.titleStr = titleStr;
              //  cell.headImgBtn.tag =
                 [cell.headImgBtn addTarget:self action:@selector(ACtionBtnGeren:) forControlEvents:UIControlEventTouchUpInside];
+                    cell.headImgBtn.tag = 10000+(indexPath.row-1);
                     cell.nameStr = model.nickname;
                     [cell.headImgBtn sd_setImageWithURL:[NSURL URLWithString:model.headimgurl] forState:0 placeholderImage:[UIImage imageNamed:@"Avatar_46"]];
                     cell.timeStr = [CommonUtil getStringWithLong:model.add_time Format:@"yyyy.MM.dd"];//[[CommonUtil getStringWithLong:model.last_login_time] Format:@"yyyy.MM.dd"];
@@ -743,8 +767,14 @@
 }
 -(void)ACtionBtnGeren:(UIButton*)btn{
     GerenViewController *ctl = [[GerenViewController alloc]init];
+    if (_CommentArray.count >btn.tag - 10000 ) {
+        
+    
+    CommentModel * model = _CommentArray[btn.tag - 10000];
+    ctl.user_id = model.user_id;
+
     [self pushNewViewController:ctl];
- 
+    }
     
     
 }
@@ -781,10 +811,49 @@
    
     
 }
+#pragma mark-获取赞
+-(void)isLiked:(BOOL)Refresh{
+
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_faxianModel.id ?  _faxianModel.id :_faxianModel.msg_id
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"Msg/isLiked" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        // [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        if ([resultDic[@"data"][@"isLiked"]boolValue]) {
+            
+            _XQModel.islike = YES;
+        }
+        else
+        {
+            _XQModel.islike = NO;
+   
+        }
+        
+        [_firstViewTableView reloadData];
+        [_secondViewTableView reloadData];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        NSLog(@"失败");
+        
+    }];
+
+    
+    
+
+}
 #pragma mark-获取数据
 -(void)load_Data:(BOOL)Refresh{
     
-    if (!_faxianModel.id&&!_faxianModel.msg_id) {
+    if (!_faxianModel.id && !_faxianModel.msg_id) {
         [self showAllTextDialog:@"无效ID"];
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -843,16 +912,14 @@
     
     
     [self.requestManager requestWebWithGETParaWith:@"Msg/checkFans" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
-        [self hideHud];
+        //[self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
         NSDictionary * messageList = resultDic[@"data"];
         _XQModel.isFans = [messageList[@"isFans"] boolValue];
-
+        [self isLiked:NO];
         
         
-        [_firstViewTableView reloadData];
-        [_secondViewTableView reloadData];
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
@@ -884,13 +951,14 @@
         NSLog(@"返回==%@",resultDic);
         NSArray * array = resultDic[@"data"][@"commentData"];
         if (array.count) {
-            
+             [_CommentArray removeAllObjects];
         for (NSDictionary * dic in array) {
             CommentModel * model = [CommentModel mj_objectWithKeyValues:dic];
             [_CommentArray addObject:model];
         }
-        [_secondViewTableView reloadData];
+        
         }
+        [_secondViewTableView reloadData];
         [_secondViewTableView.mj_footer endRefreshing];
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
@@ -922,7 +990,7 @@
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
         NSArray * array = resultDic[@"data"][@"matchList"];
-        if (array.count&&_MatchListArray.count<1) {
+        if (array.count&&_MatchListArray.count==0) {
             
             for (NSDictionary * dic in array) {
                 MatchListModel * model = [MatchListModel mj_objectWithKeyValues:dic];
@@ -947,7 +1015,7 @@
 
 
 -(void)actioncomFooer{
-    [_CommentArray removeAllObjects];
+   
     pagenum++;
     [self showMessageComment:NO];
     

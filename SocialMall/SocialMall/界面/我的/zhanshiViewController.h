@@ -10,4 +10,6 @@
 
 @interface zhanshiViewController : BaseViewController
 @property(nonatomic,copy)NSString *keyStr;
+@property(nonatomic,copy)NSString *userStr;//
+
 @end

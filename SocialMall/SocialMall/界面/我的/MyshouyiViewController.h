@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface MyshouyiViewController : UIViewController
+@interface MyshouyiViewController : BaseViewController
 @property(nonatomic,assign)NSInteger index;
 @end

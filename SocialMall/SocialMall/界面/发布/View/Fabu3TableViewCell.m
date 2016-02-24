@@ -7,9 +7,18 @@
 //
 
 #import "Fabu3TableViewCell.h"
+#import "goodsDataModel.h"
+
+@interface Fabu3TableViewCell (){
+    
+    
+    goodsDataModel * _goodsModel;
+}
+
+@end
 
 @implementation Fabu3TableViewCell
--(void)prepareUI:(NSArray*)photoArray{
+-(void)prepareUI:(NSMutableArray*)photoArray{
     for (UIView * view in self.contentView.subviews) {
         [view removeFromSuperview ];
     }
@@ -26,17 +35,19 @@
     CGFloat y = 40;
     CGFloat width = (Main_Screen_Width - 4 * 5)/3;
     CGFloat height = width;
-    for (int i = 0; i < 6; i ++){
+    for (int i = 0; i < photoArray.count; i ++){
         
         int row=i/3;//行号
         //1/3=0,2/3=0,3/3=1;
         int loc=i%3;//列号
-        
+        goodsDataModel * model = photoArray[i];
+        _goodsModel = model;
         x=offx+(offx+width)*loc ;
         y=offx+(offx+height)*row + 40;
         UIImageView * imgview = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
         imgview.contentMode = UIViewContentModeScaleAspectFit;
-        imgview.image = [UIImage imageNamed:@"releaes_default-photo"];
+        [imgview sd_setImageWithURL:[NSURL URLWithString:model.goods_image] placeholderImage:[UIImage imageNamed:@"releaes_default-photo"]];
+       
        [self.contentView addSubview:imgview];
         UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(imgview.frame.size.width - 5 - 20, 5, 20, 20)];
         [btn setImage:[UIImage imageNamed:@"check-box_normal"] forState:UIControlStateNormal];

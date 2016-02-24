@@ -26,9 +26,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.frame = CGRectMake(Main_Screen_Width * 2, 0, Main_Screen_Width, Main_Screen_Height - 44 - 64);
+    //输入框搜索
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectCYObj:) name:@"didSelectCYObjNotification" object:nil];
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
+-(void)didSelectCYObj:(NSNotification*)Notification{
+    
+   // [self searchsearch:YES Seachstr:Notification.object];
+    
+    
+    
+}
+
 -(void)prepareUI{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, self.view.frame.size.height) style:UITableViewStyleGrouped];
     _tableView.delegate =self;

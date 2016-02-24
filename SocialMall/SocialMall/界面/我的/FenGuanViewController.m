@@ -65,7 +65,7 @@
     
     
     NSDictionary * Parameterdic = @{
-                                    @"userId":userId
+                                    @"userId":_userStr ? _userStr :userId
                                     };
     
     NSString * urlstr;

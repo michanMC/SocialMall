@@ -39,6 +39,7 @@ typedef void (^ADBlock)(NSString *imageUrl);
  */
 @property Reachability *reachability;
 
+@property(nonatomic,strong)NSDictionary * TypeDic;
 
 
 @property BOOL isShowNetAlert;

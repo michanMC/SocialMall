@@ -56,8 +56,65 @@
     
 }
 -(void)rightBarButtonFabu{
+    NSMutableArray * addarray = [NSMutableArray array];
+    if (!_fengeModel) {
+        [self showAllTextDialog:@"请选择风格"];return;
+    }
+    if (!_addMesArray.count) {
+        [self showAllTextDialog:@"请添加商品"];return;
+    }
+    else
+    {
+        for (addMesModel * model in _addMesArray) {
+            NSDictionary * dic = [model mj_JSONObject];
+            [addarray addObject:dic];
+        }
+        
+    }
+
+    NSLog(@">>>%@",_fengeModel.id);
+    NSData *imageData = UIImageJPEGRepresentation(_dataDic[@"img"], 0.2);
+    NSString *base64Image=[imageData base64Encoding];
+    NSString *base64ImageStr = [NSString stringWithFormat: @"data:image/jpg;base64,%@",base64Image];
+    
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:addarray
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];;
+    
+    NSString * data2 =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    NSDictionary * Parameterdic = @{
+                                    @"image":base64ImageStr,
+                                    @"content":_dataDic[@"title"],
+                                    @"style_id":@([_fengeModel.id integerValue]),
+                                    @"matchJson":data2
+                                    
+                                    };
+    
+
+    [self showLoading:YES AndText:nil];
     
     
+    [self.requestManager requestWebWithParaWithURL:@"Msg/addMessage" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [self showAllTextDialog:@"发布成功"];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            MCUser * mc = [MCUser sharedInstance];
+            self.navigationController.tabBarController.selectedIndex = mc.tabIndex;
+            
+        });
+
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+    }];
     
     
 }
@@ -68,7 +125,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0)
         return 1;
-    return 4;
+    return _addMesArray.count + 2;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0.01;
@@ -87,7 +144,7 @@
             return 50;
         }
         
-        if (indexPath.row == 3) {
+        if (indexPath.row == _addMesArray.count + 1) {
             return 30;
         }
         
@@ -122,13 +179,13 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             
-            cell.title2Str = @"1123231";
+            cell.title2Str = _fengeModel.name;
             return cell;
          }
         
         
         
-        if (indexPath.row == 3) {
+        if (indexPath.row == _addMesArray.count+1) {
             fabu6TableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"fabu6TableViewCell"];
             if (!cell) {
                 cell = [[[NSBundle mainBundle]loadNibNamed:@"fabu6TableViewCell" owner:self options:nil]lastObject];
@@ -139,7 +196,7 @@
             return cell;
         }
         
-        if (indexPath.row != 0 || indexPath.row != 3) {
+        if (indexPath.row != 0 || indexPath.row != _addMesArray.count+1) {
             static NSString * cellid2 = @"mcm";
             liebiaoTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid2];
             if (!cell) {
@@ -149,18 +206,22 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.contentView.backgroundColor = [UIColor whiteColor];
-            cell.nameStr = @"xxxxxxxxx";
-            cell.mashuStr = @"GAP";
+            if (_addMesArray.count > indexPath.row - 1) {
+                addMesModel * model = _addMesArray[indexPath.row - 1];
+            
+                cell.nameStr = model.goods_name;//@"xxxxxxxxx";
+                cell.mashuStr = [NSString stringWithFormat:@"%@ %@",model.brand_name,model.model];//@"GAP";
             cell.deleBtn.tag = 800 + indexPath.row;
             [cell.deleBtn addTarget:self action:@selector(ACtionDeleBtn:) forControlEvents:UIControlEventTouchUpInside];
-            if (indexPath.row == _xuanzheIndedx) {
-                cell.bgView.backgroundColor = [UIColor lightGrayColor];
+//            if (indexPath.row == _xuanzheIndedx) {
+//                cell.bgView.backgroundColor = [UIColor lightGrayColor];
+//            }
+//            else
+//            {
+//                cell.bgView.backgroundColor = [UIColor whiteColor];
+//                
             }
-            else
-            {
-                cell.bgView.backgroundColor = [UIColor whiteColor];
-                
-            }
+            
             return cell;
 
         }
@@ -187,7 +248,10 @@
 }
 -(void)ACtionDeleBtn:(UIButton*)btn{
     
-    
+    NSInteger index = btn.tag - 800;
+    [_addMesArray removeObjectAtIndex:index];
+    [_tableView reloadData];
+
     
 }
 
@@ -201,7 +265,10 @@
 }
 -(void)backDic:(NSDictionary *)dic
 {
-    
+    addMesModel * modle = [addMesModel mj_objectWithKeyValues:dic];
+    [_addMesArray addObject:modle];
+    [_tableView reloadData];
+
     
 }
 

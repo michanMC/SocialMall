@@ -44,8 +44,8 @@
         _nameLbl.textColor = [UIColor darkTextColor];
         _nameLbl.font = [UIFont systemFontOfSize:15];
         [self.contentView addSubview:_nameLbl];
-        x = _bgView.frame.size.width - 30 - 50;
-        width = 50;
+        x = _bgView.frame.size.width - 30 - 200;
+        width = 200;
         //y += height + 5;
         _pinpai_mashuLbl = [[UILabel alloc]initWithFrame:CGRectMake(x, y, width, height)];
         _pinpai_mashuLbl.textColor = [UIColor grayColor];

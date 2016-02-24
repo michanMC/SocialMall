@@ -7,7 +7,8 @@
 //
 
 #import "BaseViewController.h"
-
+#import "userDatamodel.h"
 @interface settgViewController : BaseViewController
+@property(nonatomic,strong)userDatamodel *userModel;
 
 @end

@@ -62,11 +62,11 @@
     }
     
     NSDictionary * dic =@{
-                          @"shangpi":_shangpiStr,
+                          @"goods_name":_shangpiStr,
                           
-                          @"pinpai":_pinpaiStr,
+                          @"brand_name":_pinpaiStr,
 
-                          @"xinghao":_xinghaoStr,
+                          @"model":_xinghaoStr,
 
                           
                           };

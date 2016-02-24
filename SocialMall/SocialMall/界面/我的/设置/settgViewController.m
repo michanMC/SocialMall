@@ -90,6 +90,8 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         yonghuViewController * ctl =[[ yonghuViewController alloc]init];
         ctl.isMy = YES;
+        ctl.userModel = _userModel;
+
         [self pushNewViewController:ctl];
     }
     if (indexPath.section == 0 && indexPath.row == 1) {

@@ -19,6 +19,7 @@
 #import "me4TableViewCell.h"
 #import "loginViewController.h"
 #import "userDatamodel.h"
+#import "MallViewController.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -46,6 +47,16 @@
     }
     return self;
 }
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    
+}
+//-(void)viewDidDisappear:(BOOL)animated{
+//    [super viewDidDisappear:animated];
+//    self.navigationController.navigationBarHidden = YES;
+//    
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -129,6 +140,8 @@
 }
 -(void)ActionrightBar{
     settgViewController * ctl = [[settgViewController alloc]init];
+    ctl.userModel = _usermodel;
+
     [self pushNewViewController:ctl];
     
 }
@@ -291,8 +304,16 @@
 
         }
         if (indexPath.row == 1) {
+//            //默认的图片
+//            [self.tabBarItem setImage:[[UIImage imageNamed:@"mall_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//            self.tabBarItem.image = [UIImage imageNamed:@"mall_normal"];
+            //self.tabBarController.tabBar.tintColor = [UIColor grayColor];
             //收货
-            [self showAllTextDialog:@"跳H5?"];
+            //[self showAllTextDialog:@"跳H5?"];
+            MallViewController *mall = [[MallViewController alloc]init];
+            mall.menuagenturl = @"http://snsshop.111.xcrozz.com/Shop/Consignee/addressList";
+            [self pushNewViewController:mall];
+
         }
         if (indexPath.row == 2) {
             //提醒
@@ -301,13 +322,20 @@
         }
         if (indexPath.row == 3) {
             //收藏
-            [self showAllTextDialog:@"跳H5?"];
+           // [self showAllTextDialog:@"跳H5?"];
+            MallViewController *mall = [[MallViewController alloc]init];
+            mall.menuagenturl = @"http://snsshop.111.xcrozz.com/Shop/Goods/praiseList.html";
+            [self pushNewViewController:mall];
+
         }
         if (indexPath.row == 4) {
             //订单
-            [self showAllTextDialog:@"跳H5?"];
-            
+           // [self showAllTextDialog:@"跳H5?"];
+            MallViewController *mall = [[MallViewController alloc]init];
+            mall.menuagenturl = @"http://snsshop.111.xcrozz.com/Shop/Order/index.html";
+            [self pushNewViewController:mall];
         }
+        
 
         
     }

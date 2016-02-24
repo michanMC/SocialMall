@@ -43,9 +43,21 @@
 
         self.view.frame = CGRectMake(Main_Screen_Width * 1, 0, Main_Screen_Width, Main_Screen_Height - 44 - 64);
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    //输入框搜索
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectPPObj:) name:@"didSelectPPObjNotification" object:nil];
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
+-(void)didSelectPPObj:(NSNotification*)Notification{
+    _headView.hidden = YES;
+    _bgView.hidden = NO;
+
+    [self searchsearch:YES Seachstr:Notification.object];
+    
+    
+    
+}
+
 -(void)prepareUI{
     
     
@@ -279,8 +291,15 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFsearchXXQObjNotification" object:@""];
+    if (_dataarray.count > indexPath.row) {
+        faXianModel * model = _dataarray[indexPath.row];
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFsearchXXQObjNotification" object:model];
+        
+        
+    }
+
+    
 
 }
 

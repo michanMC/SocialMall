@@ -8,7 +8,8 @@
 
 #import "zhanshiViewController.h"
 #import "zhanshiTableViewCell.h"
-#import "zhanshiModel.h"
+#import "faXianModel.h"
+#import "XQViewController.h"
 @interface zhanshiViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
@@ -63,7 +64,7 @@
     
 
     NSDictionary * Parameterdic = @{
-                                    @"userId":userId
+                                    @"userId":_userStr?_userStr:userId
                                     };
     
     NSString * urlstr;
@@ -90,7 +91,12 @@
         NSLog(@"返回==%@",resultDic);
         NSArray *messageList = resultDic[@"data"][@"messageList"];
         for (NSDictionary * dic in messageList) {
-            zhanshiModel * model = [zhanshiModel mj_objectWithKeyValues:dic];
+            faXianModel * model = [faXianModel mj_objectWithKeyValues:dic];
+            for (NSDictionary * dic1 in dic[@"like_list"]) {
+                [model addlike_listDic:dic1];
+                
+            }
+
             [_dataArray addObject:model];
         }
         
@@ -143,7 +149,8 @@
 
         
     }
-        zhanshiModel * model = _dataArray [indexPath.row];
+        
+        faXianModel * model = _dataArray [indexPath.row];
         [cell.imgView sd_setImageWithURL:[NSURL URLWithString:model.image] placeholderImage:[UIImage imageNamed:@"releaes_default-photo"]];
         
         cell.titleLbl.text = model.content;
@@ -169,6 +176,18 @@
     }
     return cell;
     
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (_dataArray.count > indexPath.row) {
+
+    faXianModel * model = _dataArray [indexPath.row];
+    XQViewController * ctl = [[XQViewController alloc]init];
+    ctl.faxianModel = model;
+    [self pushNewViewController:ctl];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

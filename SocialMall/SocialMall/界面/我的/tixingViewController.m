@@ -41,9 +41,45 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    [self loadData];
+    
+}
+-(void)loadData{
+    
+    [self showHudInView:self.view hint:nil];
+
+    NSDictionary * Parameterdic = @{
+                                    @"Type":@(2),
+                                    @"Page":@(1)
+                                    };
+    
+
+    
+    [self.requestManager requestWebWithParaWithURL:@"User/getMessageList" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        NSArray *messageList = resultDic[@"data"][@"messageList"];
+//        for (NSDictionary * dic in messageList) {
+//            shouyiModel * model = [shouyiModel mj_objectWithKeyValues:dic];
+//            
+//            [_dataArray addObject:model];
+//            
+//        }
+//        [self reloadData];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        
+        [self hideHud];
+        [self showHint:description];
+        NSLog(@"失败");
+
+    }];
     
     
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     if (section == 0) {

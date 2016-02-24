@@ -14,7 +14,8 @@
 #import "MCseleButton.h"
 #import "HHContentCollectionView.h"
 #import "FenGuanViewController.h"
-
+#import "zhanshiViewController.h"
+#import "XQViewController.h"
 @interface GerenViewController ()
 {
     head2View * _headView;
@@ -26,9 +27,27 @@
 @end
 
 @implementation GerenViewController
+#pragma mark-监听跳详情
+-(void)didSelectXQObj2:(NSNotification*)Notification{
+    if (Notification.object) {
+        
+        faXianModel * model = Notification.object;
+        XQViewController * ctl = [[XQViewController alloc]init];
+        ctl.faxianModel = model;
+        [self pushNewViewController:ctl];
+        
+    }
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //跳详情
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectXQObj2:) name:@"didSelectXQObjNotification2" object:nil];
+    
+
+    
     _headView = [self head_View];
     _collectionView =[HHContentCollectionView contentCollectionViewKey:@"1"];
     [_collectionView loadData:_user_id];
@@ -82,27 +101,45 @@
     [headerView.fensiBtn2 addTarget:self action:@selector(ActionBtn:) forControlEvents:UIControlEventTouchUpInside];
     headerView.fensiBtn2.tag = 50001;
 
+    [headerView.zanbtn addTarget:self action:@selector(ActionBtn:) forControlEvents:UIControlEventTouchUpInside];
+    headerView.zanbtn.tag = 50002;
+
     return headerView;
     
     
     
 }
 -(void)ActionBtn:(UIButton*)btn{
+    
+    
     if (btn.tag == 50000) {//关
         //粉
         FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
+        
+        ctl.userStr = _user_id;
         ctl.titleStr = @"1";
         [self pushNewViewController:ctl];
  
     }
-    else
+    else if (btn.tag == 50001)
     {
         //粉
         FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
         ctl.titleStr = @"2";
+        ctl.userStr = _user_id;
+
         [self pushNewViewController:ctl];
 
         
+    }
+    else if (btn.tag == 50002){
+        zhanshiViewController * ctl = [[zhanshiViewController alloc]init];
+        ctl.keyStr = @"2";
+        ctl.userStr = _user_id;
+
+        [self pushNewViewController:ctl];
+        
+  
     }
     
     

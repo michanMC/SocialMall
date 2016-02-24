@@ -8,7 +8,8 @@
 
 #import "HHContentCollectionView.h"
 #import "HHCollectionViewCell.h"
-#import "zhanshiModel.h"
+#import "faXianModel.h"
+#import "XQViewController.h"
 @interface HHContentCollectionView () <UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
     
@@ -71,7 +72,12 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
             NSLog(@"返回==%@",resultDic);
             NSArray *messageList = resultDic[@"data"][@"messageList"];
             for (NSDictionary * dic in messageList) {
-                zhanshiModel * model = [zhanshiModel mj_objectWithKeyValues:dic];
+                faXianModel * model = [faXianModel mj_objectWithKeyValues:dic];
+                for (NSDictionary * dic1 in dic[@"like_list"]) {
+                    [model addlike_listDic:dic1];
+                    
+                }
+
                 [_zanguoArray addObject:model];
                 
             }
@@ -186,7 +192,28 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    faXianModel * model ;
+    
+    if ([_keyStr isEqualToString:@"1"]) {
+        if (_zanguoArray.count > indexPath.row) {
+           model = _zanguoArray[indexPath.row];
+            
+        }
+    }
+    if ([_keyStr isEqualToString:@"2"]) {
+        if (_zhanshiArray.count > indexPath.row) {
+             model = _zhanshiArray[indexPath.row];
+            
+        }
+    }
 
+    
+    //发送通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectXQObjNotification2" object:model];
+    
+    
+    
+    
 }
 
 @end

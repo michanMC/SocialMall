@@ -36,6 +36,9 @@
 @property(nonatomic,copy)NSString * nickname;
 @property(nonatomic,copy)NSString * style_name;
 @property(nonatomic,assign)BOOL isFans;
+@property(nonatomic,assign)BOOL islike;
+
+
 
 @property(nonatomic,strong)NSMutableArray *like_listArray;
 

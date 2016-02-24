@@ -50,9 +50,9 @@ static NSInteger pagingButtonTag                 = 1000;
     layout.minimumInteritemSpacing     = 0.0;
     layout.scrollDirection             = UICollectionViewScrollDirectionHorizontal;
     
-    HHHorizontalPagingView *pagingView = [[HHHorizontalPagingView alloc] initWithFrame:CGRectMake(0., 64, Main_Screen_Width, Main_Screen_Height - 64 - 54 )];
+    HHHorizontalPagingView *pagingView = [[HHHorizontalPagingView alloc] initWithFrame:CGRectMake(0., 64, Main_Screen_Width, Main_Screen_Height - 64 - 44 )];
     
-    pagingView.horizontalCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, -64, Main_Screen_Width, Main_Screen_Height - 44 )collectionViewLayout:layout];
+    pagingView.horizontalCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, -34, Main_Screen_Width, Main_Screen_Height - 44 )collectionViewLayout:layout];
     
     pagingView.horizontalCollectionView.bounces = NO;
     
@@ -123,7 +123,7 @@ static NSInteger pagingButtonTag                 = 1000;
 
 - (void)configureContentView {
     for(UIScrollView *v in self.contentViews) {
-        [v  setContentInset:UIEdgeInsetsMake(self.headerViewHeight+self.segmentBarHeight, 0., v.contentInset.bottom, 0.)];
+        [v  setContentInset:UIEdgeInsetsMake(self.headerViewHeight+self.segmentBarHeight , 0., v.contentInset.bottom, 0.)];
         
         v.alwaysBounceVertical = YES;
         v.showsVerticalScrollIndicator = NO;
@@ -173,13 +173,13 @@ static NSInteger pagingButtonTag                 = 1000;
             [segmentButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateSelected];
             [segmentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             segmentButton.titleLabel.font = AppFont;
-            
 //            UIImageView * imgv = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 39, 2)];
 //            imgv.backgroundColor =  AppCOLOR;
 ////            [segmentButton setImage:[UIImage imageNamed:@"我的收益"] forState:UIControlStateSelected];
 //            [segmentButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
 
             segmentButton.tag = pagingButtonTag+i;
+
             [segmentButton addTarget:self action:@selector(segmentButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
             //segmentButton.backgroundColor = [UIColor redColor];
             [_segmentView addSubview:segmentButton];

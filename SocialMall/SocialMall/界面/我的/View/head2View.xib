@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -99,6 +99,7 @@
                 <outlet property="headimgView" destination="Xr2-hi-ylo" id="OTu-tX-ftg"/>
                 <outlet property="qianmingLbl" destination="Mgd-Y1-zC3" id="1yc-Jf-vJ5"/>
                 <outlet property="sexLbl" destination="pQA-3E-Kyx" id="bhK-SG-k5h"/>
+                <outlet property="zanbtn" destination="dJv-pS-br1" id="f9h-kS-sm2"/>
                 <outlet property="zanlbl" destination="oCj-YW-qkG" id="MFe-Qc-9iO"/>
             </connections>
             <point key="canvasLocation" x="320" y="-53"/>

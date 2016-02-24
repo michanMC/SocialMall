@@ -12,5 +12,6 @@
 
 @property(nonatomic,copy)NSString *titleStr;//1=关注   2 = 粉丝 3赞
 
+@property(nonatomic,copy)NSString *userStr;//
 
 @end

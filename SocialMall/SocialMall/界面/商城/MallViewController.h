@@ -9,5 +9,7 @@
 #import "BaseViewController.h"
 
 @interface MallViewController : BaseViewController
+@property(nonatomic,copy)NSString * menuagenturl;
+@property(nonatomic,assign)BOOL isNoAdd;
 
 @end

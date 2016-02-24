@@ -36,12 +36,12 @@
         x = 0;
         y = 60 - height;
         width = Main_Screen_Width / 3;
-        UILabel * titleSubLbl = [[UILabel alloc]initWithFrame:CGRectMake(x, y, width, height)];
-        titleSubLbl.text =tilteSubStr;
-        titleSubLbl.textColor = [UIColor darkGrayColor];
-        titleSubLbl.font = [UIFont systemFontOfSize:13];
-        titleSubLbl.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:titleSubLbl];
+         _titleSubLbl= [[UILabel alloc]initWithFrame:CGRectMake(x, y, width, height)];
+        _titleSubLbl.text =tilteSubStr;
+        _titleSubLbl.textColor = [UIColor darkGrayColor];
+        _titleSubLbl.font = [UIFont systemFontOfSize:13];
+        _titleSubLbl.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_titleSubLbl];
 
         
         
@@ -50,6 +50,7 @@
     return self;
     
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 
 
+
 @interface Fabu3ViewController : BaseViewController
 @property(nonatomic,strong)UIImage * image;
 @property(nonatomic,copy)NSString * titleStr;

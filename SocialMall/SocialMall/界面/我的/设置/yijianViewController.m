@@ -49,40 +49,37 @@
         kAlertMessage(@"请写下你宝贵的意见");
         return;
     }
-//    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-//   NSString * mobile =  [defaults objectForKey:@"UserName"];
-//    
-//    if(!mobile || !mobile.length){
-//        [self showAllTextDialog:@"亲，你还没登录"];
-//        return;
-//    }
-//    NSDictionary * Parameterdic = @{
-//                                    @"content":_textView.text,
-//                                    @"mobile":mobile,
-//                                    @"imei":IMEI,
-//                                    @"device":@(2)
-//                                    };
-//    
-//    
-//    [self showLoading:YES AndText:nil];
-//    [self.requestManager requestWebWithParaWithURL:@"api/global/feedback.json" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
-//        [self hideHud];
-//        NSLog(@"成功");
-//        NSLog(@"返回==%@",resultDic);
-//        [self showAllTextDialog:@"发送成功"];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            
-//            [self.navigationController popViewControllerAnimated:YES];
-//        });
-//
-//        
-//    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
-//        [self hideHud];
-//        [self showAllTextDialog:description];
-//        
-//        NSLog(@"失败");
-//    }];
-//    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+   NSString * sessionId =  [defaults objectForKey:@"sessionId"];
+    
+    if(!sessionId || !sessionId.length){
+        [self showAllTextDialog:@"亲，你还没登录"];
+        return;
+    }
+    NSDictionary * Parameterdic = @{
+                                    @"feedback":_textView.text
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"System/feedback" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [self showAllTextDialog:@"发送成功"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
   
     
     

@@ -33,6 +33,27 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
         
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         [_instanceManager.httpClient.requestSerializer setValue:[defaults objectForKey:@"sessionId"] forHTTPHeaderField:@"user_session"];
+        _instanceManager.TypeDic = @{
+                                     @"400001":@"手机号或密码不能为空",
+                                     @"400002":@"用户不存在",
+                                     @"400003":@"手机号或密码错误",
+                                     @"400004":@"注册失败",
+                                     @"400005":@"验证码错误",
+                                     @"300001":@"上传图片类型不正确",
+                                     @"300002":@"保存图片失败",
+                                     @"300003":@"上传图片校验失败",
+                                     @"300004":@"上传图片大小超过限制",
+                                     @"400006":@"风格不能为空",
+                                     @"400007":@"消息内容不能为空",
+                                     @"400008":@"上传图片不能为空",
+                                     @"400009":@"用户未登录",
+                                     @"400010":@"短信接口错误",
+                                     @"400011":@"没有好友",
+                                     @"400012":@"还没登录",
+                                     @"400000":@"常用错误(输出提示用)",
+                                    
+                                     
+                                     };
         
         
     });
@@ -202,6 +223,14 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
                                         
                                         
                                         return ;
+                }
+                if (!message ||[message length]<1) {
+                  NSString *  key = [NSString stringWithFormat:@"%ld",[resultDic[@"status"] integerValue]];
+                    message = _TypeDic[key];
+                    
+                    
+                    
+                    
                 }
                 errorBlock(nil,error,message);
             }

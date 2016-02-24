@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MyshouyiBtn : UIButton
+@property(nonatomic,strong)UILabel * titleSubLbl;
 - (id)initWithFrame:(CGRect)frame TilteStr:(NSString*)tilteStr TilteSubStr:(NSString*)tilteSubStr TmgViewStr:(NSString*)imgViewStr;
 
 @end
