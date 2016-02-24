@@ -190,31 +190,41 @@
     // 比如你之前登录的网站地址是abc.com（当然前面要加http://，如果你服务器需要端口号也可以加上端口号），那么这里的HOST就是http://abc.com
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     
-    // 设置header，通过遍历cookies来一个一个的设置header
-    for (NSHTTPCookie *cookie in cookies){
-        
-        // cookiesWithResponseHeaderFields方法，需要为URL设置一个cookie为NSDictionary类型的header，注意NSDictionary里面的forKey需要是@"Set-Cookie"
-        NSArray *headeringCookie = [NSHTTPCookie cookiesWithResponseHeaderFields:
-                                    [NSDictionary dictionaryWithObject:
-                                     [[NSString alloc] initWithFormat:@"%@=%@",[cookie name],[defaults objectForKey:@"sessionId"]]
-                                                                forKey:@"Set-Cookie"]
-                                                                          forURL:[NSURL URLWithString:_menuagenturl]];
-        // 通过setCookies方法，完成设置，这样只要一访问URL为HOST的网页时，会自动附带上设置好的header
-        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:headeringCookie
-                                                           forURL:[NSURL URLWithString:_menuagenturl]
-                                                  mainDocumentURL:nil];
-    
-    
-    
-    }
+//    // 设置header，通过遍历cookies来一个一个的设置header
+//    for (NSHTTPCookie *cookie in cookies){
+//        
+//        // cookiesWithResponseHeaderFields方法，需要为URL设置一个cookie为NSDictionary类型的header，注意NSDictionary里面的forKey需要是@"Set-Cookie"
+//        NSArray *headeringCookie = [NSHTTPCookie cookiesWithResponseHeaderFields:
+//                                    [NSDictionary dictionaryWithObject:
+//                                     [[NSString alloc] initWithFormat:@"%@=%@",[cookie name],[defaults objectForKey:@"sessionId"]]
+//                                                                forKey:@"Set-Cookie"]
+//                                                                          forURL:[NSURL URLWithString:_menuagenturl]];
+//        // 通过setCookies方法，完成设置，这样只要一访问URL为HOST的网页时，会自动附带上设置好的header
+//        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:headeringCookie
+//                                                           forURL:[NSURL URLWithString:_menuagenturl]
+//                                                  mainDocumentURL:nil];
+//    
+//    
+//    
+//    }
     
     
     NSURL *url=[NSURL URLWithString:_menuagenturl];
     NSString *body = [NSString stringWithFormat: @"sessionId=%@", [defaults objectForKey:@"sessionId"]];
-    [_request setHTTPBody: [body dataUsingEncoding: NSUTF8StringEncoding]];
-    [_request setHTTPMethod: @"GET"];
+    
+
+   // [_request setHTTPBody: [body dataUsingEncoding: NSUTF8StringEncoding]];
     //利用url对象,来创建一个网络请求
-    _request =[[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20];
+    _request = [[NSMutableURLRequest alloc]initWithURL: url];
+
+//    _request =[[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20];
+  //  [_request setValue:@"123213" forHTTPHeaderField:@"sessionId"];
+   // [_request setHTTPMethod: @"GET"];
+    NSData *postData = [body dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+
+//    [_request setHTTPBody: postData];
+//   [_request setHTTPMethod: @"GET"];
+
     [_webView loadRequest:_request];
 
     //让 webView去加载请求
@@ -226,7 +236,7 @@
 
 #pragma mark UIWebViewDelegate 网页加载响应
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    NSString*urlstr = _request.URL.absoluteString;
+    NSString*urlstr = request.URL.absoluteString;
     
     NSURL *url = [_request URL];
     if([[url scheme] isEqualToString:@"devzeng"]) {
@@ -237,9 +247,8 @@
             
         }
             }
-            
-            
-
+    NSDictionary* dic = [request allHTTPHeaderFields];
+    //判断请求中有没有自己定义的字段，没有就把现有请求停止，构造个新的请求，把自定义的字段加进去，然后加载
     
     
     if([webView isKindOfClass:[UIWebView class]] == YES){
@@ -264,15 +273,20 @@
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
     self.tabBarController.tabBar.hidden=YES;
+    NSCachedURLResponse *resp = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
+    NSLog(@"%@",[(NSHTTPURLResponse*)resp.response allHeaderFields]);
+    
+    
+    
     if([webView isKindOfClass:[UIWebView class]] == YES){
         [_progressProxy webViewDidFinishLoad:webView];
     }
-    NSHTTPCookieStorage *myCookie = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *cookie in [myCookie cookies]) {
-        NSLog(@"cookie == %@", cookie);//t7okttoqhae8fdhi0kk3sv8f12
-            //09a0p2l6ik1u9r33abjgfhcsn4
-        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie]; // 保存
-    }
+//    NSHTTPCookieStorage *myCookie = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//    for (NSHTTPCookie *cookie in [myCookie cookies]) {
+//        NSLog(@"cookie == %@", cookie);//t7okttoqhae8fdhi0kk3sv8f12
+//            //09a0p2l6ik1u9r33abjgfhcsn4
+//        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie]; // 保存
+//    }
     
     
 }
@@ -490,6 +504,7 @@
 }
 
 -(void)backpop{
+    
     if([_webView canGoBack]){
         [_webView goBack];
     }else{
