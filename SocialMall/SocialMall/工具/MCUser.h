@@ -75,6 +75,7 @@
 @property(nonatomic,strong)NSMutableArray * messageContents;
 
 @property(nonatomic,assign)NSInteger  tabIndex;
+@property(nonatomic,assign)BOOL  istiao;//
 
 +(MCUser *)sharedInstance;
 

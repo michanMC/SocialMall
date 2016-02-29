@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface MainTableViewController : UITabBarController
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
+@property (nonatomic, strong) MAMapView *mapView;
+
+@property (nonatomic, strong) AMapSearchAPI *search;
+
 - (void)jumpToChatList;
 
 - (void)setupUntreatedApplyCount;

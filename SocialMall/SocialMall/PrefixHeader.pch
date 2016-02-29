@@ -26,6 +26,9 @@
 #import "MJExtension.h"
 #import "MCUser.h"
 #import "JT3DScrollView.h"
+#import <MAMapKit/MAMapKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
+
 #ifdef DEBUG
 #define MTLog(...) NSLog(__VA_ARGS__)
 #else

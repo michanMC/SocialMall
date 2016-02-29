@@ -18,7 +18,8 @@
 #import "NJKWebViewProgress.h"
 #import "NSURLRequest+ForSSL.h"
 #import "BUIView.h"
-
+#import "MeViewController.h"
+#import "loginViewController.h"
 @interface MallViewController ()<UIWebViewDelegate,NJKWebViewProgressDelegate,UIScrollViewDelegate>{
     
     WebViewJavascriptBridge * _bridge;
@@ -30,7 +31,7 @@
     UIImageView * _bgImgView;
     CGFloat _lastPosition;
     
-    
+    UIView *_barView;
     
 }
 @property(nonatomic,retain)NJKWebViewProgress * progressProxy;
@@ -43,6 +44,30 @@
 @end
 
 @implementation MallViewController
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        //跳登录
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login:) name:@"didSelectDLNotificationMall" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reqLoadData:) name:@"didDataNotificationMall" object:nil];
+    }
+    return self;
+}
+-(void)login:(NSNotification*)Notification{
+    
+    loginViewController * ctl = [[loginViewController alloc]init];
+    ctl.isMeCtl = YES;
+    [self pushNewViewController:ctl];
+    
+    
+}
+-(void)reqLoadData:(NSNotification*)Notification{
+    [self loadGoogle];
+    
+    
+}
+
 -(void)swipeAction:(UISwipeGestureRecognizer *)swipe
 {
     
@@ -54,16 +79,17 @@
 
             break;
         case UISwipeGestureRecognizerDirectionUp:
-            self.tabBarController.tabBar.hidden=YES;
+           // self.tabBarController.tabBar.hidden=YES;
+            [self hiddenbarView];
 
             
             break;
         case UISwipeGestureRecognizerDirectionDown:
-            self.tabBarController.tabBar.hidden=NO;
-
+            //self.tabBarController.tabBar.hidden=NO;
+            [self showBarView];
             
             break;
-        case UISwipeGestureRecognizerDirectionRight:  
+        case UISwipeGestureRecognizerDirectionRight:
             break;
     }
     NSLog(@"%d",swipe.direction);
@@ -76,22 +102,102 @@
     if (currentPostion - _lastPosition > 25) {
         _lastPosition = currentPostion;
         NSLog(@"ScrollUp now");
-        self.tabBarController.tabBar.hidden=YES;
-
+       // self.tabBarController.tabBar.hidden=YES;
+        [self hiddenbarView];
     }
     else if (_lastPosition - currentPostion > 25)
     {
         _lastPosition = currentPostion;
         NSLog(@"ScrollDown now");
-        self.tabBarController.tabBar.hidden=NO;
+        [self showBarView];
+       // self.tabBarController.tabBar.hidden=NO;
 
         
     }
+}
+-(void)prepareTbarView{
+    _barView = [[UIView alloc]initWithFrame:CGRectMake(0, Main_Screen_Height - 49, Main_Screen_Width, 49)];
+    _barView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [self.view addSubview:_barView];
+    UIImageView *imgview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, 49)];
+    imgview.image = [UIImage imageNamed:@"tbarView"];
+    [_barView addSubview:imgview];
+    CGFloat x = 0;
+    CGFloat y = 0;
+    CGFloat width = Main_Screen_Width / 5;
+    CGFloat hieght = 49;
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    for (int i = 0; i < 5; i ++) {
+       
+        btn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, hieght)];
+        btn.tag = 9000+i;
+        [_barView addSubview:btn];
+        [btn addTarget:self action:@selector(actionBarBtn:) forControlEvents:UIControlEventTouchUpInside];
+         x += width;
+    }
+    
+    
+    
+    
+}
+-(void)actionBarBtn:(UIButton*)btn{
+    
+    NSLog( @"%d",btn.tag - 9000);
+    
+    
+    [self hiddenbarView];
+    
+    
+    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[MallViewController class]] ||[vc isKindOfClass:[MeViewController class]]
+            ) {
+            //设置tabBarController的下标 0:首页
+            vc.tabBarController.selectedIndex = btn.tag - 9000;
+            //跳转到订单列表
+            [self.navigationController popToViewController:vc animated:NO];
+            
+            
+            
+        }
+    }
+
+//    if (btn.tag - 9000 == 4 && _menuagenturl) {
+//        
+//        
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//    }
+//    else
+    // self.tabBarController.selectedIndex =btn.tag - 9000 ;
+    
+}
+-(void)showBarView{
+    
+    [UIView animateWithDuration:.5 animations:^{
+        
+        _barView.frame = CGRectMake(0, Main_Screen_Height - 49, Main_Screen_Width, 49);
+        
+        
+    }];
+    
+    
+}
+-(void)hiddenbarView{
+    [UIView animateWithDuration:.5 animations:^{
+        
+        _barView.frame = CGRectMake(0, Main_Screen_Height , Main_Screen_Width, 49);
+        
+        
+    }];
+
+    
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden=YES;
     self.navigationController.navigationBarHidden = YES;
+    [self prepareTbarView];
 
 }
 -(void)viewDidDisappear:(BOOL)animated{
@@ -181,49 +287,19 @@
     
     if (!_menuagenturl) {
         _menuagenturl = @"http://snsshop.111.xcrozz.com/Shop";
-       // _menuagenturl = @"http://snsshop.111.xcrozz.com/test.html";
+
 
     }
     NSLog(@"当前WEB地址为 : %@",_menuagenturl);
-    // 寻找URL为HOST的相关cookie，不用担心，步骤2已经自动为cookie设置好了相关的URL信息
-    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:_menuagenturl]]; // 这里的HOST是你web服务器的域名地址
-    // 比如你之前登录的网站地址是abc.com（当然前面要加http://，如果你服务器需要端口号也可以加上端口号），那么这里的HOST就是http://abc.com
+
+    
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     
-//    // 设置header，通过遍历cookies来一个一个的设置header
-//    for (NSHTTPCookie *cookie in cookies){
-//        
-//        // cookiesWithResponseHeaderFields方法，需要为URL设置一个cookie为NSDictionary类型的header，注意NSDictionary里面的forKey需要是@"Set-Cookie"
-//        NSArray *headeringCookie = [NSHTTPCookie cookiesWithResponseHeaderFields:
-//                                    [NSDictionary dictionaryWithObject:
-//                                     [[NSString alloc] initWithFormat:@"%@=%@",[cookie name],[defaults objectForKey:@"sessionId"]]
-//                                                                forKey:@"Set-Cookie"]
-//                                                                          forURL:[NSURL URLWithString:_menuagenturl]];
-//        // 通过setCookies方法，完成设置，这样只要一访问URL为HOST的网页时，会自动附带上设置好的header
-//        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:headeringCookie
-//                                                           forURL:[NSURL URLWithString:_menuagenturl]
-//                                                  mainDocumentURL:nil];
-//    
-//    
-//    
-//    }
-    
-    
-    NSURL *url=[NSURL URLWithString:_menuagenturl];
     NSString *body = [NSString stringWithFormat: @"sessionId=%@", [defaults objectForKey:@"sessionId"]];
-    
+    NSString * maurl = [NSString stringWithFormat:@"%@?%@",_menuagenturl,body];
+    NSURL *url=[NSURL URLWithString:maurl];
 
-   // [_request setHTTPBody: [body dataUsingEncoding: NSUTF8StringEncoding]];
-    //利用url对象,来创建一个网络请求
     _request = [[NSMutableURLRequest alloc]initWithURL: url];
-
-//    _request =[[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20];
-  //  [_request setValue:@"123213" forHTTPHeaderField:@"sessionId"];
-   // [_request setHTTPMethod: @"GET"];
-    NSData *postData = [body dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-
-//    [_request setHTTPBody: postData];
-//   [_request setHTTPMethod: @"GET"];
 
     [_webView loadRequest:_request];
 
@@ -260,8 +336,8 @@
 }
 #pragma mark-当网页视图已经开始加载一个请求
 -(void)webViewDidStartLoad:(id)webView {//当网页视图已经开始加载一个请求后，得到通知。
-    self.tabBarController.tabBar.hidden=NO;
-
+    //self.tabBarController.tabBar.hidden=NO;
+    [self showBarView];
     NSLog(@"webViewDidStartLoad");
     
     if([webView isKindOfClass:[UIWebView class]] == YES){
@@ -272,7 +348,8 @@
 #pragma mark-当网页视图结束
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    self.tabBarController.tabBar.hidden=YES;
+    //self.tabBarController.tabBar.hidden=YES;
+    [self hiddenbarView];
     NSCachedURLResponse *resp = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
     NSLog(@"%@",[(NSHTTPURLResponse*)resp.response allHeaderFields]);
     

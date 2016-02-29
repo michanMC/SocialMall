@@ -190,48 +190,20 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
                 NSString *message = [resultDic objectForKey:@"message"];
                 NSError *error = [NSError errorWithDomain:@"服务器业务逻辑错误" code:logicCode.intValue userInfo:nil];
                 if ([message isEqualToString:@"session无效"]&&islogin) {
-//                    NSLog(@"api == %@",webApi);
-//                    /*保存数据－－－－－－－－－－－－－－－－－begin*/
-//                    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-//                        [defaults setObject:@"" forKey:@"isLogOut"];
-//                                        // [defaults setObject :nil forKey:@"sessionId"];
-//                    [MCUser sharedInstance].userSessionId = nil;
-//                    [defaults setObject:nil forKey:@"sessionId"];
-//                                        // [defaults setObject:nil forKey:@"Pwd"];
-//                    [defaults setObject:nil forKey:@"nickname"];
-//                    [defaults setObject:nil forKey:@"mobile"];
-//                    [defaults setObject:nil forKey:@"id"];
-//
-//                    
-//                            //强制让数据立刻保存
-//                                [defaults synchronize];
-//                                        // [[NetworkManager instanceManager] setSessionID:nil];
-//                    
-//                    loginViewController *loginVC = [[loginViewController alloc]init];
-//                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//                    DEMONavigationController *nav = [[DEMONavigationController alloc]initWithRootViewController:loginVC];
-//                    appDelegate.window.rootViewController = nav;
 
-//                    
-//                    ViewController * root = [[ViewController alloc]init];
-//                                        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//                                        // [self addChildViewController:nav];
-//                                        
-//                                        
-//                                        appDelegate.window.rootViewController = root;
-                    
-                                        
                                         
                                         return ;
                 }
-                if (!message ||[message length]<1) {
                   NSString *  key = [NSString stringWithFormat:@"%ld",[resultDic[@"status"] integerValue]];
                     message = _TypeDic[key];
                     
                     
+                    if (!message ||[message length]<1) {
+                        message = [resultDic objectForKey:@"message"];
+                    }
                     
-                    
-                }
+
+                
                 errorBlock(nil,error,message);
             }
         }
@@ -382,35 +354,24 @@ static NSString *const EPHttpApiBaseURL = AppURL;//@"http://121.201.16.96";
             else{
                 //业务逻辑错误
                 NSString *message = [resultDic objectForKey:@"message"];
+                
                 NSError *error = [NSError errorWithDomain:@"服务器业务逻辑错误" code:logicCode.intValue userInfo:nil];
                 if ([message isEqualToString:@"session无效"]) {
-                    
-                    /*保存数据－－－－－－－－－－－－－－－－－begin*/
-                    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-                    [defaults setObject:@"" forKey:@"isLogOut"];
-                    // [defaults setObject :nil forKey:@"sessionId"];
-                    [MCUser sharedInstance].sessionId = nil;
-                    [defaults setObject:nil forKey:@"sessionId"];
-                    // [defaults setObject:nil forKey:@"Pwd"];
-                    [defaults setObject:nil forKey:@"nickname"];
-                    [defaults setObject:nil forKey:@"mobile"];
-                    [defaults setObject:nil forKey:@"id"];
-                    
-                    
-                    //强制让数据立刻保存
-                    [defaults synchronize];
-                    // [[NetworkManager instanceManager] setSessionID:nil];
-                    ViewController * root = [[ViewController alloc]init];
-                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                    // [self addChildViewController:nav];
-                    
-                    
-                    appDelegate.window.rootViewController = root;
-                    
                     
                     
                     return ;
                 }
+                
+               
+                    NSString *  key = [NSString stringWithFormat:@"%ld",[resultDic[@"status"] integerValue]];
+                
+                    message = _TypeDic[key];
+                  if (!message ||[message length]<1) {
+                    message = [resultDic objectForKey:@"message"];
+                  }
+                
+                
+
                 errorBlock(nil,error,message);
             }
         }

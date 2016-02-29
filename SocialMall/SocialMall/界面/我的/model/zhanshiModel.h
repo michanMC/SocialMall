@@ -16,5 +16,6 @@
 @property(nonatomic,copy)NSString * image;
 @property(nonatomic,copy)NSString * add_time;
 @property(nonatomic,copy)NSString * user_id;
+@property(nonatomic,copy)NSString * id;
 
 @end

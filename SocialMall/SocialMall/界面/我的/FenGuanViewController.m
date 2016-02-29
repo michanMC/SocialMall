@@ -46,6 +46,19 @@
     _tableView.delegate =self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    if (_likearray.count) {
+        
+        for (like_list * model in _likearray) {
+            NSDictionary * dic = [model mj_JSONObject];
+            
+            userDatamodel * model1 = [userDatamodel mj_objectWithKeyValues:dic];
+            [_dataArray addObject:model1];
+            
+        }
+ 
+        [_tableView reloadData];
+        
+    }else
     [self loadata:YES];
     
     
@@ -91,7 +104,14 @@
         [self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
-        NSArray *messageList = resultDic[@"data"][@"fansList"];
+        NSString * keysrt =@"fansList";
+        if ([_titleStr isEqualToString:@"3"])
+        {
+            keysrt = @"messageList";
+            
+        }
+
+        NSArray *messageList = resultDic[@"data"][keysrt];
         for (NSDictionary * dic in messageList) {
             userDatamodel * model = [userDatamodel mj_objectWithKeyValues:dic];
             [_dataArray addObject:model];
@@ -148,7 +168,10 @@
     
     GerenViewController * ctl = [[GerenViewController alloc]init];
         userDatamodel * model = _dataArray[indexPath.row];
-
+        if (!model.user_id) {
+            [self showAllTextDialog:@"无效的userID"];
+            return;
+        }
         ctl.user_id = model.user_id;//_dataArray[indexPath]
     [self pushNewViewController:ctl];
     }

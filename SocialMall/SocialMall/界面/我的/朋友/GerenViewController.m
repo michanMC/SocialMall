@@ -22,6 +22,7 @@
     HHContentCollectionView *_collectionView;
     HHContentCollectionView *_zancollectionView;
     userDatamodel *_usermodel;
+    BOOL _istiao;
 }
 
 @end
@@ -29,12 +30,26 @@
 @implementation GerenViewController
 #pragma mark-监听跳详情
 -(void)didSelectXQObj2:(NSNotification*)Notification{
-    if (Notification.object) {
+    
+    MCUser * user = [MCUser sharedInstance];
+    
+    
+    if (Notification.object &&!user.istiao) {
+        
+        
+        user.istiao = YES;
+        
+        NSLog(@"11111111");
         
         faXianModel * model = Notification.object;
         XQViewController * ctl = [[XQViewController alloc]init];
         ctl.faxianModel = model;
         [self pushNewViewController:ctl];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+             user.istiao = NO;
+        });
+
         
     }
     
@@ -91,11 +106,48 @@
     [self loadaData:YES];
     // Do any additional setup after loading the view.
 }
+-(void)ActionGuanzhu{
+    
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
+    if (!_user_id) {
+        return;
+        
+        
+    }
+    NSString * userId = [defaults objectForKey:@"userId"];
+    
+    NSDictionary * Parameterdic = @{
+                                    @"to_id":_user_id
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"Friends/toFriend" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+        //[self showAllTextDialog:@"点赞成功"];
+       // [self load_Data:YES];
+        [self loadaData:YES];
+
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+    }];
+    
+    
+
+}
 -(head2View*)head_View{
     head2View *headerView = [[NSBundle mainBundle] loadNibNamed:@"head2View" owner:self options:nil][0];
     headerView.guanzhuBtn.backgroundColor = AppCOLOR;
     ViewRadius(headerView.guanzhuBtn, 5);
-    //[headerView.guanzhuBtn addTarget:self action:<#(nonnull SEL)#> forControlEvents:<#(UIControlEvents)#>]
+    [headerView.guanzhuBtn addTarget:self action:@selector(ActionGuanzhu) forControlEvents:UIControlEventTouchUpInside];
     [headerView.guanzhu2btn addTarget:self action:@selector(ActionBtn:) forControlEvents:UIControlEventTouchUpInside];
     headerView.guanzhu2btn.tag = 50000;
     [headerView.fensiBtn2 addTarget:self action:@selector(ActionBtn:) forControlEvents:UIControlEventTouchUpInside];

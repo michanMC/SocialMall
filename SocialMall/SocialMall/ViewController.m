@@ -11,7 +11,9 @@
 #import "MainTableViewController.h"
 #import "MCNavViewController.h"
 //#import "XZMTabBarViewController.h"
-@interface ViewController ()
+@interface ViewController ()<MAMapViewDelegate, AMapSearchDelegate>
+
+
 
 @end
 
@@ -19,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     MainTableViewController *main = [[MainTableViewController alloc] init];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.window.rootViewController = main;

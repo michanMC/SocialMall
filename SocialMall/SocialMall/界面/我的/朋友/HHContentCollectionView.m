@@ -110,7 +110,7 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
         
         [self.requestManager requestWebWithGETParaWith:urlstr Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
             NSLog(@"成功");
-            NSLog(@"返回==%@",resultDic);
+            NSLog(@"返回1==%@",resultDic);
             NSArray *messageList = resultDic[@"data"][@"messageList"];
                         for (NSDictionary * dic in messageList) {
                             zhanshiModel * model = [zhanshiModel mj_objectWithKeyValues:dic];
@@ -192,7 +192,7 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    faXianModel * model ;
+    zhanshiModel * model ;
     
     if ([_keyStr isEqualToString:@"1"]) {
         if (_zanguoArray.count > indexPath.row) {
@@ -206,10 +206,13 @@ static NSString *collectionViewCellIdentifier = @"collectionViewCell";
             
         }
     }
-
+    NSDictionary * dic = [model mj_JSONObject];
+    faXianModel * model1 = [faXianModel mj_objectWithKeyValues:dic];
+    
+    
     
     //发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectXQObjNotification2" object:model];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectXQObjNotification2" object:model1];
     
     
     

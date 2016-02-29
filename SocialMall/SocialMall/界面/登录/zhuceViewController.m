@@ -315,6 +315,8 @@
 
                 //发送通知
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectloadData2Notification" object:@""];
+                //发送通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"didDataNotificationMall" object:@""];
                 [self.navigationController popToRootViewControllerAnimated:YES];
 
 

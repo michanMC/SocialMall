@@ -368,14 +368,18 @@
         }
         if (indexPath.row == 1) {
             UIImageView * viewimg = [[UIImageView alloc]init];
+            
             CGFloat hh;
             __block typeof (CGFloat)hhh = hh;
+            __weak typeof (UIImageView*)wimg =viewimg;
             [viewimg sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_76"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                wimg.image = image;
                 if (image) {
                     CGFloat w = image.size.width;
                     CGFloat h = image.size.height;
                    
                    hhh = Main_Screen_Width * h / w;
+                    
                 }
                 NSLog(@"%zd",image.size);
                 
@@ -383,7 +387,8 @@
                 
                 
             }];
-            if (!hhh) {
+            if (!hhh||!wimg.image) {
+                
                 return Main_Screen_Width;
             }
             return hhh;
@@ -500,7 +505,8 @@
                 cell = [[[NSBundle mainBundle]loadNibNamed:cellid1 owner:self options:nil]lastObject];
             }
             cell.headImgBtn.tag = 90000;
-           // [cell.headImgBtn addTarget:self action:@selector(actionHeadbtn:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.headImgBtn addTarget:self action:@selector(actionHeadbtn:) forControlEvents:UIControlEventTouchUpInside];
+            
             [cell.headImgBtn sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] forState:0 placeholderImage:[UIImage imageNamed:@"Avatar_76"]];
             ViewRadius(cell.headImgBtn, 40/2);
 
@@ -740,6 +746,16 @@
     [animationView show];
 
     
+    
+    
+}
+-(void)actionHeadbtn:(UIButton*)btn{
+    
+    GerenViewController *ctl = [[GerenViewController alloc]init];
+    ctl.user_id = _XQModel.user_id;
+    
+    [self pushNewViewController:ctl];
+
     
     
 }

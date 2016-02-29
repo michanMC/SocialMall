@@ -12,7 +12,7 @@
 @interface AppDelegate ()
 
 @end
-
+//高德key:ca10d0212114f9e87e5032a64284d9dd
 @implementation AppDelegate
 
 
@@ -33,8 +33,14 @@
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     
     manager.enableAutoToolbar = YES;
+    [self configureAPIKey];
 
     return YES;
+}
+- (void)configureAPIKey
+{
+    
+    [MAMapServices sharedServices].apiKey = @"ca10d0212114f9e87e5032a64284d9dd";
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

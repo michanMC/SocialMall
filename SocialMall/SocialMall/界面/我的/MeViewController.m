@@ -28,7 +28,7 @@
     NSArray *_imgArray;
     userDatamodel * _usermodel;
     BOOL _Refresh;
-    
+    NSString * _cityStr;
 }
 
 @end
@@ -47,6 +47,7 @@
     }
     return self;
 }
+
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -61,7 +62,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
+    /*保存数据－－－－－－－－－－－－－－－－－begin*/
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    _cityStr = [defaults objectForKey:@"city"];
     
+
     _titleArray = @[@"我的收益",@"收货地址管理",@"消息提醒",@"我的收藏",@"我的订单"];
     _imgArray = @[@"income_icon",@"mine_address_icon",@"mine_message_icon",@"mine_collect_icon",@"mine_order_icon"];
     [self prepareUI];
@@ -220,6 +225,7 @@
         cell.zhanshiLbl.text = _usermodel.messages;
         cell.sexLbl.text = [_usermodel.sex isEqualToString:@"0"]? @"男":@"女";
         
+        cell.dingweiLbl.text = _cityStr;
         
         
         return cell;

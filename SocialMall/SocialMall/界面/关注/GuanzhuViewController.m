@@ -27,6 +27,8 @@
     NSMutableArray *_arrayView;
     BOOL _isRefresh;
     NSInteger pageNum;
+    
+    faXianModel * _cunmodel;
 }
 
 @end
@@ -37,8 +39,29 @@
     [super viewWillAppear:animated];
     [self appColorNavigation];
 }
+-(void)appIsLogin{
+    
+    [self showLoading:YES AndText:nil];
+    [ self.requestManager requestWebWithParaWithURL:@"User/updateInfo" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+      
+        [self showAllTextDialog:@"已登录"];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showHint:description];
+        [self showAllTextDialog:@"没登录"];
+
+        NSLog(@"%@",description);
+    }];
+ 
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self appIsLogin];
     pageNum = 0;
     _dataArray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -107,21 +130,35 @@
 }
 #pragma mark-监听跳个人信息
 -(void)didSelectgerenDataObj:(NSNotification*)Notification{
+    
         if (Notification.object) {
+
             
             like_list * model = Notification.object;
+                NSString *modelStr = [NSString stringWithFormat:@"%@",model];
+
+            if ([modelStr isEqualToString:@"1"]) {
+                FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
+                ctl.titleStr = @"3";
+                 _index = (_scrollView.contentOffset.x  )/(Main_Screen_Width - 40);
+                _cunmodel = _dataArray[_index];
+
+                ctl.likearray = _cunmodel.like_list;
+                
+                
+                [self pushNewViewController:ctl];
+            }
+            else
+            {
+            
+
     GerenViewController *ctl = [[GerenViewController alloc]init];
             ctl.user_id = model.user_id;
     [self pushNewViewController:ctl];
-        }
-        else
-        {
-            FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
-            ctl.titleStr = @"3";
-            [self pushNewViewController:ctl];
+            }
             
-
         }
+    
     
 }
 
@@ -244,7 +281,7 @@
         [self createCardWithColor:i];
     }
     _scrollView.contentOffset = CGPointMake(_index * (Main_Screen_Width - 40), 0);
-    
+    _scrollView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     if (_index==0) {
         _scrollView.contentOffset = CGPointMake(0, 0);
         
@@ -350,7 +387,7 @@
     _index = (scrollView.contentOffset.x  )/(Main_Screen_Width - 40);
     if (_arrayView.count >_index ) {
         zuopinDataView * view = _arrayView[_index];
-
+        _cunmodel = _dataArray[_index];
     }
 
     

@@ -7,11 +7,11 @@
 //
 
 #import "BaseViewController.h"
-
+#import "faXianModel.h"
 @interface FenGuanViewController : BaseViewController
 
 @property(nonatomic,copy)NSString *titleStr;//1=关注   2 = 粉丝 3赞
 
 @property(nonatomic,copy)NSString *userStr;//
-
+@property (nonatomic,strong)NSMutableArray * likearray;
 @end

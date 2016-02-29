@@ -193,6 +193,8 @@
 #pragma mark-赞个人信息
 -(void)actionZanBtn:(BOOL)isAll likelist:(like_list *)model
 {
+    
+    
     if (isAll) {
         //发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectgerenDataObjNotification" object:@"1"];
@@ -209,9 +211,11 @@
 }
 #pragma mark-个人信息
 -(void)actionHeadbtn:(UIButton*)btn{
+    
     if (btn.tag == 90000) {//作者
+        
         //发送通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectgerenDataObjNotification" object:@"0"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectgerenDataObjNotification" object:_homeModel];
         
  
     }

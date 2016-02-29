@@ -14,7 +14,12 @@
 #import "MallViewController.h"
 #import "MeViewController.h"
 #import "MCNavViewController.h"
-@interface MainTableViewController ()
+@interface MainTableViewController ()<MAMapViewDelegate, AMapSearchDelegate>{
+    
+    BOOL _isdingwei;
+    
+    
+}
 
 @end
 
@@ -26,10 +31,85 @@
     }
     return self;
 }
+- (void)initMapView
+{
+    self.mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.mapView.delegate = self;
+    _mapView.showsUserLocation = YES; //YES 为打开定位，NO为关闭定位
+    _mapView.userTrackingMode = MAUserTrackingModeNone;
+    
+    [self.view addSubview:self.mapView];
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0)
+    {
+        self.locationManager = [[CLLocationManager alloc] init];
+        [self.locationManager requestAlwaysAuthorization];
+    }
+}
+-(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation
+updatingLocation:(BOOL)updatingLocation
+{
+    if(updatingLocation&&!_isdingwei)
+    {
+        //取出当前位置的坐标
+        NSLog(@"latitude : %f,longitude: %f",userLocation.coordinate.latitude,userLocation.coordinate.longitude);
+        
+        //构造AMapReGeocodeSearchRequest对象
+        AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
+        regeo.location = [AMapGeoPoint locationWithLatitude:userLocation.coordinate.latitude     longitude:userLocation.coordinate.longitude];
+        regeo.radius = 10000;
+        regeo.requireExtension = YES;
+        
+        //发起逆地理编码
+        [_search AMapReGoecodeSearch: regeo];
+        
+        
+    }
+}
+//实现逆地理编码的回调函数
+- (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response
+{
+    if(response.regeocode != nil&&!_isdingwei)
+    {
+        _isdingwei = YES;
+        //通过AMapReGeocodeSearchResponse对象处理搜索结果
+        NSString *result = [NSString stringWithFormat:@"%@", response.regeocode.addressComponent.city];
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:result forKey:@"city"];
+    
+        //强制让数据立刻保存
+        [defaults synchronize];
+
+        NSLog(@"ReGeo: %@", result);
+    }
+}
+/* 初始化search. */
+- (void)initSearch
+{
+    [AMapSearchServices sharedServices].apiKey = @"ca10d0212114f9e87e5032a64284d9dd";
+    self.search = [[AMapSearchAPI alloc] init];
+    self.search.delegate = self;
+    
+}
+#pragma mark - AMapSearchDelegate
+
+- (void)AMapSearchRequest:(id)request didFailWithError:(NSError *)error
+{
+    NSLog(@"%s: searchRequest = %@, errInfo= %@", __func__, [request class], error);
+    
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initMapView];
+    
+    [self initSearch];
+
     [self setupViews];
+
     // Do any additional setup after loading the view.
 }
 - (void)setupViews
@@ -96,6 +176,29 @@
             //发送通知
             [[NSNotificationCenter defaultCenter] postNotificationName:@"didRefreshDataObjNotification" object:@""];
         }
+      else  if (item.tag == 90003) {
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            
+            
+            if ([defaults objectForKey:@"sessionId"]) {
+                // [self prepareUI2];
+                //发送通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectloadData2Notification" object:@""];
+                MCUser * mc = [MCUser sharedInstance];
+                mc.tabIndex = item.tag -90000;
+                
+            }else
+            {
+                //发送通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectDLNotificationMall" object:@""];
+                
+                return;
+                
+            }
+            
+        }
+
+        
         MCUser * mc = [MCUser sharedInstance];
         mc.tabIndex = item.tag -90000;
     }
