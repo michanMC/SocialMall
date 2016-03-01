@@ -200,8 +200,15 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectloadData2Notification" object:@""];
                 //发送通知
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"didDataNotificationMall" object:@""];
+                
+                //发送通知
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"didupdateCityNotification" object:@""];
+                
                 [self.navigationController popToRootViewControllerAnimated:YES];
 
+                
+                
+                
             }
             else
 
@@ -291,7 +298,7 @@
 //    [self.navigationController popViewControllerAnimated:YES];
     if (_isMeCtl) {
         MCUser * mc = [MCUser sharedInstance];
-        self.navigationController.tabBarController.selectedIndex = 0;//mc.tabIndex;
+        self.navigationController.tabBarController.selectedIndex = 1;//mc.tabIndex;
 
         [self.navigationController popToRootViewControllerAnimated:YES];
 

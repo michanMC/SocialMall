@@ -212,6 +212,7 @@
 #pragma mark-跳个人信息didSelecsearchtGRXQObj
 -(void)didSelecsearchtGRXQObj:(NSNotification*)Notification{
     GerenViewController * ctl = [[GerenViewController alloc]init];
+    ctl.user_id = Notification.object;
     [self pushNewViewController:ctl];
 
     

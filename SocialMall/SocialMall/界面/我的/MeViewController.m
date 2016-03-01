@@ -43,6 +43,9 @@
         //跳登录
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login:) name:@"didSelectDLNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData2:) name:@"didSelectloadData2Notification" object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCity:) name:@"didupdateCityNotification" object:nil];
+
 
     }
     return self;
@@ -80,6 +83,28 @@
 
     
 }
+-(void)updateCity:(NSNotification*)Notification{
+    
+    if (!_cityStr) {
+        return;
+    }
+    NSDictionary * Parameterdic = @{
+                                    @"city":_cityStr
+                                    };
+
+    [self.requestManager requestWebWithParaWithURL:@"User/updateCity" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"返回==%@",resultDic);
+      //  [_tableView reloadData];
+
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        
+        [self showAllTextDialog:description];
+
+    } ];
+    
+}
 -(void)loadData2:(NSNotification*)Notification{
     if (!_Refresh)
     [self loadaData:YES];
@@ -92,7 +117,10 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    
+    if (self.isgion) {
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didupdateCityNotification" object:@""];
+    }
 //    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
 //    if ([defaults objectForKey:@"sessionId"]) {
 //        // [self prepareUI2];
@@ -130,6 +158,21 @@
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
         _usermodel = [userDatamodel mj_objectWithKeyValues:resultDic[@"data"][@"data"]];
+        
+       
+        if (_usermodel.headimgurl) {
+            /*保存数据－－－－－－－－－－－－－－－－－begin*/
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
+            [defaults setObject:_usermodel.headimgurl forKey:@"headimgurl"];
+            //强制让数据立刻保存
+            [defaults synchronize];
+
+        }
+        
+        
+        
+        
         [_tableView reloadData];
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
@@ -224,8 +267,8 @@
         cell.zanLbl.text = _usermodel.likeds;
         cell.zhanshiLbl.text = _usermodel.messages;
         cell.sexLbl.text = [_usermodel.sex isEqualToString:@"0"]? @"男":@"女";
-        
-        cell.dingweiLbl.text = _cityStr;
+        cell.shoudaoZanLbl.text = _usermodel.receiveLikeds;
+        cell.dingweiLbl.text =[_usermodel.city length] ? _usermodel.city : _cityStr;
         
         
         return cell;

@@ -114,6 +114,9 @@ updatingLocation:(BOOL)updatingLocation
 }
 - (void)setupViews
 {
+   
+    
+    
     MCUser * mc = [MCUser sharedInstance];
     mc.tabIndex = 0;
 
@@ -141,12 +144,18 @@ updatingLocation:(BOOL)updatingLocation
     
     [self setUpChildController:me title:@"我" imageName:@"mall_normal" selectedImageName:@"mall_pressed" Tag:90004];
     //
+     self.selectedIndex = 1;
 }
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     if (item.tag == 90002) {
         //发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFBNotification" object:@""];
+        
+        
+        
+        
+        
     }
     else
     {
@@ -226,6 +235,7 @@ updatingLocation:(BOOL)updatingLocation
  
     }
     MCNavViewController *nav = [[MCNavViewController alloc]initWithRootViewController:controller];
+   
     [self addChildViewController:nav];
     
     

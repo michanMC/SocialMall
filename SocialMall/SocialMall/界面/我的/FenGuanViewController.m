@@ -15,7 +15,7 @@
 {
     UITableView *_tableView;
     NSMutableArray *_dataArray;
-
+    NSInteger _page;
 }
 
 @end
@@ -24,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _page = 0;
     _dataArray = [NSMutableArray array];
 
     if([_titleStr isEqualToString:@"1"]){
@@ -41,11 +42,24 @@
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
+-(void)actionheadRefresh{
+    _page = 0;
+    [_dataArray removeAllObjects];
+    [self loadata:YES];
+    
+    
+}
+-(void)actionFooer{
+    _page ++;
+    [self loadata:YES];
+}
 -(void)prepareUI{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64) style:UITableViewStyleGrouped];
     _tableView.delegate =self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    
+    
     if (_likearray.count) {
         
         for (like_list * model in _likearray) {
@@ -58,8 +72,11 @@
  
         [_tableView reloadData];
         
-    }else
+    }else{
+        _tableView.mj_header  = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(actionheadRefresh)];
+            _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(actionFooer)];
     [self loadata:YES];
+    }
     
     
 }
@@ -78,7 +95,8 @@
     
     
     NSDictionary * Parameterdic = @{
-                                    @"userId":_userStr ? _userStr :userId
+                                    @"userId":_userStr ? _userStr :userId,
+                                    @"page":@(_page)
                                     };
     
     NSString * urlstr;
@@ -114,16 +132,23 @@
         NSArray *messageList = resultDic[@"data"][keysrt];
         for (NSDictionary * dic in messageList) {
             userDatamodel * model = [userDatamodel mj_objectWithKeyValues:dic];
+            
+//            if (model.user_id)
             [_dataArray addObject:model];
         }
         
         
-        
+        [_tableView.mj_footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+
         [_tableView reloadData];
+        
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
         [self showAllTextDialog:description];
-        
+        [_tableView.mj_footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+
         NSLog(@"失败");
         
     }];

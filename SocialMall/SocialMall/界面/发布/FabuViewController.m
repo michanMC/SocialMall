@@ -9,6 +9,7 @@
 #import "FabuViewController.h"
 #import "YBImgPickerViewController.h"
 #import "Fabu2ViewController.h"
+#import "loginViewController.h"
 @interface FabuViewController ()<YBImgPickerViewControllerDelegate>
 
 @end
@@ -18,8 +19,21 @@
 {
     [super viewDidAppear:animated];
 }
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+//        //跳登录
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login:) name:@"didSelectDL3Notification" object:nil];
+        
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectObjFB:) name:@"didSelectFBNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectObjZQ:) name:@"didSelectZQNotification" object:nil];
@@ -27,8 +41,18 @@
 
     self.title = @"发布";
     self.tabBarItem.title = @"";
+    
+    if (self.isgion){
     YBImgPickerViewController * next = [[YBImgPickerViewController alloc]init];
     [next showInViewContrller:self choosenNum:0 delegate:self];
+    }
+    else
+    {
+        loginViewController * ctl = [[loginViewController alloc]init];
+        ctl.isMeCtl = YES;
+        [self pushNewViewController:ctl];
+
+    }
 
     // Do any additional setup after loading the view.
 }
@@ -38,10 +62,30 @@
     
     
 }
+-(void)login:(NSNotification*)Notification{
+    loginViewController * ctl = [[loginViewController alloc]init];
+    ctl.isMeCtl = YES;
+    [self pushNewViewController:ctl];
+  
+
+    
+}
 -(void)didSelectObjFB:(NSNotification*)Notification{
     
+    if (self.isgion) {
+        
+
     YBImgPickerViewController * next = [[YBImgPickerViewController alloc]init];
     [next showInViewContrller:self choosenNum:0 delegate:self];
+    }
+    else
+    {
+        
+        loginViewController * ctl = [[loginViewController alloc]init];
+        ctl.isMeCtl = YES;
+        [self pushNewViewController:ctl];
+  
+    }
  
     
     

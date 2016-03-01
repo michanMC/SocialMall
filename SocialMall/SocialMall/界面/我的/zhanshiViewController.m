@@ -14,6 +14,8 @@
 {
     UITableView *_tableView;
     NSMutableArray *_dataArray;
+    NSInteger _page;
+
 }
 
 @end
@@ -39,12 +41,26 @@
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
+-(void)actionheadRefresh{
+    _page = 0;
+    [_dataArray removeAllObjects];
+    [self loadata:YES];
+    
+    
+}
+-(void)actionFooer{
+    _page ++;
+
+    [self loadata:YES];
+}
+
 -(void)prepareUI{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource= self;
     [self.view addSubview:_tableView ];
-    
+    _tableView.mj_header  = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(actionheadRefresh)];
+    _tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(actionFooer)];
     [self loadata:YES];
     
     
@@ -64,8 +80,19 @@
     
 
     NSDictionary * Parameterdic = @{
-                                    @"userId":_userStr?_userStr:userId
+                                    @"userId":_userStr?_userStr:userId,
+                                     @"page":@(_page)
+                                    
                                     };
+//     if ([_keyStr isEqualToString:@"3"])
+//    {
+//        Parameterdic = @{
+//                        
+//                         @"page":@(_page)
+//                         
+//                         };
+//        
+//    }
     
     NSString * urlstr;
     if ([_keyStr isEqualToString:@"1"]) {
@@ -79,7 +106,7 @@
     }
     else if ([_keyStr isEqualToString:@"3"])
     {
-        urlstr = @"Msg/messageLiked";
+        urlstr = @"Msg/getLike";
 
     }
     [self showLoading:Refresh AndText:nil];
@@ -90,6 +117,12 @@
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
         NSArray *messageList = resultDic[@"data"][@"messageList"];
+        if ([_keyStr isEqualToString:@"3"])
+        {
+          
+            messageList = resultDic[@"data"][@"list"];
+        }
+
         for (NSDictionary * dic in messageList) {
             faXianModel * model = [faXianModel mj_objectWithKeyValues:dic];
             for (NSDictionary * dic1 in dic[@"like_list"]) {
@@ -100,13 +133,17 @@
             [_dataArray addObject:model];
         }
         
-        
+        [_tableView.mj_footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+
         
         [_tableView reloadData];
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
         [self showAllTextDialog:description];
-        
+        [_tableView.mj_footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+
         NSLog(@"失败");
         
     }];

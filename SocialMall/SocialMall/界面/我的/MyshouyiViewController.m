@@ -16,7 +16,7 @@
 #import "MyshouyiBtn.h"
 #import "UserFinanceModel.h"
 #import "userDatamodel.h"
-@interface MyshouyiViewController ()
+@interface MyshouyiViewController ()<UITextFieldDelegate>
 {
     HHHorizontalPagingView *pagingView;
     headView * _headView;
@@ -29,6 +29,7 @@
     
     UserFinanceModel *_FinanceModel;
     userDatamodel *_usermodel;
+    NSString *ali_account;
     
 }
 //@property (nonatomic,strong) NetworkManager *requestManager;
@@ -59,7 +60,7 @@
 
     
     [self loadaData2:YES];
-
+    [self loadAliAccount];
     [_quanbuTableView loadData];
     //_quanbuTableView.contentOffset = CGPointMake(0, -100);
 
@@ -106,7 +107,22 @@
     
     
 }
+#pragma mark-获取个人支付宝
 
+-(void)loadAliAccount{
+    
+    
+    [self.requestManager requestWebWithParaWithURL:@"User/loadAliAccount" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        NSLog(@"返回==%@",resultDic);
+        ali_account = resultDic[@"ali_account"];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showHint:description];
+
+    }];
+    
+}
 #pragma mark-获取个人金钱信息
 -(void)loadaData:(BOOL)Refresh{
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
@@ -138,6 +154,9 @@
         
         //_headView.zhanshiLbl.text = _usermodel.messages;
     [_headView.headBtn sd_setImageWithURL:[NSURL URLWithString:_usermodel.headimgurl] forState:0 placeholderImage:[UIImage imageNamed:@"Avatar_136"]];
+        
+        
+        ViewRadius(_headView.headBtn, 34);
         _headView.sexLbl.text = [_usermodel.sex isEqualToString:@"0"]? @"男":@"女";
         _headView.namelbl.text =  _usermodel.nickname;
         _headView.qianmingLbl.text = [NSString stringWithFormat:@"个性签名:%@",_usermodel.autograph];
@@ -231,13 +250,14 @@
     _tixianText.textColor = [UIColor darkTextColor];
     _tixianText.font =AppFont;
     [_botBtnView addSubview:_tixianText];
-    
+    _tixianText.delegate = self;
     UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 15 - 100, 6, 100, 32)];
     [btn3 setTitle:@"申请提现" forState:0];
     [btn3 setTitleColor:[UIColor whiteColor] forState:0];
     btn3.backgroundColor = AppCOLOR;
     ViewRadius(btn3, 5);
     btn3.titleLabel.font = [UIFont systemFontOfSize:13];
+    [btn3 addTarget:self action:@selector(actionTX) forControlEvents:UIControlEventTouchUpInside];
     [_botBtnView addSubview:btn3];
     
     
@@ -252,9 +272,47 @@
    // btnvv.titleSubLbl.text = @"121212";
     
 }
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    
+}
 -(headView*)head_View{
     headView *headerView = [[NSBundle mainBundle] loadNibNamed:@"headView" owner:self options:nil][0];
     return headerView;
+
+    
+    
+}
+-(void)actionTX{
+    [_tixianText resignFirstResponder];
+    if (!_tixianText.text.length) {
+        [self showAllTextDialog:@"请输入提现金额"];
+        return;
+    }
+    if (!ali_account.length) {
+        [self showAllTextDialog:@"你还没设置支付宝账号"];
+        return;
+    }
+    [self showLoading:YES AndText:nil];
+    
+    NSDictionary * Parameterdic = @{
+                                    @"money":_tixianText.text,
+                                    @"ali_account":ali_account,
+                                    };
+    
+
+    
+    [self.requestManager requestWebWithParaWithURL:@"User/withdrawing" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"返回==%@",resultDic);
+        [self showAllTextDialog:@"提现成功"];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showHint:description];
+        
+    }];
+    
 
     
     

@@ -10,6 +10,7 @@
 @protocol Fabu3ViewDelegate <NSObject>
 
 -(void)actionAdd;
+-(void)selegoods:(NSInteger)index;
 
 @end
 

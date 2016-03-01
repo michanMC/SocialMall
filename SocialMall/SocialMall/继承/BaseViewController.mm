@@ -133,6 +133,14 @@
     _userphone = [defaults objectForKey:@"mobile"];
     
     _userSessionId = [defaults objectForKey:@"sessionId"];
+    if (_userSessionId) {
+        _isgion = YES;
+    }
+    else
+    {
+        _isgion = NO;
+
+    }
     _userExpire = _user.userExpire;
     _userNickname = [defaults objectForKey:@"nickname"];
 

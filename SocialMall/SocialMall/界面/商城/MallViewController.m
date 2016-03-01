@@ -316,6 +316,8 @@
     
     NSURL *url = [_request URL];
     if([[url scheme] isEqualToString:@"devzeng"]) {
+        
+        [self showAllTextDialog:@"devzeng"];
         //处理JavaScript和Objective-C交互
         if([[url host] isEqualToString:@"login"]){
             NSLog(@"登录");

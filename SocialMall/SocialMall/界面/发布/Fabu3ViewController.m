@@ -26,6 +26,7 @@
     NSMutableArray * _purchasedGoodsArray;
     NSMutableArray *_fengeArray;
     KeywordModel * selemodel;
+    NSString * goods_id;
 }
 @property(nonatomic,strong)NSMutableDictionary *dataDic;
 
@@ -72,9 +73,9 @@
         
     }
 
-[self headView];
+//[self headView];
 //
-//[self loadData2:YES];
+[self loadData2:YES];
     
 } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
     [self hideHud];
@@ -107,6 +108,7 @@
             [_purchasedGoodsArray addObject:model];
             
         }
+        [self headView];
         [_tableView reloadData];
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
@@ -171,6 +173,9 @@
     if (!_fengeArray.count) {
         [self showAllTextDialog:@"请添加商品"];return;
     }
+    if (!goods_id || ![goods_id length]) {
+         [self showAllTextDialog:@"请选择商品"];return;
+    }
     
 
     
@@ -180,6 +185,8 @@
     ctl.addMesArray  = _fengeArray;
      [_dataDic setObject:_image forKey:@"img"];
     [_dataDic setObject:_titleStr forKey:@"title"];
+    [_dataDic setObject:goods_id forKey:@"goods_id"];
+
     ctl.dataDic = _dataDic;
     [self pushNewViewController:ctl];
     
@@ -294,6 +301,14 @@
     fabu4ViewController * ctl = [[fabu4ViewController alloc]init];
     ctl.delegate = self;
     [self pushNewViewController:ctl];
+}
+-(void)selegoods:(NSInteger)index{
+    goodsDataModel * model = _purchasedGoodsArray[index];
+    
+    goods_id = model.goods_id;
+    
+    
+    
 }
 -(void)backDic:(NSDictionary *)dic
 {

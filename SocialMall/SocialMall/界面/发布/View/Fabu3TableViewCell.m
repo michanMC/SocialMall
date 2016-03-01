@@ -102,6 +102,10 @@
     }
     btn.selected = YES;
     NSLog(@"%d",btn.tag - 500);
+    
+    [_delagate selegoods:btn.tag - 500];
+    
+    
 
 }
 - (void)awakeFromNib {

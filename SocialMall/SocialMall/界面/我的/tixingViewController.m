@@ -49,7 +49,7 @@
     [self showHudInView:self.view hint:nil];
 
     NSDictionary * Parameterdic = @{
-                                    @"Type":@(2),
+                                    @"Type":@(0),
                                     @"Page":@(1)
                                     };
     
@@ -61,6 +61,10 @@
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
         NSArray *messageList = resultDic[@"data"][@"messageList"];
+        
+        
+        
+        
 //        for (NSDictionary * dic in messageList) {
 //            shouyiModel * model = [shouyiModel mj_objectWithKeyValues:dic];
 //            

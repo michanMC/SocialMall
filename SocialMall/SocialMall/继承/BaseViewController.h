@@ -57,6 +57,8 @@ typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
 @property(nonatomic,copy)NSString*  userThumbnail;//
 
 
+@property(nonatomic,assign)BOOL  isgion;//
+
 
 
 -(void)ColorNavigation;

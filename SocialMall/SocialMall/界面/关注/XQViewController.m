@@ -130,7 +130,11 @@
     _pinlunBgview.backgroundColor = [UIColor whiteColor];
     _pinglunHeadImg = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 28, 28)];
     //_pinglunHeadImg.image = [UIImage imageNamed:@"Avatar_46"];
-    [_pinglunHeadImg sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_46"]];
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSString *headimgurl = [defaults objectForKey:@"headimgurl"];
+  
+
+    [_pinglunHeadImg sd_setImageWithURL:[NSURL URLWithString:headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_46"]];
     ViewRadius(_pinglunHeadImg, 28/2);
     [_pinlunBgview addSubview:_pinglunHeadImg];
     
@@ -763,10 +767,31 @@
 -(void)actionZanBtn:(BOOL)isAll likelist:(like_list *)model
 {
     if (isAll) {
+        
+        
         FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
         ctl.titleStr = @"3";
-        [self pushNewViewController:ctl];
         
+        ctl.likearray = _XQModel.like_list;
+        
+        [self pushNewViewController:ctl];
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        FenGuanViewController * ctl = [[FenGuanViewController alloc]init];
+//        ctl.titleStr = @"3";
+//        [self pushNewViewController:ctl];
+//        
 
     }
     else
@@ -896,10 +921,17 @@
             [_XQModel addlike_listDic:dic];
 
         }
-        [self checkFans:NO];
-        [_pinglunHeadImg sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_46"]];
-
-       // [_firstViewTableView reloadData];
+        
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        
+        if ([defaults objectForKey:@"sessionId"]) {
+             [self checkFans:NO];//判断是否关注
+        }
+        else
+        {
+           [self isLiked:NO];
+        }
+       
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
@@ -911,19 +943,28 @@
 }
 #pragma mark-检查是否关注
 -(void)checkFans:(BOOL)Refresh{
-    
-    if (!_faxianModel.id &&!_faxianModel.msg_id) {
-        return;
+    if (!_faxianModel.user_id &&!_faxianModel.msg_id) {
+        if (!_XQModel.user_id){
+         [self isLiked:NO];
+            return;
+
+        }
+        else
+        {
+            _faxianModel.user_id = _XQModel.user_id;
+        }
     }
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     NSString * userid = [defaults objectForKey:@"userId"];
     NSDictionary * Parameterdic = @{
-                                    @"toId":_faxianModel.id ?_faxianModel.id: _faxianModel.msg_id,
+                                    @"toId":_faxianModel.user_id ?_faxianModel.user_id: _faxianModel.msg_id,
                                     @"fromId":userid?userid:@""
                                     
                                     };
-    
-    
+//    toId = "45",
+//    fromId = "4",
+//    toId = "36",
+//    fromId = "4",
     [self showLoading:Refresh AndText:nil];
     
     
@@ -1045,8 +1086,13 @@
     if (!_faxianModel.id &&!_faxianModel.msg_id) {
         return;
     }
+    if (!self.isgion) {
+        [self showAllTextDialog:@"没登录"];
+        return;
+    }
+    
     NSDictionary * Parameterdic = @{
-                                    @"to_id":_faxianModel.id ? _faxianModel.id : _faxianModel.msg_id
+                                    @"to_id":_faxianModel.user_id ? _faxianModel.user_id : _faxianModel.msg_id
                                     };
     
     
@@ -1076,7 +1122,11 @@
     if (!_faxianModel.id &&!_faxianModel.msg_id) {
         return;
     }
-    
+    if (!self.isgion) {
+        [self showAllTextDialog:@"没登录"];
+        return;
+    }
+
     NSDictionary * Parameterdic = @{
                                     @"msg_id":_faxianModel.id ? _faxianModel.id : _faxianModel.msg_id
 };
@@ -1105,6 +1155,11 @@
     
     
     [_pinLunTextView resignFirstResponder];
+    if (!self.isgion) {
+        [self showAllTextDialog:@"没登录"];
+        return;
+    }
+
     if (!_pinLunTextView.text.length) {
         return;
     }
@@ -1125,6 +1180,8 @@
         [self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
+        _pinLunTextView.text = @"";
+
         [self showAllTextDialog:@"评论成功"];
         pagenum = 0;
         [self showMessageComment:YES];

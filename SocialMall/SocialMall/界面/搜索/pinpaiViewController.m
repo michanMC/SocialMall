@@ -29,6 +29,10 @@
     NSMutableArray *_dataarray;
 
     UICollectionView *_collectionView;
+    
+    NSInteger _page;
+    NSInteger _sort;
+    NSString *_seachStr;
 
 }
 
@@ -38,6 +42,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _page = 0;
+    _sort = 0;
     _keywordArray = [NSMutableArray array];
     _dataarray = [NSMutableArray array];
 
@@ -51,6 +57,7 @@
 -(void)didSelectPPObj:(NSNotification*)Notification{
     _headView.hidden = YES;
     _bgView.hidden = NO;
+    [_dataarray removeAllObjects];
 
     [self searchsearch:YES Seachstr:Notification.object];
     
@@ -121,7 +128,8 @@
     _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [_bgView addSubview:_collectionView];
     
-    
+    _collectionView.mj_header  = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(actionheadRefresh)];
+    _collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(actionFooer)];
     
     
     
@@ -130,6 +138,22 @@
     
     
 }
+-(void)actionheadRefresh{
+    [_dataarray removeAllObjects];
+    _page = 0;
+    [self searchsearch:YES Seachstr:_seachStr];
+    
+    
+}
+-(void)actionFooer{
+    _page ++;
+    [self searchsearch:YES Seachstr:_seachStr];
+
+    
+    
+    
+}
+
 #pragma mark-获取标签
 -(void)searchTagFG:(BOOL)Refresh{
     
@@ -174,11 +198,13 @@
 }
 #pragma mark-获取数据
 -(void)searchsearch:(BOOL)Refresh Seachstr:(NSString*)seachstr{
-    
+    _seachStr = seachstr;
     NSDictionary * Parameterdic = @{
                                     @"searchType":@"brand",
-                                    @"keyword":seachstr,
-                                    @"page":@(0)
+                                    @"keyword":seachstr?seachstr:@"",
+                                    @"page":@(_page),
+                                    @"sort":@(_sort)
+
                                     };
     
     
@@ -199,12 +225,17 @@
         
         
         
-        
+        [_collectionView.mj_footer endRefreshing];
+        [_collectionView.mj_header endRefreshing];
+
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
         [self showAllTextDialog:description];
         NSLog(@"失败");
+        [_collectionView.mj_footer endRefreshing];
+        [_collectionView.mj_header endRefreshing];
+
         
     }];
     
@@ -293,6 +324,8 @@
 {
     if (_dataarray.count > indexPath.row) {
         faXianModel * model = _dataarray[indexPath.row];
+        
+        
         //发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFsearchXXQObjNotification" object:model];
         
@@ -330,10 +363,22 @@
     if (btn== _renduBtn) {
         _timeBtn.selected = NO;
         [self NormalBtn:_timeBtn];
+        _sort = 0;
+        
+        [_dataarray removeAllObjects];
+        _page = 0;
+        [self searchsearch:YES Seachstr:_seachStr];
+
     }
     if (btn== _timeBtn  ) {
         _renduBtn.selected = NO;
         [self NormalBtn:_renduBtn];
+        _sort = 1;
+        [_dataarray removeAllObjects];
+        _page = 0;
+        [self searchsearch:YES Seachstr:_seachStr];
+
+        
     }
     
     

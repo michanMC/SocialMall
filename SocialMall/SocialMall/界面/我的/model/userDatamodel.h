@@ -21,5 +21,7 @@
 @property(nonatomic,copy)NSString * fans;//粉丝
 @property(nonatomic,copy)NSString * nickname;
 @property(nonatomic,assign)BOOL isFans;
+@property(nonatomic,copy)NSString * city;
+@property(nonatomic,copy)NSString * image;
 
 @end

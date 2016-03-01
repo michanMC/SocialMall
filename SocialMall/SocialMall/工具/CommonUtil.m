@@ -775,7 +775,7 @@
     
     //设定时间格式,这里可以设置成自己需要的格式
     dateFormatter.dateFormat = format;
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:time / 1000];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:time];
     
     //用[NSDate date]可以获取系统当前时间
     NSString *currentDateStr=nil;
@@ -880,7 +880,7 @@
 }
 +(NSString*)daysAgoAgainst:(long long)time{
     
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:time / 1000];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:time ];
     NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
     
     

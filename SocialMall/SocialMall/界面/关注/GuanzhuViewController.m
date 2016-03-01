@@ -41,13 +41,35 @@
 }
 -(void)appIsLogin{
     
-    [self showLoading:YES AndText:nil];
-    [ self.requestManager requestWebWithParaWithURL:@"User/updateInfo" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+   // [self showLoading:YES AndText:nil];
+    [ self.requestManager requestWebWithParaWithURL:@"Login/appIsLogin" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
-      
-        [self showAllTextDialog:@"已登录"];
+        
+        if (![resultDic[@"data"][@"isLogin"] boolValue]) {
+            
+            
+
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            if (![defaults objectForKey:@"sessionId"]|| ![[defaults objectForKey:@"sessionId"] length]) {
+                loginViewController * ctl = [[loginViewController alloc]init];
+                ctl.isMeCtl = YES;
+                [self pushNewViewController:ctl];
+
+            }
+            else
+            {
+                [self goin];
+            }
+        
+        }
+        else
+        {
+            
+            
+            
+        }
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
@@ -59,6 +81,58 @@
  
     
 }
+#pragma mark-登录
+-(void)goin{
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+
+  NSString*  _phoneStr = [defaults objectForKey:@"UserPhone"];
+   NSString*  _pwdStr = [defaults objectForKey:@"Pwd"];
+    
+
+    
+    
+    NSDictionary * Parameterdic = @{
+                                    @"phone":_phoneStr,
+                                    @"pwd":_pwdStr
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    
+    [self.requestManager requestWebWithParaWithURL:@"Login/login" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [MCUser sharedInstance].sessionId = resultDic[@"data"][@"sessionId"];
+        [MCUser sharedInstance].userId = resultDic[@"data"][@"userId"];
+        
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:resultDic[@"data"][@"sessionId"] forKey:@"sessionId"];
+        [defaults setObject :resultDic[@"data"][@"userId"] forKey:@"userId"];
+        
+        [defaults setObject:_phoneStr forKey:@"UserPhone"];
+        [defaults setObject:_pwdStr forKey:@"Pwd"];
+        
+        //强制让数据立刻保存
+        [defaults synchronize];
+        
+[self friendShowMessage:YES];
+        
+        //13798996333
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
+    
+    
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self appIsLogin];
@@ -195,7 +269,7 @@
 {
     if (!_McFooter) {
         _McFooter = [[MCBannerFooter alloc]initWithFrame:CGRectMake(0,0 , 100,0 )];
-        _McFooter.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _McFooter.backgroundColor = [UIColor whiteColor];
         _McFooter.state = ZYBannerFooterStateIdle;
         //想显示这个视图，那得让这个视图跟着tableView的滚动来进出
         //所以需要把这个视图加到tableView上
@@ -204,10 +278,7 @@
 //        [self.scrollView addSubview:_McFooter];
         
     }
-    CGFloat width = CGRectGetWidth(_scrollView.frame);
-    CGFloat height = CGRectGetHeight(_scrollView.frame);
 
-    _McFooter.frame = CGRectMake(_arrayView.count * width+20,0 , 100,height) ;
 
     return _McFooter;
 }
@@ -289,16 +360,26 @@
    
     
     
-  
-  [_scrollView addSubview:self.McFooter];
-    
+    if (!_McFooter) {
+        [_scrollView addSubview:self.McFooter];
+
+    }
+    CGFloat width = Main_Screen_Width - 40;//CGRectGetWidth(_scrollView.frame);
+    CGFloat height = CGRectGetHeight(_scrollView.frame);
+    NSLog(@"wwww ===== %f",_dataArray.count * width+ 20);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        _McFooter.frame = CGRectMake(_dataArray.count * width+ 20,0 , 100,height) ;
+        
+    });
+
     
    
 }
 
 - (void)createCardWithColor:(NSInteger)index
 {
-    CGFloat width = CGRectGetWidth(_scrollView.frame);
+    CGFloat width = Main_Screen_Width - 40;//CGRectGetWidth(_scrollView.frame);
     CGFloat height = CGRectGetHeight(_scrollView.frame);
     
     CGFloat x = _arrayView.count * width;

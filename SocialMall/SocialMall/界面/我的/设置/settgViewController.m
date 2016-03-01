@@ -124,7 +124,8 @@
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         [defaults setObject:nil forKey:@"sessionId"];
         [defaults setObject :nil forKey:@"userId"];
-        
+        [defaults setObject :nil forKey:@"headimgurl"];
+
         [defaults setObject:nil forKey:@"Pwd"];
         
         //强制让数据立刻保存
