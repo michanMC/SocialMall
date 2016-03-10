@@ -14,6 +14,7 @@
 #import "zuixinViewController.h"
 #import "XQViewController.h"
 #import "SearchViewController.h"
+#import "oadMessageModel.h"
 @interface FaxianViewController ()<UIScrollViewDelegate>
 {
     
@@ -21,6 +22,7 @@
     tuijianViewController * _tuijianCtl;
     remenViewController * _remenCtl;
     zuixinViewController * _zuixinCtl;
+    oadMessageModel *_oermodel;
 }
 
 @end
@@ -31,7 +33,8 @@
     [super viewDidLoad];
     //跳详情
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectFXXQObj:) name:@"didSelectFXXQObjNotification" object:nil];
-    
+    //刷新提醒
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RefreshTXData:) name:@"didRefreshTXDataObjNotification" object:nil];
     
     UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(20, 7, Main_Screen_Width - 40, 40)];
     [btn setImage:[UIImage imageNamed:@"shous"] forState:0];
@@ -40,8 +43,233 @@
 
     
     [self prepareUI];
+    [self appIsLogin];
+
     // Do any additional setup after loading the view.
 }
+#pragma mark-刷新提醒
+
+-(void)RefreshTXData:(NSNotification*)Notification{
+    
+    [self loadnewMessage];
+    [self loadnewnewOrder];
+}
+
+#pragma mark-检测4.20.	获取最新好友消息
+-(void)loadnewMessage{
+    
+    [ self.requestManager requestWebWithParaWithURL:@"Msg/newMessage" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        if (resultDic[@"data"][@"newMessageId"]) {
+            
+            /*保存数据－－－－－－－－－－－－－－－－－begin*/
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            
+            NSString *newMessageId = [defaults objectForKey:@"newMessageId"];
+            
+            if ([newMessageId isEqualToString:resultDic[@"data"][@"newMessageId"]]) {
+                
+                
+            }
+            else
+            {
+                [defaults setObject:resultDic[@"data"][@"newMessageId"]?resultDic[@"data"][@"newMessageId"]:@"" forKey:@"newMessageId"];
+
+                //强制让数据立刻保存
+                [defaults synchronize];
+                [self.tabBarController.tabBar showBadgeOnItemIndex:0];
+
+            }
+        }
+        
+        
+       
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        //
+        NSLog(@"%@",description);
+    }];
+
+    
+    
+    
+}
+
+#pragma mark-检测4.20.	获取订单消息
+-(void)loadnewnewOrder{
+    
+    [ self.requestManager requestWebWithParaWithURL:@"User/loadMessageType" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        if (resultDic[@"data"]) {
+            
+            _oermodel = [oadMessageModel mj_objectWithKeyValues:resultDic[@"data"] ];
+            
+            
+            /*保存数据－－－－－－－－－－－－－－－－－begin*/
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            
+            NSString *newOrder = [defaults objectForKey:@"newOrder"];//订单
+            NSString *newNotice = [defaults objectForKey:@"newNotice"];//公告
+            NSString *newComment = [defaults objectForKey:@"newComment"];//回复
+
+            if ([newOrder isEqualToString:_oermodel.Order]) {
+                
+                
+            }
+            else
+            {
+                [defaults setObject:_oermodel.Order?_oermodel.Order:@"" forKey:@"newOrder"];
+                
+                //强制让数据立刻保存
+                [defaults synchronize];
+                [self.tabBarController.tabBar showBadgeOnItem4Index:4];
+                
+            }
+            
+            
+            if ([newNotice isEqualToString:_oermodel.Notice]) {
+                
+                
+            }
+            else
+            {
+                [defaults setObject:_oermodel.Notice?_oermodel.Notice:@"" forKey:@"newNotice"];
+                
+                //强制让数据立刻保存
+                [defaults synchronize];
+                [self.tabBarController.tabBar showBadgeOnItem4Index:4];
+                
+            }
+            
+
+            
+            
+            if ([newComment isEqualToString:_oermodel.Comment]) {
+                
+                
+            }
+            else
+            {
+                [defaults setObject:_oermodel.Comment ?_oermodel.Comment:@"" forKey:@"newComment"];
+                
+                //强制让数据立刻保存
+                [defaults synchronize];
+                [self.tabBarController.tabBar showBadgeOnItem4Index:4];
+                
+            }
+            
+
+            
+        }
+
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        //
+        NSLog(@"%@",description);
+        
+    }];
+    
+    
+    
+    
+}
+-(void)appIsLogin{
+    
+    // [self showLoading:YES AndText:nil];
+    [ self.requestManager requestWebWithParaWithURL:@"Login/appIsLogin" Parameter:nil IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+        if (![resultDic[@"data"][@"isLogin"] boolValue]) {
+            
+            
+            
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            
+            if (![defaults objectForKey:@"sessionId"]|| ![[defaults objectForKey:@"sessionId"] length]) {
+//                loginViewController * ctl = [[loginViewController alloc]init];
+//                ctl.isMeCtl = YES;
+//                [self pushNewViewController:ctl];
+                
+            }
+            else
+            {
+                [self goin];
+            }
+            
+        }
+        else
+        {
+            
+            [self loadnewMessage];
+            [self loadnewnewOrder];
+
+            
+        }
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+//        [self showHint:description];
+//        [self showAllTextDialog:@"没登录"];
+//        
+        NSLog(@"%@",description);
+    }];
+    
+    
+}
+#pragma mark-登录
+-(void)goin{
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
+    NSString*  _phoneStr = [defaults objectForKey:@"UserPhone"];
+    NSString*  _pwdStr = [defaults objectForKey:@"Pwd"];
+    NSDictionary * Parameterdic = @{
+                                    @"phone":_phoneStr,
+                                    @"pwd":_pwdStr
+                                    };
+    
+    //[self showLoading:YES AndText:nil];
+    [self.requestManager requestWebWithParaWithURL:@"Login/login" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        [self showAllTextDialog:@"登录成功"];
+        [MCUser sharedInstance].sessionId = resultDic[@"data"][@"sessionId"];
+        [MCUser sharedInstance].userId = resultDic[@"data"][@"userId"];
+        
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:resultDic[@"data"][@"sessionId"] forKey:@"sessionId"];
+        [defaults setObject :resultDic[@"data"][@"userId"] forKey:@"userId"];
+        
+        [defaults setObject:_phoneStr forKey:@"UserPhone"];
+        [defaults setObject:_pwdStr forKey:@"Pwd"];
+        
+        //强制让数据立刻保存
+        [defaults synchronize];
+        [self loadnewMessage];
+        [self loadnewnewOrder];
+
+        
+        //13798996333
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
+}
+
 #pragma mark-监听跳详情
 -(void)didSelectFXXQObj:(NSNotification*)Notification{
     

@@ -10,8 +10,9 @@
 #import "faxianCollectionViewCell.h"
 #import "faXianModel.h"
 #import "MJRefresh.h"
+#import "CHTCollectionViewWaterfallLayout.h"
 
-@interface tuijianViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface tuijianViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CHTCollectionViewDelegateWaterfallLayout>
 {
    // JT3DScrollView *_scrollView;
     
@@ -47,13 +48,17 @@
 
 -(void)prepareUI{
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc]init];
     
     CGFloat y = 0;
     CGFloat x = 0;
-    layout.minimumInteritemSpacing = 5;
-    layout.minimumLineSpacing = 5;
-    layout.sectionInset = UIEdgeInsetsMake(5, x, y, x);
+   layout.minimumInteritemSpacing = 5;
+   layout.minimumColumnSpacing = 5;
+   layout.sectionInset = UIEdgeInsetsMake(5, x, y, x);
+
+    layout.columnCount = 3;
+  //  layout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+
     _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, self.view.frame.size.height) collectionViewLayout:layout];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
@@ -133,6 +138,19 @@
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_dataArray.count > indexPath.row) {
+        faXianModel *model = [self.dataArray objectAtIndex:indexPath.row];
+        
+        if (!CGSizeEqualToSize(model.imageSize, CGSizeZero)) {
+            CGFloat w = model.imageSize.width;
+            CGFloat h = model.imageSize.height;
+            w = (Main_Screen_Width-10)/3;
+            h = h * w / model.imageSize.width;
+            return CGSizeMake(w, h);
+        }
+            return CGSizeMake((Main_Screen_Width-10)/3, (Main_Screen_Width-10)/3);
+       
+    }
     //item
     return CGSizeMake((Main_Screen_Width-10)/3, (Main_Screen_Width-10)/3);
 }
@@ -149,11 +167,40 @@
     //cell.contentView.backgroundColor = [UIColor blackColor];
     
     if (_dataArray.count > indexPath.row) {
+        faXianModel *model = [self.dataArray objectAtIndex:indexPath.row];
+        
+        NSString *imgUrlString = model.image;
+        
         [cell prepareUI:_dataArray[indexPath.row]];
+        
+       // [cell.imgView sd_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:[UIImage imageNamed:@"message_default-photo"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//            if (image) {
+//                if (!CGSizeEqualToSize(model.imageSize, image.size)) {
+//                    model.imageSize = image.size;
+//                    [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+//                }
+//                
+//            }
+//            else
+//            {
+//                if (!CGSizeEqualToSize(model.imageSize, image.size)) {
+//                    model.imageSize = CGSizeMake((Main_Screen_Width-10)/3, (Main_Screen_Width-10)/3);
+//                    [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+//                }
+// 
+//            }
+      //  }];
 
+        
     }
     return cell;
 }
+- (void)updateLayoutForOrientation:(UIInterfaceOrientation)orientation {
+    CHTCollectionViewWaterfallLayout *layout =
+    (CHTCollectionViewWaterfallLayout *)_collectionView.collectionViewLayout;
+    layout.columnCount = UIInterfaceOrientationIsPortrait(orientation) ? 2 : 3;
+}
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_dataArray.count > indexPath.row) {

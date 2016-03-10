@@ -24,10 +24,24 @@
     _faxianmodel = model;
     CGRect  frame = self.contentView.frame;
 
-    UIImageView * imgView =[[UIImageView alloc]initWithFrame:CGRectMake(frame.origin.x, 0, frame.size.width, frame.size.height)];
+   _imgView =[[UIImageView alloc]initWithFrame:CGRectMake(frame.origin.x, 0, frame.size.width, frame.size.height)];
     //imgView.image = [UIImage imageNamed:@"message_default-photo"];
-    [imgView sd_setImageWithURL:[NSURL URLWithString:model.image] placeholderImage:[UIImage imageNamed:@"message_default-photo"]];
-    [self.contentView addSubview:imgView];
+    if (!CGSizeEqualToSize(model.imageSize, CGSizeZero)) {
+        CGFloat w = model.imageSize.width;
+        CGFloat h = model.imageSize.height;
+        w = (Main_Screen_Width-10)/3;
+        h = h * w / model.imageSize.width;
+        _imgView.frame =CGRectMake(frame.origin.x, 0, w, h);
+        
+    }
+
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:model.image] placeholderImage:[UIImage imageNamed:@"message_default-photo"]];
+    
+    
+    _imgView.contentMode = UIViewContentModeScaleAspectFill;
+    _imgView.clipsToBounds = YES; // 裁剪边缘
+
+    [self.contentView addSubview:_imgView];
 
     
     

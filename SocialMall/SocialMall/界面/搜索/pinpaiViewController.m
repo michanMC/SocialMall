@@ -58,7 +58,7 @@
     _headView.hidden = YES;
     _bgView.hidden = NO;
     [_dataarray removeAllObjects];
-
+    _page = 0;
     [self searchsearch:YES Seachstr:Notification.object];
     
     

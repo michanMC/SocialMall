@@ -70,12 +70,11 @@
  */
 @property(nonatomic,copy)NSString*  userThumbnail;//
 
-
-
 @property(nonatomic,strong)NSMutableArray * messageContents;
 
 @property(nonatomic,assign)NSInteger  tabIndex;
 @property(nonatomic,assign)BOOL  istiao;//
+@property(nonatomic,copy)NSString * Message_Id;
 
 +(MCUser *)sharedInstance;
 

@@ -41,7 +41,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    [self loadData];
+   // [self loadData];
     
 }
 -(void)loadData{
@@ -92,6 +92,7 @@
         }
         else
         {
+            return 1;
             return 1 + 10;
         }
     }
@@ -101,6 +102,8 @@
         }
         else
         {
+            return 1;
+
             return 1 + 10;
         }
     }

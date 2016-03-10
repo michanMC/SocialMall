@@ -221,6 +221,81 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (BOOL)hasAuthorized:(SSDKPlatformType)platformType{
+    
+  return   [ShareSDK hasAuthorized:platformType];
+    
+    
+}
+
+
+
+#pragma mark-点击某个分享按钮
+-(void)actionFenxian:(SSDKPlatformType)PlatformType PopToRoot:(BOOL)isPopToRoot SsDic:(NSMutableDictionary*)ssdic{
+    
+    if (!ssdic) {
+        return;
+    }
+    /**
+     * 在简单分享中，只要设置共有分享参数即可分享到任意的社交平台
+     **/
+    __weak BaseViewController *theController = self;
+    // [self showLoadingView:YES];
+    [self showLoading:YES AndText:nil];
+    //创建分享参数
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    NSString * url = ssdic[@"url"];
+    NSString * title = ssdic[@"title"];
+    NSString * titlesub = ssdic[@"titlesub"];
+    if (!titlesub) {
+        titlesub = @"分享";
+    }
+    NSArray* imageArray = @[[UIImage imageNamed:@"ios-template-180"]];
+    
+    //    if (imageArray) {
+        [shareParams SSDKSetupShareParamsByText:title
+                                         images:imageArray
+                                            url:[NSURL URLWithString:url]
+                                          title:titlesub
+                                           type:SSDKContentTypeApp];
+    
+    
+    //进行分享
+    [ShareSDK share:PlatformType
+         parameters:shareParams
+     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+         
+         [theController stopshowLoading];
+         // [theController.tableView reloadData];
+         
+         switch (state) {
+             case SSDKResponseStateSuccess:
+             {
+                 [self showAllTextDialog:@"分享成功"];
+                 break;
+             }
+             case SSDKResponseStateFail:
+             {
+                 [self showAllTextDialog:@"分享失败"];
+
+                 break;
+             }
+             case SSDKResponseStateCancel:
+             {
+                 
+                 [self showAllTextDialog:@"分享已取消"];
+                 break;
+             }
+             default:
+                 break;
+         }
+     }];
+    // }
+    
+    
+    
+    
+}
 
 
 //-(void)dealloc

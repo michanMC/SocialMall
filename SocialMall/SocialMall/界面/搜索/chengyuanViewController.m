@@ -38,6 +38,8 @@
     //输入框搜索
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectCYObj:) name:@"didSelectCYObjNotification" object:nil];
     [self prepareUI];
+    [self searchsearch:YES Seachstr:@""];
+
     // Do any additional setup after loading the view.
 }
 -(void)didSelectCYObj:(NSNotification*)Notification{
@@ -46,7 +48,7 @@
     
     [_dataarray removeAllObjects];
    
-
+    _page = 0;
     [self searchsearch:YES Seachstr:Notification.object];
     
 }
@@ -140,7 +142,7 @@
     }
     if (_dataarray.count > indexPath.row) {
         userDatamodel * modle = _dataarray[indexPath.row];
-        cell.namelbl.text = @"";
+        cell.namelbl.text = modle.nickname;
         [cell.headViewimg sd_setImageWithURL:[NSURL URLWithString:modle.image] placeholderImage:[UIImage imageNamed:@"Avatar_42"]];
         ViewRadius(cell.headViewimg, 15);
         

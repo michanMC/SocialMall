@@ -110,6 +110,9 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.imgView sd_setImageWithURL:[NSURL URLWithString:_homeModel.image] placeholderImage:[UIImage imageNamed:@"home_default-photo"]];
         cell.titleLbl.text = _homeModel.content;
+        cell.imgView.contentMode = UIViewContentModeScaleAspectFill;
+        cell.imgView.clipsToBounds = YES; // 裁剪边缘
+
         
         return cell;
     }
@@ -169,20 +172,65 @@
     ViewRadius(shareView.bgView2, 40);
     
     [shareView.btn addTarget:self action:@selector(actionjubaoBtn) forControlEvents:UIControlEventTouchUpInside];
-    [shareView showInWindow];
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_homeModel.msg_id
+                                    };
+    
+    
+    [_delegate showLoading:YES AndText:nil];
+    
+    
+    [_delegate.requestManager requestWebWithGETParaWith:@"Msg/reportMessage" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [_delegate hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+        [shareView showInWindow];
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [_delegate hideHud];
+        [_delegate showAllTextDialog:description];
+        
+        NSLog(@"失败");
+        
+    }];
+
+    
 
 }
 -(void)actionjubaoBtn{
     
     [shareView hideView];
+    
 
 }
 #pragma mark-转发
 -(void)ActionAhuanfa{
     
     CLAnimationView *animationView = [[CLAnimationView alloc]initWithTitleArray:@[@"朋友圈",@"微信好友"] picarray:@[@"share_friends",@"share_wechat"]];
+    __weak BaseViewController *weakSelf = _delegate;
+
     [animationView selectedWithIndex:^(NSInteger index) {
         NSLog(@"你选择的index ＝＝ %ld",(long)index);
+        NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        NSString * url = [NSString stringWithFormat:@"111"];
+        [dic setObject:url forKey:@"url"];
+        [dic setObject:_homeModel.content forKey:@"title"];
+        [dic setObject:@"分享详情" forKey:@"titlesub"];
+        
+        
+        if (index == 1) {
+                [weakSelf actionFenxian:SSDKPlatformSubTypeWechatTimeline PopToRoot:NO SsDic:dic];
+            
+        }
+        else
+        {
+            [weakSelf actionFenxian:SSDKPlatformSubTypeWechatSession PopToRoot:NO SsDic:dic];
+        }
+        
+        
+        
     }];
     [animationView CLBtnBlock:^(UIButton *btn) {
         NSLog(@"你点了选择/取消按钮");

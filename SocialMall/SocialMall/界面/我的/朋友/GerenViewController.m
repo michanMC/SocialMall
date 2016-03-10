@@ -16,6 +16,7 @@
 #import "FenGuanViewController.h"
 #import "zhanshiViewController.h"
 #import "XQViewController.h"
+#import "ShoudaozanViewController.h"
 @interface GerenViewController ()
 {
     head2View * _headView;
@@ -205,11 +206,21 @@
         
     }
     else if (btn.tag == 50002){
-        zhanshiViewController * ctl = [[zhanshiViewController alloc]init];
-        ctl.keyStr = @"2";
-        ctl.userStr = _user_id;
+        
+        ShoudaozanViewController * ctl = [[ShoudaozanViewController alloc]init];
+        ctl.userIdStr = _user_id;
 
         [self pushNewViewController:ctl];
+
+        
+        
+        
+        
+//        zhanshiViewController * ctl = [[zhanshiViewController alloc]init];
+//        ctl.keyStr = @"2";
+//        ctl.userStr = _user_id;
+//
+//        [self pushNewViewController:ctl];
         
   
     }
@@ -240,6 +251,8 @@
         
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
+        
+        
         _usermodel = [userDatamodel mj_objectWithKeyValues:resultDic[@"data"][@"data"]];
         if (self.isgion) {
              [self checkFans:YES];
@@ -253,6 +266,8 @@
             
             _headView.sexLbl.text = [_usermodel.sex isEqualToString:@"0"]? @"男":@"女";
             _headView.zanlbl.text = [NSString stringWithFormat:@"赞 %@",_usermodel.likeds];
+            
+            
             _headView.fensiLbl.text = [NSString stringWithFormat:@"粉丝 %@",_usermodel.fans];//_usermodel.fans;
             _headView.guanzhuLbl.text = [NSString stringWithFormat:@"关注 %@",_usermodel.follows];//_usermodel.follows;
             _headView.qianmingLbl.text = [NSString stringWithFormat:@"个性签名:%@",_usermodel.autograph];
@@ -333,7 +348,9 @@
         self.title = _usermodel.nickname ;//? _usermodel.nickname:userPhone;
         
         _headView.sexLbl.text = [_usermodel.sex isEqualToString:@"0"]? @"男":@"女";
-        _headView.zanlbl.text = [NSString stringWithFormat:@"赞 %@",_usermodel.likeds];
+        _headView.zanlbl.text = [NSString stringWithFormat:@"赞 %@",_usermodel.receiveLikeds];
+        
+        
         _headView.fensiLbl.text = [NSString stringWithFormat:@"粉丝 %@",_usermodel.fans];//_usermodel.fans;
         _headView.guanzhuLbl.text = [NSString stringWithFormat:@"关注 %@",_usermodel.follows];//_usermodel.follows;
         _headView.qianmingLbl.text = [NSString stringWithFormat:@"个性签名:%@",_usermodel.autograph];

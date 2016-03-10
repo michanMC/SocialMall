@@ -376,29 +376,39 @@
             CGFloat hh;
             __block typeof (CGFloat)hhh = hh;
             __weak typeof (UIImageView*)wimg =viewimg;
-            [viewimg sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_76"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                wimg.image = image;
-                if (image) {
-                    CGFloat w = image.size.width;
-                    CGFloat h = image.size.height;
-                   
-                   hhh = Main_Screen_Width * h / w;
-                    
-                }
-                NSLog(@"%zd",image.size);
+           
+            if (!CGSizeEqualToSize(_XQModel.imageSize, CGSizeZero)) {
+                 hhh = Main_Screen_Width * _XQModel.imageSize.height / _XQModel.imageSize.width;
                 
                 
-                
-                
-            }];
-            if (!hhh||!wimg.image) {
-                
-                return Main_Screen_Width;
+                return hhh;
             }
-            return hhh;
+
+            
+//            
+//            [viewimg sd_setImageWithURL:[NSURL URLWithString:_XQModel.headimgurl] placeholderImage:[UIImage imageNamed:@"Avatar_76"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//                wimg.image = image;
+//                if (image) {
+//                    CGFloat w = image.size.width;
+//                    CGFloat h = image.size.height;
+//                   
+//                   hhh = Main_Screen_Width * h / w;
+//                    
+//                }
+//                NSLog(@"%zd",image.size);
+//                
+//                
+//                
+//                
+//            }];
+//            if (!hhh||!wimg.image ||hhh < 1) {
+//                
+//                return Main_Screen_Width;
+//            }
+           // return hhh;
 
 
-          //  return Main_Screen_Width;
+            return Main_Screen_Width;
             
         }
         if (indexPath.row == 2) {
@@ -555,7 +565,28 @@
                 cell = [[[NSBundle mainBundle]loadNibNamed:cellid2 owner:self options:nil]lastObject];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:_XQModel.image] placeholderImage:[UIImage imageNamed:@"home_default-photo"]];
+            NSString *imgUrlString = _XQModel.image;
+            
+            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:imgUrlString] placeholderImage:[UIImage imageNamed:@"home_default-photo"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                if (image) {
+                    if (!CGSizeEqualToSize(_XQModel.imageSize, image.size)) {
+                        _XQModel.imageSize = image.size;
+            NSIndexPath *reloadIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+
+                        [_firstViewTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:reloadIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                        [_firstViewTableView reloadItemsAtIndexPaths:@[indexPath]];
+                    }
+                }
+            }];
+
+            
+            
+            
+//            [cell.imgView sd_setImageWithURL:[NSURL URLWithString:_XQModel.image] placeholderImage:[UIImage imageNamed:@"home_default-photo"]];
+//            
+            
+            
+            
             return cell;
         }
  
@@ -741,8 +772,34 @@
 -(void)fenxiang{
     
     CLAnimationView *animationView = [[CLAnimationView alloc]initWithTitleArray:@[@"朋友圈",@"微信好友"] picarray:@[@"share_friends",@"share_wechat"]];
+    __weak XQViewController *weakSelf = self;
+
     [animationView selectedWithIndex:^(NSInteger index) {
         NSLog(@"你选择的index ＝＝ %ld",(long)index);
+        NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        NSString * url = [NSString stringWithFormat:@"111"];
+        [dic setObject:url forKey:@"url"];
+        [dic setObject:_XQModel.content forKey:@"title"];
+        [dic setObject:@"分享详情" forKey:@"titlesub"];
+        
+
+        if (index == 1) {
+                 [weakSelf actionFenxian:SSDKPlatformSubTypeWechatTimeline PopToRoot:NO SsDic:dic];
+ 
+        }
+        else
+        {
+[weakSelf actionFenxian:SSDKPlatformSubTypeWechatSession PopToRoot:NO SsDic:dic];
+           
+ 
+        }
+        
+
+        
+        
+        
+        
+        
     }];
     [animationView CLBtnBlock:^(UIButton *btn) {
         NSLog(@"你点了选择/取消按钮");
@@ -882,7 +939,10 @@
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
-        [self showAllTextDialog:description];
+        //[self showAllTextDialog:description];
+        [_firstViewTableView reloadData];
+        [_secondViewTableView reloadData];
+
         NSLog(@"失败");
         
     }];
@@ -929,7 +989,11 @@
         }
         else
         {
-           [self isLiked:NO];
+            [self hideHud];
+            [_firstViewTableView reloadData];
+            [_secondViewTableView reloadData];
+ 
+          // [self isLiked:NO];
         }
        
         
@@ -980,7 +1044,10 @@
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
-        [self showAllTextDialog:description];
+       // [self showAllTextDialog:description];
+        [_firstViewTableView reloadData];
+        [_secondViewTableView reloadData];
+
         NSLog(@"失败");
         
     }];

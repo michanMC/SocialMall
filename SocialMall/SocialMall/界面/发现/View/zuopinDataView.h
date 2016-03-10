@@ -10,5 +10,6 @@
 #import "faXianModel.h"
 @interface zuopinDataView : UIView
 @property(nonatomic,strong)UITableView*tableView;
+@property (nonatomic,weak)BaseViewController *delegate;
 -(void)prepareUI:(faXianModel*)model;
 @end

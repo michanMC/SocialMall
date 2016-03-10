@@ -10,7 +10,11 @@
 
 @interface addMesModel : NSObject
 @property(nonatomic,copy)NSString * brand_name;
-@property(nonatomic,copy)NSString * goods_name;
 @property(nonatomic,copy)NSString * model;//型号
+
+@property(nonatomic,copy)NSString * goods_name;
+
+@property(nonatomic,copy)NSString * goods_id;
+@property(nonatomic,copy)NSString * goods_image;
 
 @end

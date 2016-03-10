@@ -37,6 +37,7 @@
 @property(nonatomic,copy)NSString * style_name;
 @property(nonatomic,assign)BOOL isFans;
 @property(nonatomic,assign)BOOL islike;
+@property (nonatomic, assign) CGSize imageSize;
 
 
 

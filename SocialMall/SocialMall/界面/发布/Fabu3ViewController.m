@@ -13,7 +13,6 @@
 #import "Fabu3TableViewCell.h"
 #import "liebiaoTableViewCell.h"
 #import "KeywordModel.h"
-#import "goodsDataModel.h"
 #import "addMesModel.h"
 @interface Fabu3ViewController ()<UITableViewDataSource,UITableViewDelegate,fabu4Viewdelegate,ItemViewDelegate,Fabu3ViewDelegate>
 {
@@ -26,18 +25,25 @@
     NSMutableArray * _purchasedGoodsArray;
     NSMutableArray *_fengeArray;
     KeywordModel * selemodel;
-    NSString * goods_id;
+    addMesModel * goods_modle;
+    
+    NSMutableArray * _goodsArray;
+    
 }
 @property(nonatomic,strong)NSMutableDictionary *dataDic;
 
 @end
 
 @implementation Fabu3ViewController
-
+-(void)loadData{
+    [_tableView reloadData];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _keywordArray = [NSMutableArray array];
     _purchasedGoodsArray = [NSMutableArray array];
+    _goodsArray = [NSMutableArray array];
     _fengeArray = [NSMutableArray array];
     _dataDic = [NSMutableDictionary dictionary];
     self.title = @"搭配列表";
@@ -104,7 +110,7 @@
         
         NSArray *  messageList = resultDic[@"data"][@"goodsData"];
         for (NSDictionary * dic in messageList) {
-            goodsDataModel * model = [goodsDataModel mj_objectWithKeyValues:dic];
+            addMesModel * model = [addMesModel mj_objectWithKeyValues:dic];
             [_purchasedGoodsArray addObject:model];
             
         }
@@ -170,22 +176,26 @@
     if (!selemodel) {
         [self showAllTextDialog:@"请选择风格"];return;
     }
-    if (!_fengeArray.count) {
-        [self showAllTextDialog:@"请添加商品"];return;
-    }
-    if (!goods_id || ![goods_id length]) {
-         [self showAllTextDialog:@"请选择商品"];return;
+   
+    
+    if (![_goodsArray count] && !_fengeArray.count) {
+        
+         [self showAllTextDialog:@"请选择或添加商品"];return;
     }
     
 
     
     fabu5ViewController * ctl = [[fabu5ViewController alloc]init];
+    ctl.deleGateView = self;
     ctl.fengeModel = selemodel;
    // ctl.goodsModel =
     ctl.addMesArray  = _fengeArray;
+   // ctl.goodsArray  = _goodsArray;
+
      [_dataDic setObject:_image forKey:@"img"];
+    
     [_dataDic setObject:_titleStr forKey:@"title"];
-    [_dataDic setObject:goods_id forKey:@"goods_id"];
+   // [_dataDic setObject:goods_id forKey:@"goods_id"];
 
     ctl.dataDic = _dataDic;
     [self pushNewViewController:ctl];
@@ -208,7 +218,17 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0)
     return 1;
-    return _fengeArray.count;
+    if (section == 1) {
+        NSInteger count= 0;
+        for (addMesModel * modle in _fengeArray) {
+            if (!modle.goods_id) {
+                count++;
+            }
+        }
+        return count;
+
+    }
+    return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
@@ -253,7 +273,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         cell.delagate =self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell prepareUI:_purchasedGoodsArray];
+    [cell prepareUI:_purchasedGoodsArray FenggeArray:_fengeArray];
     return cell;
     }
     else
@@ -265,8 +285,17 @@
         }
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (_fengeArray.count > indexPath.row) {
-            addMesModel * model = _fengeArray[indexPath.row];
+         NSMutableArray * array = [NSMutableArray array];
+        for (addMesModel * modle in _fengeArray) {
+            if (!modle.goods_id) {
+                [array addObject:modle];
+            }
+        }
+
+        if (array.count > indexPath.row) {
+           
+            
+            addMesModel * model = array[indexPath.row];
         
         
             cell.nameStr = model.goods_name;//@"xxxxxxxxx";
@@ -289,10 +318,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section != 0) {
-        _xuanzheIndedx = indexPath.row;
-        //一个section刷新
-        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
-        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+//        _xuanzheIndedx = indexPath.row;
+//        //一个section刷新
+//        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
+//        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     
 }
@@ -302,16 +331,26 @@
     ctl.delegate = self;
     [self pushNewViewController:ctl];
 }
--(void)selegoods:(NSInteger)index{
-    goodsDataModel * model = _purchasedGoodsArray[index];
+-(void)selegoods:(NSInteger)index Issele:(BOOL)issele{
     
-    goods_id = model.goods_id;
     
+    
+    addMesModel * model = _purchasedGoodsArray[index];
+    
+    goods_modle = model;
+    if ([_fengeArray containsObject:goods_modle]) {
+        [_fengeArray removeObject:goods_modle];
+    }
+    else
+    {
+        [_fengeArray addObject:goods_modle];
+    }
     
     
 }
 -(void)backDic:(NSDictionary *)dic
 {
+    
     addMesModel * modle = [addMesModel mj_objectWithKeyValues:dic];
     [_fengeArray addObject:modle];
     [_tableView reloadData];
@@ -319,8 +358,29 @@
 }
 -(void)ACtionDeleBtn:(UIButton*)btn{
     
-    NSInteger index = btn.tag - 800;
-    [_fengeArray removeObjectAtIndex:index];
+    NSMutableArray * array = [NSMutableArray array];
+    for (addMesModel * modle in _fengeArray) {
+        if (!modle.goods_id) {
+            [array addObject:modle];
+        }
+    }
+     NSInteger index = btn.tag - 800;
+    addMesModel * modle2 = array[index];
+    
+    
+//    
+//    for (int i = 0; i < _fengeArray.count; i++) {
+//        addMesModel * model = _fengeArray[i];
+//        if (!model.goods_id) {
+//            
+//        }
+//
+//    }
+    
+    [_fengeArray removeObject:modle2];
+   
+    
+   // [_fengeArray removeObjectAtIndex:index];
     [_tableView reloadData];
     
 }

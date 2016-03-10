@@ -17,7 +17,7 @@
 {
     UITableView*_tableView;
     NSInteger _xuanzheIndedx;
-
+    UIImageView * imgView;
     
 }
 @end
@@ -46,11 +46,26 @@
 }
 -(UIView*)headView{
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Width)];
-    UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Width)];
+    imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Width)];
     imgView.image = _dataDic[@"img"];
+    UIImage *img =_dataDic[@"img"];
+    
+    
+    if (img) {
+        CGFloat w = img.size.width;
+        CGFloat h = img.size.height;
+        
+        CGFloat  hhh = Main_Screen_Width * h / w;
+        
+        view.frame =CGRectMake(0, 0, Main_Screen_Width, hhh);
+        imgView .frame= CGRectMake(0, 0, Main_Screen_Width, hhh);
+        
+    }
+    
+
     [view addSubview:imgView];
-    imgView.contentMode = UIViewContentModeScaleAspectFill;
-    imgView.clipsToBounds = YES; // 裁剪边缘
+//    imgView.contentMode = UIViewContentModeScaleAspectFill;
+//    imgView.clipsToBounds = YES; // 裁剪边缘
     
     return view;
     
@@ -60,7 +75,7 @@
     if (!_fengeModel) {
         [self showAllTextDialog:@"请选择风格"];return;
     }
-    if (!_addMesArray.count) {
+    if (!_addMesArray.count && !_goodsArray.count) {
         [self showAllTextDialog:@"请添加商品"];return;
     }
     else
@@ -69,12 +84,20 @@
             NSDictionary * dic = [model mj_JSONObject];
             [addarray addObject:dic];
         }
-        
-        
+//        for (addMesModel * model in _goodsArray) {
+//            NSDictionary * dic = [model mj_JSONObject];
+//            [addarray addObject:dic];
+//        }
+
     }
 
     NSLog(@">>>%@",_fengeModel.id);
-    NSData *imageData = UIImageJPEGRepresentation(_dataDic[@"img"], 0.2);
+    UIImage *img =imgView.image;
+
+    NSData *imageData = UIImageJPEGRepresentation(img, 1);
+  //  NSData *imageData = UIImagePNGRepresentation(_dataDic[@"img"]);// png
+
+    
     NSString *base64Image=[imageData base64Encoding];
     NSString *base64ImageStr = [NSString stringWithFormat: @"data:image/jpg;base64,%@",base64Image];
     
@@ -211,8 +234,8 @@
                 addMesModel * model = _addMesArray[indexPath.row - 1];
             
                 cell.nameStr = model.goods_name;//@"xxxxxxxxx";
-                cell.mashuStr = [NSString stringWithFormat:@"%@ %@",model.brand_name,model.model];//@"GAP";
-            cell.deleBtn.tag = 800 + indexPath.row;
+                cell.mashuStr = [NSString stringWithFormat:@"%@ %@",model.brand_name?model.brand_name:@"",model.model?model.model:@""];//@"GAP";
+            cell.deleBtn.tag = 800 + indexPath.row-1;
             [cell.deleBtn addTarget:self action:@selector(ACtionDeleBtn:) forControlEvents:UIControlEventTouchUpInside];
 //            if (indexPath.row == _xuanzheIndedx) {
 //                cell.bgView.backgroundColor = [UIColor lightGrayColor];
@@ -235,16 +258,16 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section != 0) {
-        if (indexPath.row != 0 || indexPath.row != 1) {
-            
-
-        _xuanzheIndedx = indexPath.row;
-        //一个section刷新
-        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
-        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }
+//    if (indexPath.section != 0) {
+//        if (indexPath.row != 0 || indexPath.row != _addMesArray.count+1) {
+//            
+//
+//        _xuanzheIndedx = indexPath.row;
+//        //一个section刷新
+//        NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
+//        [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+//        }
+//    }
     
 }
 -(void)ACtionDeleBtn:(UIButton*)btn{
@@ -252,6 +275,7 @@
     NSInteger index = btn.tag - 800;
     [_addMesArray removeObjectAtIndex:index];
     [_tableView reloadData];
+    [_deleGateView loadData];
 
     
 }

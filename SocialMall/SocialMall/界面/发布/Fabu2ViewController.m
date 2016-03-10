@@ -44,9 +44,24 @@
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Width)];
     UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Width)];
     imgView.image = _image;
+    if (_image) {
+        CGFloat w = _image.size.width;
+        CGFloat h = _image.size.height;
+        
+      CGFloat  hhh = Main_Screen_Width * h / w;
+        
+        view.frame =CGRectMake(0, 0, Main_Screen_Width, hhh);
+        imgView .frame= CGRectMake(0, 0, Main_Screen_Width, hhh);
+        
+    }
+   
+    
+
+    
+    
     [view addSubview:imgView];
-    imgView.contentMode = UIViewContentModeScaleAspectFill;
-    imgView.clipsToBounds = YES; // 裁剪边缘
+//    imgView.contentMode = UIViewContentModeScaleAspectFill;
+//    imgView.clipsToBounds = YES; // 裁剪边缘
 
     return view;
     

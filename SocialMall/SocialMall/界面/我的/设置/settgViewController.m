@@ -17,7 +17,7 @@
 #import "MallViewController.h"
 #import "MeViewController.h"
 
-@interface settgViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface settgViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 {
     
     UITableView *_tableView;
@@ -104,11 +104,48 @@
         // ctl.isMy = YES;
         [self pushNewViewController:ctl];
     }
+    if (indexPath.section == 1 && indexPath.row == 2) {
+        [self showLoading:YES AndText:nil];
+        dispatch_async(
+                       dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                       , ^{
+                           NSString *cachPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES) objectAtIndex:0];
+                           
+                           
+                           NSArray *files = [[NSFileManager defaultManager] subpathsAtPath:cachPath];
+//                           NSLog(@"Path : %@\n files : %@",cachPath,files);
+//                           
+                           for (NSString *p in files) {
+                               NSError *error;
+                               NSString *path = [cachPath stringByAppendingPathComponent:p];
+                               if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                                   [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+                               }
+                           }
+                           [self performSelectorOnMainThread:@selector(clearCacheSuccess) withObject:nil waitUntilDone:YES];
+                       });
+    
+    
+    
+    }
 
     if (indexPath.section == 2) {
-        [self logout];
+    kAlertMessage2(@"退出登录?")
+        //[self logout];
     }
     
+}
+-(void)clearCacheSuccess
+{
+    [self stopshowLoading];
+    [self showAllTextDialog:@"清理成功"];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+      [self logout];
+    }
 }
 #pragma mark-退出登录
 -(void)logout{
@@ -130,12 +167,12 @@
         
         //强制让数据立刻保存
         [defaults synchronize];
-#import "GuanzhuViewController.h"
-        //#import "XZMTabbarExtension.h"
-#import "FabuViewController.h"
-#import "FaxianViewController.h"
-#import "MallViewController.h"
-#import "MeViewController.h"
+//#import "GuanzhuViewController.h"
+//        //#import "XZMTabbarExtension.h"
+//#import "FabuViewController.h"
+//#import "FaxianViewController.h"
+//#import "MallViewController.h"
+//#import "MeViewController.h"
 
         [self showAllTextDialog:@"成功退出"];
         for (UIViewController *vc in self.navigationController.viewControllers) {

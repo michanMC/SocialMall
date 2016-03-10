@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "faXianModel.h"
 @interface faxianCollectionViewCell : UICollectionViewCell
+@property(nonatomic,strong)UIImageView * imgView;
 -(void)prepareUI:(faXianModel*)model;
 
 @end

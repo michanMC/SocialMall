@@ -7,18 +7,18 @@
 //
 
 #import "Fabu3TableViewCell.h"
-#import "goodsDataModel.h"
+#import "addMesModel.h"
 
 @interface Fabu3TableViewCell (){
     
     
-    goodsDataModel * _goodsModel;
+    addMesModel * _goodsModel;
 }
 
 @end
 
 @implementation Fabu3TableViewCell
--(void)prepareUI:(NSMutableArray*)photoArray{
+-(void)prepareUI:(NSMutableArray*)photoArray FenggeArray:(NSMutableArray*)fenggeArray{
     for (UIView * view in self.contentView.subviews) {
         [view removeFromSuperview ];
     }
@@ -40,8 +40,9 @@
         int row=i/3;//行号
         //1/3=0,2/3=0,3/3=1;
         int loc=i%3;//列号
-        goodsDataModel * model = photoArray[i];
+        addMesModel * model = photoArray[i];
         _goodsModel = model;
+        
         x=offx+(offx+width)*loc ;
         y=offx+(offx+height)*row + 40;
         UIImageView * imgview = [[UIImageView alloc]initWithFrame:CGRectMake(x, y, width, height)];
@@ -53,7 +54,14 @@
         [btn setImage:[UIImage imageNamed:@"check-box_normal"] forState:UIControlStateNormal];
         ViewRadius(btn, 10);
         [btn setImage:[UIImage imageNamed:@"check-box_pressed"] forState:UIControlStateSelected];
-        
+        if ([fenggeArray containsObject:model]) {
+            btn.selected = YES;
+        }
+        else
+        {
+            btn.selected = NO;
+
+        }
         [imgview addSubview:btn];
         imgview.userInteractionEnabled = YES;
         btn.tag = 500+i;
@@ -94,16 +102,25 @@
 }
 -(void)actionBtn:(UIButton*)btn{
     
-    
-    for (int i = 0; i < 6; i ++) {
-        UIButton * btn2 = (UIButton*)[self viewWithTag:500 + i];
-        btn2.selected = NO;
-        btn2.backgroundColor = [UIColor whiteColor];
+    if (btn.selected) {
+        btn.selected = NO;
     }
-    btn.selected = YES;
+    else
+    {
+        btn.selected = YES;
+ 
+    }
+    
+    
+//    for (int i = 0; i < 6; i ++) {
+//        UIButton * btn2 = (UIButton*)[self viewWithTag:500 + i];
+//        btn2.selected = NO;
+//        btn2.backgroundColor = [UIColor whiteColor];
+//    }
+//    btn.selected = YES;
     NSLog(@"%d",btn.tag - 500);
     
-    [_delagate selegoods:btn.tag - 500];
+    [_delagate selegoods:btn.tag - 500 Issele:btn.selected];
     
     
 

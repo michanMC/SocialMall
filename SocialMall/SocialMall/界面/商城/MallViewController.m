@@ -20,6 +20,7 @@
 #import "BUIView.h"
 #import "MeViewController.h"
 #import "loginViewController.h"
+#import "CLAnimationView.h"
 @interface MallViewController ()<UIWebViewDelegate,NJKWebViewProgressDelegate,UIScrollViewDelegate>{
     
     WebViewJavascriptBridge * _bridge;
@@ -115,7 +116,9 @@
         
     }
 }
+
 -(void)prepareTbarView{
+    
     _barView = [[UIView alloc]initWithFrame:CGRectMake(0, Main_Screen_Height - 49, Main_Screen_Width, 49)];
     _barView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:_barView];
@@ -197,15 +200,23 @@
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden=YES;
     self.navigationController.navigationBarHidden = YES;
-    [self prepareTbarView];
+    if (!_barView) {
+        [self prepareTbarView];
+ 
+    }
 
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
     self.tabBarController.tabBar.hidden=NO;
     self.navigationController.navigationBarHidden = NO;
-
 }
+//-(void)viewDidDisappear:(BOOL)animated{
+//    [super viewDidDisappear:animated];
+//
+//
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -314,16 +325,37 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSString*urlstr = request.URL.absoluteString;
     
-    NSURL *url = [_request URL];
+    NSURL *url = [request URL];
     if([[url scheme] isEqualToString:@"devzeng"]) {
         
-        [self showAllTextDialog:@"devzeng"];
+      // [self showAllTextDialog:@"devzeng"];
         //处理JavaScript和Objective-C交互
-        if([[url host] isEqualToString:@"login"]){
-            NSLog(@"登录");
-            NSLog(@"url ==== %@",url);
+        if([[url host] isEqualToString:@"Share"]){
+            NSString *urlStr = [url absoluteString];
+            NSLog(@"TestAppDemo1 request params: %@", urlStr);
+            
+            urlStr = [urlStr stringByReplacingOccurrencesOfString:@"devzeng://Share?" withString:@""];
+            
+            NSArray *paramArray = [urlStr componentsSeparatedByString:@"&"];
+            
+            NSMutableDictionary * _MCdic= [ NSMutableDictionary dictionary];
+            
+            for (NSString * str in paramArray) {
+                 NSArray *paramArray2 = [str componentsSeparatedByString:@"="];
+                [_MCdic setObject:paramArray2[1] forKey:paramArray2[0]];
+            
+            }
+            [self activityShare:_MCdic];
+            
+
             
         }
+         if([[url host] isEqualToString:@"back"]){
+             
+             [self back2];
+             
+             
+         }
             }
     NSDictionary* dic = [request allHTTPHeaderFields];
     //判断请求中有没有自己定义的字段，没有就把现有请求停止，构造个新的请求，把自定义的字段加进去，然后加载
@@ -477,6 +509,73 @@
         
     }
 }
+#pragma mark-返回
+-(void)back2{
+    
+    [self hiddenbarView];
+    
+    
+    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[MallViewController class]] ||[vc isKindOfClass:[MeViewController class]]
+            ) {
+            //设置tabBarController的下标 0:首页
+            vc.tabBarController.selectedIndex = 4;
+            //跳转到订单列表
+            [self.navigationController popToViewController:vc animated:NO];
+            
+            
+            
+        }
+    }
+
+    
+    
+    
+}
+#pragma mark-Share
+-(void)activityShare:(NSDictionary*)dic{
+    
+    CLAnimationView *animationView = [[CLAnimationView alloc]initWithTitleArray:@[@"朋友圈",@"微信好友"] picarray:@[@"share_friends",@"share_wechat"]];
+    __weak MallViewController *weakSelf = self;
+    
+    [animationView selectedWithIndex:^(NSInteger index) {
+        NSLog(@"你选择的index ＝＝ %ld",(long)index);
+        NSMutableDictionary * dic2 = [NSMutableDictionary dictionary];
+        
+        [dic2 setObject:dic[@"url"] forKey:@"url"];
+        [dic2 setObject:dic[@"title"] forKey:@"title"];
+        [dic2 setObject:@"分享详情" forKey:@"titlesub"];
+        
+        
+        if (index == 1) {
+            [weakSelf actionFenxian:SSDKPlatformSubTypeWechatTimeline PopToRoot:NO SsDic:dic2];
+            
+        }
+        else
+        {
+            [weakSelf actionFenxian:SSDKPlatformSubTypeWechatSession PopToRoot:NO SsDic:dic2];
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+    }];
+    [animationView CLBtnBlock:^(UIButton *btn) {
+        NSLog(@"你点了选择/取消按钮");
+    }];
+    [animationView show];
+    
+
+    
+}
+
+
 #pragma mark -  activityGo
 -(void)activityGo:(NSDictionary*) option  Callback :(NSString*)callback {
     

@@ -67,7 +67,7 @@
     
 }
 -(void)actionFooer{
-    [_dataArray removeAllObjects];
+   // [_dataArray removeAllObjects];
 
     pageNum ++;
     [self load_Data:NO];
@@ -78,7 +78,7 @@
 
 -(void)load_Data:(BOOL)Refresh{
     NSDictionary * Parameterdic = @{
-                                    @"page":@(0)
+                                    @"page":@(pageNum)
                                     };
     
     

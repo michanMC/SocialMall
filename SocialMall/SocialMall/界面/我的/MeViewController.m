@@ -20,6 +20,7 @@
 #import "loginViewController.h"
 #import "userDatamodel.h"
 #import "MallViewController.h"
+#import "ShoudaozanViewController.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     
@@ -434,8 +435,7 @@
     else if(btn.tag == 2005){
         //收到的赞
         
-        zhanshiViewController * ctl = [[zhanshiViewController alloc]init];
-        ctl.keyStr = @"3";
+        ShoudaozanViewController * ctl = [[ShoudaozanViewController alloc]init];
         [self pushNewViewController:ctl];
         
         

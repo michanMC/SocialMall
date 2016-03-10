@@ -3,7 +3,7 @@
 #import <UIKit/UIKit.h>
 #import "MJRefresh.h"
 #import "NetworkManager.h"
-//#import <ShareSDK/ShareSDK.h>
+#import <ShareSDK/ShareSDK.h>
 typedef void(^BarButtonItemActionBlock)(void);
 
 typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
@@ -104,4 +104,7 @@ typedef NS_ENUM(NSInteger, BarbuttonItemStyle) {
 /**
  *  分享
  */
+- (BOOL)hasAuthorized:(SSDKPlatformType)platformType;
+-(void)actionFenxian:(SSDKPlatformType)PlatformType PopToRoot:(BOOL)isPopToRoot SsDic:(NSMutableDictionary*)ssdic;
+
 @end

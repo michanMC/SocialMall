@@ -10,6 +10,7 @@
 #import "zhanshiTableViewCell.h"
 #import "faXianModel.h"
 #import "XQViewController.h"
+#import "CLAnimationView.h"
 @interface zhanshiViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
@@ -177,16 +178,8 @@
     if (_dataArray.count > indexPath.row) {
         
     
-    if (indexPath.row == 0) {
-        cell.fenxianBtn.hidden = YES;
-    }
-    else
-    {
-        cell.fenxianBtn.hidden = NO;
-
-        
-    }
-        
+        [cell.fenxianBtn addTarget:self action:@selector(actionFenX:) forControlEvents:UIControlEventTouchUpInside];
+        cell.fenxianBtn.tag = indexPath.row + 1000000;
         faXianModel * model = _dataArray [indexPath.row];
         [cell.imgView sd_setImageWithURL:[NSURL URLWithString:model.image] placeholderImage:[UIImage imageNamed:@"releaes_default-photo"]];
         
@@ -225,6 +218,47 @@
     ctl.faxianModel = model;
     [self pushNewViewController:ctl];
     }
+}
+-(void)actionFenX:(UIButton*)btn{
+    
+     faXianModel * model = _dataArray [btn.tag - 1000000];
+    
+    CLAnimationView *animationView = [[CLAnimationView alloc]initWithTitleArray:@[@"朋友圈",@"微信好友"] picarray:@[@"share_friends",@"share_wechat"]];
+    __weak XQViewController *weakSelf = self;
+    
+    [animationView selectedWithIndex:^(NSInteger index) {
+        NSLog(@"你选择的index ＝＝ %ld",(long)index);
+        NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        NSString * url = [NSString stringWithFormat:@"111"];
+        [dic setObject:url forKey:@"url"];
+        [dic setObject:model.content forKey:@"title"];
+        [dic setObject:@"分享详情" forKey:@"titlesub"];
+        
+        
+        if (index == 1) {
+            [weakSelf actionFenxian:SSDKPlatformSubTypeWechatTimeline PopToRoot:NO SsDic:dic];
+            
+        }
+        else
+        {
+            [weakSelf actionFenxian:SSDKPlatformSubTypeWechatSession PopToRoot:NO SsDic:dic];
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+    }];
+    [animationView CLBtnBlock:^(UIButton *btn) {
+        NSLog(@"你点了选择/取消按钮");
+    }];
+    [animationView show];
+
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

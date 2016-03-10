@@ -68,7 +68,6 @@
 
                           @"model":_xinghaoStr,
 
-                          
                           };
     [_delegate backDic:dic];
     [self.navigationController popViewControllerAnimated:YES];
@@ -105,16 +104,15 @@
     
     cell.imgView.frame = CGRectMake(20, cell.imgView.frame.origin.y, cell.imgView.frame.size.width, cell.imgView.frame.size.height);
     cell.textField.frame = CGRectMake(20 +cell.imgView.frame.size.width + 5 , cell.textField.frame.origin.y, cell.textField.frame.size.width, cell.textField.frame.size.height);
-
-    
-    
     
     if (indexPath.row == 0) {
         cell.imgView.image = [UIImage imageNamed:@"Product-name_icon"];
         cell.textField.placeholder = @"商品名称";
         cell.textField.tag = 900;
        // cell.textField.text = _phoneStr;
-        cell.textField.keyboardType = UIKeyboardTypeNumberPad;
+       // cell.textField.keyboardType = UIKeyboardTypeNumberPad;
+        cell.textField.keyboardType = UIKeyboardTypeDefault;
+
     }
     else if(indexPath.row == 1){
         cell.imgView.image = [UIImage imageNamed:@"brand_icon"];

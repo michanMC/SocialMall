@@ -37,6 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.tabBarController.tabBar hideBadgeOnItemIndex:0];
     [self appColorNavigation];
 }
 -(void)appIsLogin{
@@ -52,6 +53,7 @@
             
 
             NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            
             if (![defaults objectForKey:@"sessionId"]|| ![[defaults objectForKey:@"sessionId"] length]) {
                 loginViewController * ctl = [[loginViewController alloc]init];
                 ctl.isMeCtl = YES;
@@ -87,22 +89,17 @@
 
   NSString*  _phoneStr = [defaults objectForKey:@"UserPhone"];
    NSString*  _pwdStr = [defaults objectForKey:@"Pwd"];
-    
-
-    
-    
     NSDictionary * Parameterdic = @{
                                     @"phone":_phoneStr,
                                     @"pwd":_pwdStr
                                     };
     
-    
     [self showLoading:YES AndText:nil];
-    
     [self.requestManager requestWebWithParaWithURL:@"Login/login" Parameter:Parameterdic IsLogin:NO Finish:^(NSDictionary *resultDic) {
         [self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
+        [self showAllTextDialog:@"登录成功"];
         [MCUser sharedInstance].sessionId = resultDic[@"data"][@"sessionId"];
         [MCUser sharedInstance].userId = resultDic[@"data"][@"userId"];
         
@@ -128,9 +125,6 @@
         NSLog(@"失败");
     }];
     
-    
-    
-    
 }
 
 - (void)viewDidLoad {
@@ -150,9 +144,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RefreshData:) name:@"didRefreshDataObjNotification" object:nil];
     
 
-    
-    
-    
     indexnum = 3;
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"sessionId"]) {
@@ -165,10 +156,6 @@
 
     
    // self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc]initWithTitle:@"暂时加个登录" style:UIBarButtonItemStylePlain target:self action:@selector(ActionTime)];
-    
-
-    
-    
     // Do any additional setup after loading the view.
 }
 #pragma mark-监听跳详情
@@ -332,7 +319,7 @@
 
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
         [self hideHud];
-        [self showAllTextDialog:description];
+       // [self showAllTextDialog:description];
         [self prepareUI];
         _isRefresh = NO;
 
@@ -360,10 +347,10 @@
    
     
     
-    if (!_McFooter) {
-        [_scrollView addSubview:self.McFooter];
-
-    }
+//    if (!_McFooter) {
+//        [_scrollView addSubview:self.McFooter];
+//
+//    }
     CGFloat width = Main_Screen_Width - 40;//CGRectGetWidth(_scrollView.frame);
     CGFloat height = CGRectGetHeight(_scrollView.frame);
     NSLog(@"wwww ===== %f",_dataArray.count * width+ 20);
@@ -391,6 +378,7 @@
     
     
     faXianModel * model = _dataArray[index];
+    zuoView.delegate = self;
     [zuoView prepareUI:model];
     [_scrollView addSubview:zuoView];
     [_arrayView addObject:zuoView];
@@ -416,7 +404,7 @@
         return;
     }
 
-    if ((scrollView.contentOffset.x + Main_Screen_Width - _scrollViewSizeW) > 100) {
+    if ((scrollView.contentOffset.x + Main_Screen_Width - _scrollViewSizeW) > 70) {
         
         _McFooter.state = ZYBannerFooterStateTrigger;
         
