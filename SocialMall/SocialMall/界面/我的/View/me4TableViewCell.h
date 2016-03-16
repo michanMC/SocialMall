@@ -11,5 +11,6 @@
 @interface me4TableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *tiltleLbl;
+@property (weak, nonatomic) IBOutlet UIView *hongdianView;
 
 @end

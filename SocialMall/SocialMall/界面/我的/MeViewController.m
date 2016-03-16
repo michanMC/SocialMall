@@ -284,6 +284,22 @@
          cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
          cell.imgView.image = [UIImage imageNamed:_imgArray[indexPath.row]];
          cell.tiltleLbl.text = _titleArray[indexPath.row];
+         if (indexPath.row == 2) {
+             /*保存数据－－－－－－－－－－－－－－－－－begin*/
+             NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+             if ([[defaults objectForKey:@"isdingdan"] isEqualToString:@"1"]) {
+                 cell.hongdianView.hidden = NO;
+             }
+             else
+             {
+                 cell.hongdianView.hidden = YES;
+
+             }
+             ViewRadius(cell.hongdianView, 4);
+            
+         }
+         else
+             cell.hongdianView.hidden = YES;
          return cell;
          
          
@@ -368,6 +384,7 @@
         if (indexPath.row == 2) {
             //提醒
             tixingViewController * ctl = [[tixingViewController alloc]init];
+            ctl.dagteView = self;
             [self pushNewViewController:ctl];
         }
         if (indexPath.row == 3) {
@@ -502,7 +519,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)loadCell
+{
+    [_tableView reloadData];
+}
+-(void)pushDingdan{
+    
+    MallViewController *mall = [[MallViewController alloc]init];
+    mall.menuagenturl = @"http://snsshop.111.xcrozz.com/Shop/Order/index.html";
+    [self pushNewViewController:mall];
+  
+    
+}
 /*
 #pragma mark - Navigation
 

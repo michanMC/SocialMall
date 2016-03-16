@@ -68,7 +68,6 @@
             NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
             
             NSString *newMessageId = [defaults objectForKey:@"newMessageId"];
-            
             if ([newMessageId isEqualToString:resultDic[@"data"][@"newMessageId"]]) {
                 
                 
@@ -76,6 +75,10 @@
             else
             {
                 [defaults setObject:resultDic[@"data"][@"newMessageId"]?resultDic[@"data"][@"newMessageId"]:@"" forKey:@"newMessageId"];
+                
+                [defaults setObject:@"1" forKey:@"isguanzhu"];
+                
+                
 
                 //强制让数据立刻保存
                 [defaults synchronize];
@@ -116,18 +119,25 @@
             NSString *newOrder = [defaults objectForKey:@"newOrder"];//订单
             NSString *newNotice = [defaults objectForKey:@"newNotice"];//公告
             NSString *newComment = [defaults objectForKey:@"newComment"];//回复
-
+            
+            BOOL isdingdan = NO;
+            
+            
+//订单
             if ([newOrder isEqualToString:_oermodel.Order]) {
                 
                 
             }
             else
             {
-                [defaults setObject:_oermodel.Order?_oermodel.Order:@"" forKey:@"newOrder"];
                 
+                isdingdan = YES;
+                [defaults setObject:_oermodel.Order?_oermodel.Order:@"" forKey:@"newOrder"];
+                [defaults setObject:@"1" forKey:@"Order"];
+
                 //强制让数据立刻保存
                 [defaults synchronize];
-                [self.tabBarController.tabBar showBadgeOnItem4Index:4];
+//                [self.tabBarController.tabBar showBadgeOnItem4Index:4];
                 
             }
             
@@ -138,11 +148,14 @@
             }
             else
             {
+                isdingdan = YES;
+
                 [defaults setObject:_oermodel.Notice?_oermodel.Notice:@"" forKey:@"newNotice"];
-                
+                [defaults setObject:@"1" forKey:@"Notice"];
+
                 //强制让数据立刻保存
                 [defaults synchronize];
-                [self.tabBarController.tabBar showBadgeOnItem4Index:4];
+                //[self.tabBarController.tabBar showBadgeOnItem4Index:4];
                 
             }
             
@@ -155,14 +168,24 @@
             }
             else
             {
+                isdingdan = YES;
+
                 [defaults setObject:_oermodel.Comment ?_oermodel.Comment:@"" forKey:@"newComment"];
-                
+                [defaults setObject:@"1" forKey:@"Comment"];
+
                 //强制让数据立刻保存
                 [defaults synchronize];
-                [self.tabBarController.tabBar showBadgeOnItem4Index:4];
+               // [self.tabBarController.tabBar showBadgeOnItem4Index:4];
                 
             }
             
+            
+            if (isdingdan) {
+                [defaults setObject:@"1" forKey:@"isdingdan"];
+                [defaults synchronize];
+
+                [self.tabBarController.tabBar showBadgeOnItem4Index:4];
+            }
 
             
         }

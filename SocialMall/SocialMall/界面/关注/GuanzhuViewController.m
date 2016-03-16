@@ -38,6 +38,10 @@
 {
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar hideBadgeOnItemIndex:0];
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"0" forKey:@"isguanzhu"];
+    //强制让数据立刻保存
+    [defaults synchronize];
     [self appColorNavigation];
 }
 -(void)appIsLogin{

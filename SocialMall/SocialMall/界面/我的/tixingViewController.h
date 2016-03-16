@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-
+#import "MeViewController.h"
 @interface tixingViewController : BaseViewController
-
+@property (weak,nonatomic)MeViewController * dagteView;
 @end

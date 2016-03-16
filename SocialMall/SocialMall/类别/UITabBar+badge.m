@@ -49,7 +49,7 @@
     [self addSubview:badgeView];
 }
 //隐藏小红点
-- (void)hideBadgeOnItem4Index:(int)index{
+- (void)hideBadgeOnIte4Index:(int)index{
     //移除小红点
     [self removeBadgeOnItem4Index:index];
 }

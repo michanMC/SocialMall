@@ -145,6 +145,11 @@ updatingLocation:(BOOL)updatingLocation
     [self setUpChildController:me title:@"我" imageName:@"mall_normal" selectedImageName:@"mall_pressed" Tag:90004];
     //
      self.selectedIndex = 1;
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    if ([[defaults objectForKey:@"isguanzhu"] isEqualToString:@"1"]) {
+        [self.tabBarController.tabBar showBadgeOnItemIndex:0];
+
+    }
 }
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {

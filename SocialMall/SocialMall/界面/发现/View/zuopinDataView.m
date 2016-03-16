@@ -144,8 +144,21 @@
         
         cell.pinlunLbl.text = _homeModel.comments;
         cell.zanLbl.text = _homeModel.like;
-        
-        
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        NSString * userid = [defaults objectForKey:@"userId"];
+        BOOL iszan = NO;
+        for (like_list * modellist in _homeModel.like_listArray) {
+            if ([modellist.user_id isEqualToString:userid]) {
+                iszan = YES;
+            }
+        }
+        if (iszan) {
+            [cell.zanBtn setImage:[UIImage imageNamed:@"favorite_icon_pressed"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [cell.zanBtn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:UIControlStateNormal];
+        }
         
         
         
