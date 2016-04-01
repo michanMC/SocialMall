@@ -11,10 +11,12 @@
 #import "Fabu5ViewController.h"
 #import "ItemView.h"
 #import "Fabu3TableViewCell.h"
+#import "Fabu7TableViewCell.h"
+
 #import "liebiaoTableViewCell.h"
 #import "KeywordModel.h"
 #import "addMesModel.h"
-@interface Fabu3ViewController ()<UITableViewDataSource,UITableViewDelegate,fabu4Viewdelegate,ItemViewDelegate,Fabu3ViewDelegate>
+@interface Fabu3ViewController ()<UITableViewDataSource,UITableViewDelegate,fabu4Viewdelegate,ItemViewDelegate,Fabu3ViewDelegate,UITextFieldDelegate>
 {
     
     UITableView *_tableView;
@@ -28,6 +30,14 @@
     addMesModel * goods_modle;
     
     NSMutableArray * _goodsArray;
+    
+    
+    
+    NSString *_spnameStr;
+    NSString * _pipaiStr;
+    NSString * _qitaStr;
+
+    
     
 }
 @property(nonatomic,strong)NSMutableDictionary *dataDic;
@@ -132,7 +142,7 @@
     [self.view addSubview:_headView];
     _headView.backgroundColor = [UIColor whiteColor];
     UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 15)];
-    imgView.image = [UIImage imageNamed:@"style_icon02"];
+    imgView.image = [UIImage imageNamed:@"风格选择"];
     [_headView addSubview:imgView];
     UILabel * lbl = [[UILabel alloc]initWithFrame:CGRectMake(30, 7, 100, 20)];
     lbl.text = @"风格选择";
@@ -213,12 +223,13 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0)
+    
+    if (section == 1)
     return 1;
-    if (section == 1) {
+    if (section == 2) {
         NSInteger count= 0;
         for (addMesModel * modle in _fengeArray) {
             if (!modle.goods_id) {
@@ -228,7 +239,7 @@
         return count;
 
     }
-    return 0;
+    return 1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
@@ -238,33 +249,155 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        
-    CGFloat x = 5;
-    CGFloat offx = 5;
-    CGFloat y = 40;
-    CGFloat width = (Main_Screen_Width - 4 * 5)/3;
-    CGFloat height = width;
-    for (int i = 0; i < _purchasedGoodsArray.count; i ++){
-        
-        int row=i/3;//行号
-        //1/3=0,2/3=0,3/3=1;
-        int loc=i%3;//列号
-        
-        x=offx+(offx+width)*loc ;
-        y=offx+(offx+height)*row;
-
+        return 191;
     }
+    if (indexPath.section == 1) {
         if (!_purchasedGoodsArray.count) {
             return 44;
         }
-    
-    return y+height + 1 * 40+10;
+
+        BOOL ischao = NO;
+        if (_purchasedGoodsArray.count > 6) {
+             ischao = YES;
+        }
+        else
+        {
+            ischao = NO;
+            
+        }
+        if (!ischao) {
+            CGFloat x = 5;
+            CGFloat offx = 5;
+            CGFloat y = 40;
+            CGFloat width = (Main_Screen_Width - 4 * 5)/3;
+            CGFloat height = width;
+            for (int i = 0; i < _purchasedGoodsArray.count; i ++){
+                
+                
+
+                
+                x += width + offx;
+                if (i ==2) {
+                    y += height + offx;
+                    x = offx;
+                }
+                
+                
+            }
+            return  y + 40 + 5;
+            //y + h + 5;
+            
+            
+        }
+        else
+        {
+            
+            NSInteger pagenum =  _purchasedGoodsArray.count / 6;
+            NSInteger countnum = _purchasedGoodsArray.count % 6;
+            CGFloat width = (Main_Screen_Width - 4 * 5)/3;
+            
+            CGFloat x = 5;
+            CGFloat offx = 5;
+            CGFloat y = 5;
+            CGFloat height = width;
+            
+            CGFloat widthOffx= 0;
+            
+            NSInteger indexCount = 0;
+            for (int a = 0; a < pagenum; a++) {
+                
+                
+                for (int i = 0; i < 2; i ++){
+                    
+                    
+                    for (int j = 0;j < 3;j++) {
+                        
+                        
+                        indexCount ++;
+                        x +=width + offx;
+                        
+                        
+                        
+                    }
+                    x = widthOffx + offx;
+                    y += width+ 5;
+                    
+                }
+                widthOffx = Main_Screen_Width + a *Main_Screen_Width;
+                x = widthOffx + offx;
+                y = 5;
+                
+            }
+            
+            
+            return  40 + width*2 + 5 + 30;
+            
+        }
+        
+
+        
+        
+        
+        
+//    CGFloat x = 5;
+//    CGFloat offx = 5;
+//    CGFloat y = 40;
+//    CGFloat width = (Main_Screen_Width - 4 * 5)/3;
+//    CGFloat height = width;
+//    for (int i = 0; i < _purchasedGoodsArray.count; i ++){
+//        
+//        int row=i/3;//行号
+//        //1/3=0,2/3=0,3/3=1;
+//        int loc=i%3;//列号
+//        
+//        x=offx+(offx+width)*loc ;
+//        y=offx+(offx+height)*row;
+//
+//    }
+//        if (!_purchasedGoodsArray.count) {
+//            return 44;
+//        }
+//    
+//    return y+height + 1 * 40+10;
     }
     return 60;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     if (indexPath.section == 0) {
+        static NSString * cellid0 = @"Fabu7TableViewCell";
+        Fabu7TableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid0];
+
+            if (!cell) {
+                cell = [[[NSBundle mainBundle]loadNibNamed:@"Fabu7TableViewCell" owner:self options:nil]lastObject];
+    
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.textFil1.delegate =self;
+        cell.textFil2.delegate =self;
+        cell.textFil3.delegate =self;
+        cell.textFil1.tag = 8880;
+        cell.textFil2.tag = 8881;
+        cell.textFil3.tag = 8882;
+        cell.textFil1.text = _spnameStr;
+        cell.textFil2.text = _pipaiStr;
+        cell.textFil3.text = _qitaStr;
+
+        [cell.addBtn addTarget:self action:@selector(ActionAddBtn) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+
+        
+    
+        return cell;
+        
+    }
+    
+    
+    if (indexPath.section == 1) {
     static NSString * cellid = @"mcq";
     Fabu3TableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (!cell) {
@@ -276,7 +409,7 @@
     [cell prepareUI:_purchasedGoodsArray FenggeArray:_fengeArray];
     return cell;
     }
-    else
+    else  if (indexPath.section == 2)
     {
         static NSString * cellid2 = @"mcm";
         liebiaoTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid2];
@@ -311,9 +444,11 @@
 // 
 //        }
         }
+    
         return cell;
-   
+    
     }
+    return  [[UITableViewCell alloc]init];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -325,6 +460,67 @@
     }
     
 }
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    
+    NSInteger tag = textField.tag;
+    if (tag == 8880) {
+        _spnameStr = textField.text;
+    }
+    if (tag == 8881) {
+        _pipaiStr = textField.text;
+    }
+    if (tag == 8882) {
+        _qitaStr = textField.text;
+    }
+
+
+}
+-(void)ActionAddBtn{
+    UITextField * text1 = (UITextField*)[self.view viewWithTag:8880];
+    UITextField * text2 = (UITextField*)[self.view viewWithTag:8881];
+    UITextField * text3 = (UITextField*)[self.view viewWithTag:8882];
+    [text1 resignFirstResponder];
+    [text2 resignFirstResponder];
+    [text3 resignFirstResponder];
+
+    
+    if (!_spnameStr||!_spnameStr.length) {
+        return;
+    }
+    NSLog(@"%@",_spnameStr);
+    NSLog(@"%@",_pipaiStr);
+    NSLog(@"%@",_qitaStr);
+
+    
+    NSDictionary * dic =@{
+                          @"goods_name":_spnameStr,
+                          
+                          @"brand_name":_pipaiStr?_pipaiStr:@"",
+                          
+                          @"model":_qitaStr?_qitaStr:@"",
+                          
+                          };
+
+    
+    addMesModel * modle = [addMesModel mj_objectWithKeyValues:dic];
+    [_fengeArray addObject:modle];
+    _spnameStr = @"";
+    _pipaiStr = @"";
+    _qitaStr = @"";
+
+    [_tableView reloadData];
+    [_tableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionBottom animated:YES];
+   // 这个是选择哪一行的cell，让该行的cell滑到tableView的最底端
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:2];
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+   // 这个是指定哪一行的cell，让该行cell滑到tableView的最底端
+    
+    [self showAllTextDialog:@"添加成功"];
+    
+    
+}
+
 -(void)actionAdd
 {
     fabu4ViewController * ctl = [[fabu4ViewController alloc]init];

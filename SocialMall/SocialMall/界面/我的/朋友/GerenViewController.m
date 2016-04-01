@@ -270,7 +270,7 @@
             
             _headView.fensiLbl.text = [NSString stringWithFormat:@"粉丝 %@",_usermodel.fans];//_usermodel.fans;
             _headView.guanzhuLbl.text = [NSString stringWithFormat:@"关注 %@",_usermodel.follows];//_usermodel.follows;
-            _headView.qianmingLbl.text = [NSString stringWithFormat:@"个性签名:%@",_usermodel.autograph];
+            _headView.qianmingLbl.text = [NSString stringWithFormat:@"%@",_usermodel.autograph];
             
             if (_usermodel.isFans) {
                 _headView.guanzhuBtn.layer.borderColor = UIColorFromRGB(0x29477d).CGColor;
@@ -353,7 +353,7 @@
         
         _headView.fensiLbl.text = [NSString stringWithFormat:@"粉丝 %@",_usermodel.fans];//_usermodel.fans;
         _headView.guanzhuLbl.text = [NSString stringWithFormat:@"关注 %@",_usermodel.follows];//_usermodel.follows;
-        _headView.qianmingLbl.text = [NSString stringWithFormat:@"个性签名:%@",_usermodel.autograph];
+        _headView.qianmingLbl.text = [NSString stringWithFormat:@"%@",_usermodel.autograph];
 
         if (_usermodel.isFans) {
             _headView.guanzhuBtn.layer.borderColor = UIColorFromRGB(0x29477d).CGColor;

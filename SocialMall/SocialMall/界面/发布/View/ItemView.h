@@ -41,6 +41,7 @@ typedef void(^ItemViewBlock)(id obj);
 //- (id)initWihtItemArray:(NSArray *)array;
 
 - (void)ItemViewWithBlock:(ItemViewBlock)block;
+- (id)initWithFrame:(CGRect)frame Skeystr:(NSString*)skeystr;
 
 
 @end

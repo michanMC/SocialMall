@@ -15,6 +15,7 @@
 #import "XQViewController.h"
 #import "SearchViewController.h"
 #import "oadMessageModel.h"
+#import "userDatamodel.h"
 @interface FaxianViewController ()<UIScrollViewDelegate>
 {
     
@@ -37,7 +38,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RefreshTXData:) name:@"didRefreshTXDataObjNotification" object:nil];
     
     UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(20, 7, Main_Screen_Width - 40, 40)];
-    [btn setImage:[UIImage imageNamed:@"shous"] forState:0];
+    [btn setImage:[UIImage imageNamed:@"搜索框"] forState:0];
     [btn addTarget:self action:@selector(ActionTime) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = btn;//[self MCtiteView];
 
@@ -234,7 +235,7 @@
             
             [self loadnewMessage];
             [self loadnewnewOrder];
-
+            [self loadaData:NO];
             
         }
         
@@ -281,7 +282,8 @@
         [self loadnewMessage];
         [self loadnewnewOrder];
 
-        
+        [self loadaData:NO];
+
         //13798996333
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
@@ -470,6 +472,60 @@
 -(void)ActionTime{
     SearchViewController * ctl = [[SearchViewController alloc]init];
     [self pushNewViewController:ctl];
+    
+    
+}
+-(void)loadaData:(BOOL)Refresh{
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
+    if (![defaults objectForKey:@"userId"]) {
+        // [self prepareUI2];
+       // [self showAllTextDialog:@"没登陆"];
+        return;
+        
+        
+    }
+    NSString * userId = [defaults objectForKey:@"userId"];
+    
+    
+    NSDictionary * Parameterdic = @{
+                                    @"userId":userId
+                                    };
+    
+    
+    [self showLoading:Refresh AndText:nil];
+    
+    [self.requestManager requestWebWithGETParaWith:@"User/userInfo" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+               NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+       userDatamodel* _usermodel = [userDatamodel mj_objectWithKeyValues:resultDic[@"data"][@"data"]];
+        
+        /*保存数据－－－－－－－－－－－－－－－－－begin*/
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        
+
+        if (_usermodel.headimgurl) {
+            [defaults setObject:_usermodel.headimgurl forKey:@"headimgurl"];
+            
+            
+            //强制让数据立刻保存
+        
+        }
+        if (_usermodel.nickname) {
+             [defaults setObject:_usermodel.headimgurl forKey:@"nickname"];
+        }
+        
+         [defaults synchronize];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        
+//        [self showAllTextDialog:description];
+        NSLog(@"失败");
+        
+    }];
+    
     
     
 }

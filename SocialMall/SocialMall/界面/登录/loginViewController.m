@@ -69,8 +69,8 @@
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, 100)];
     
     
-    UIImageView * imgview = [[UIImageView alloc]initWithFrame:CGRectMake((Main_Screen_Width - 150) / 2, (100 - 100)/2, 150, 100)];
-    imgview.image =[ UIImage imageNamed:@"logo"];
+    UIImageView * imgview = [[UIImageView alloc]initWithFrame:CGRectMake((Main_Screen_Width - 80) / 2, (100 - 100)/2, 80, 80)];
+    imgview.image =[ UIImage imageNamed:@"ios-template-180"];
     [view addSubview:imgview];
     return view;
     
@@ -84,12 +84,15 @@
     CGFloat width = Main_Screen_Width - 80;
     CGFloat height = 40;
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(x, y, width, height)];
-    [btn setBackgroundImage:[UIImage imageNamed:@"login_btn_bg"] forState:0];
+   // [btn setBackgroundImage:[UIImage imageNamed:@"login_btn_bg"] forState:0];
+    btn.layer.borderColor =  UIColorFromRGB(0x29477d).CGColor;
+    btn.layer.borderWidth = 1;
+    ViewRadius(btn, 5);
     [btn setTitle:@"登录" forState:0];
     btn.titleLabel.font = [UIFont systemFontOfSize:14];
     btn.tag = 200;
     [btn addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setTitleColor:[UIColor whiteColor] forState:0];
+    [btn setTitleColor:UIColorFromRGB(0x29477d) forState:0];
     [view addSubview:btn];
     y += height + 5;
     width = 75;

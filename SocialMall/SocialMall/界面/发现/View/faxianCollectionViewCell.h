@@ -11,5 +11,6 @@
 @interface faxianCollectionViewCell : UICollectionViewCell
 @property(nonatomic,strong)UIImageView * imgView;
 -(void)prepareUI:(faXianModel*)model;
+-(void)prepareUI2;
 
 @end

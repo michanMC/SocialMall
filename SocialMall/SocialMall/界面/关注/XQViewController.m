@@ -21,6 +21,10 @@
 #import "FenGuanViewController.h"
 #import "GerenViewController.h"
 #import "liebiaoTableViewCell.h"
+#import "SearchViewController.h"
+#import "jubao_View.h"
+#import "UIView+TYAlertView.h"
+#import "MallViewController.h"
 @interface XQViewController ()
 <UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate,UITextViewDelegate,zuopinDataView3CellDelegate>
 {
@@ -40,6 +44,10 @@
     NSMutableArray * _MatchListArray;
 
     NSInteger pagenum;
+    
+    
+    jubao_View *shareView;
+
     
 }
 @property(nonatomic,strong) UITableView *firstViewTableView;
@@ -168,7 +176,7 @@
     
     [_secondViewController.view addSubview:_secondViewTableView];
     _zhidingBtn = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 10 - 50, Main_Screen_Height - 64 - 48 - 50 - 50, 50, 50)];
-    [_zhidingBtn setImage:[UIImage imageNamed:@"iconfont-zhiding"] forState:0];
+    [_zhidingBtn setImage:[UIImage imageNamed:@"返回顶部"] forState:0];
     _zhidingBtn.hidden = YES;
     [_zhidingBtn addTarget:self action:@selector(releaseBtn) forControlEvents:UIControlEventTouchUpInside];
 
@@ -607,19 +615,29 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             NSString * str = [NSString stringWithFormat:@"喜欢%@",_XQModel.like];
+            cell.xihuanBTn.layer.borderWidth = 1;
+            cell.xihuanBTn.layer.borderColor = UIColorFromRGB(0x29477d).CGColor;
+            [cell.xihuanBTn setTitleColor:UIColorFromRGB(0x29477d) forState:0];
             [cell.xihuanBTn setTitle:str forState:0];
+            ViewRadius(cell.xihuanBTn, 5);
             if (_XQModel.islike) {
-                cell.xihuanBTn.tintColor = [UIColor redColor];
+               cell.xihuanBTn.tintColor = AppCOLOR;
                 
                 [cell.xihuanBTn setImage:[UIImage imageNamed:@"favorite_icon_pressed"] forState:0];
             }
             else
             {
-                cell.xihuanBTn.tintColor = [UIColor whiteColor];
+                cell.xihuanBTn.tintColor = [UIColor lightGrayColor];
 
                 [cell.xihuanBTn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:0];
  
             }
+            
+            [cell.gendoubtn addTarget:self action:@selector(actionpinglun:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.jubaoBtn addTarget:self action:@selector(actionjubao) forControlEvents:UIControlEventTouchUpInside];
+            [cell.zhuanfaBtn addTarget:self action:@selector(ActionAhuanfa) forControlEvents:UIControlEventTouchUpInside];
+            cell.bgView.tag = 600;
+
 
 
             [cell.xihuanBTn addTarget:self action:@selector(ActionDianzan) forControlEvents:UIControlEventTouchUpInside];
@@ -673,7 +691,16 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;                cell.titleLbl.text = @"搭配详情";
                 cell.imgView2.hidden = YES;
                 cell.imgView1.hidden = NO;
-
+                cell.sykeLbl.text = _XQModel.style_name;
+                ViewRadius(cell.sykeLbl, 5);
+                cell.sykeLbl.textColor = AppCOLOR;
+                cell.sykeLbl.layer.borderColor= UIColorFromRGB(0x29477d).CGColor;
+                cell.sykeLbl.layer.borderWidth = 1;
+                CGFloat w = [MCIucencyView  heightforString:_XQModel.style_name andHeight:25 fontSize:14];
+                cell.sykeLbl.frame  = CGRectMake(Main_Screen_Width - w - 15, 7.5, w + 10, 25);
+                
+                cell.sykeLbl.hidden  =NO;
+                [cell.seyBtn addTarget:self action:@selector(Actionsyek) forControlEvents:UIControlEventTouchUpInside];
                 return cell;
                 
                 
@@ -713,6 +740,8 @@
                     cell = [[[NSBundle mainBundle]loadNibNamed:cellid8 owner:self options:nil]lastObject];
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;                cell.titleLbl.text = [NSString stringWithFormat:@"评论(%ld)",(unsigned long)[_CommentArray count]];//@"评论(22)";
+                cell.sykeLbl.hidden  =YES;
+
                 if (_CommentArray.count) {
                     cell.imgView1.hidden = YES;
                     cell.imgView2.hidden = NO;
@@ -767,7 +796,39 @@
     
     
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+     if(indexPath.section == 1 ){
+         if (indexPath.row != 0) {
+             if (_MatchListArray.count > indexPath.row-1) {
+                 MatchListModel * model = _MatchListArray[indexPath.row-1];
+                 if (model.url) {
+                     MallViewController *mall = [[MallViewController alloc]init];
+                     mall.isQXCtl = YES;
+                     mall.menuagenturl = model.url;
+                     [self pushNewViewController:mall];
 
+                     
+                     
+                 }
+                 
+                 
+             
+             
+             }
+             
+         }
+         
+         
+         
+         
+     }
+    
+    
+    
+    
+}
 #pragma mark-分享
 -(void)fenxiang{
     
@@ -1266,6 +1327,112 @@
     
     
 }
+-(void)Actionsyek{
+    
+   // cell.sykeLbl.text = _XQModel.style_name;
+    SearchViewController * ctl = [[SearchViewController alloc]init];
+    ctl.sekyStr = _XQModel.style_name;
+    [self pushNewViewController:ctl];
+
+    
+//    //发送通知
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectTextFieldObjNotification" object:_XQModel.style_name];
+    
+    
+}
+#pragma mark-更多
+-(void)actionpinglun:(UIButton*)btn{
+    
+    UIView * view = (UIView *)[self.view viewWithTag:600];
+    if (view.hidden) {
+        view.hidden = NO;
+    }
+    else
+    {
+        view.hidden = YES;
+    }
+    
+    
+}
+#pragma mark-举报
+-(void)actionjubao{
+    UIView * view = (UIView *)[self.view viewWithTag:600];
+    view.hidden = YES;
+    
+    
+    shareView= [jubao_View createViewFromNib];
+    shareView.tag = 1200;
+    ViewRadius(shareView.bgView2, 40);
+    
+    [shareView.btn addTarget:self action:@selector(actionjubaoBtn) forControlEvents:UIControlEventTouchUpInside];
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_XQModel.id
+                                    };
+    
+    
+    [self showLoading:YES AndText:nil];
+    
+    
+    [self.requestManager requestWebWithGETParaWith:@"Msg/reportMessage" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+        [shareView showInWindow];
+        
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+        
+        NSLog(@"失败");
+        
+    }];
+    
+    
+    
+}
+#pragma mark-转发
+-(void)ActionAhuanfa{
+    UIView * view = (UIView *)[self.view viewWithTag:600];
+    view.hidden = YES;
+    CLAnimationView *animationView = [[CLAnimationView alloc]initWithTitleArray:@[@"朋友圈",@"微信好友"] picarray:@[@"share_friends",@"share_wechat"]];
+    __weak BaseViewController *weakSelf = self;
+    
+    [animationView selectedWithIndex:^(NSInteger index) {
+        NSLog(@"你选择的index ＝＝ %ld",(long)index);
+        NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        NSString * url = [NSString stringWithFormat:@"111"];
+        [dic setObject:url forKey:@"url"];
+        [dic setObject:_XQModel.content forKey:@"title"];
+        [dic setObject:@"分享详情" forKey:@"titlesub"];
+        
+        
+        if (index == 1) {
+            [weakSelf actionFenxian:SSDKPlatformSubTypeWechatTimeline PopToRoot:NO SsDic:dic];
+            
+        }
+        else
+        {
+            [weakSelf actionFenxian:SSDKPlatformSubTypeWechatSession PopToRoot:NO SsDic:dic];
+        }
+        
+        
+        
+    }];
+    [animationView CLBtnBlock:^(UIButton *btn) {
+        NSLog(@"你点了选择/取消按钮");
+    }];
+    [animationView show];
+    
+}
+-(void)actionjubaoBtn{
+    
+    [shareView hideView];
+    
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

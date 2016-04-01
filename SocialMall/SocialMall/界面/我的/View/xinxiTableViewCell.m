@@ -14,6 +14,7 @@
     // Initialization code
     [_swBtn setImage:[UIImage imageNamed:@"Switch-Off"] forState:UIControlStateNormal];
     [_swBtn setImage:[UIImage imageNamed:@"Switch-On"] forState:UIControlStateSelected];
+    
 
 }
 

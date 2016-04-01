@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Fabu7TableViewCell" rowHeight="191" id="aGC-hD-e6B" customClass="Fabu7TableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="191"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aGC-hD-e6B" id="Yfc-tV-oD9">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="190.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="填写搭配" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3de-0I-dOF">
+                        <rect key="frame" x="10" y="0.0" width="100" height="40"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jg3-9q-F9p">
+                        <rect key="frame" x="20" y="141" width="280" height="40"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="其他" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b0N-Mh-gvw">
+                                <rect key="frame" x="36" y="5" width="236" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="model_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="TqY-xy-QBp">
+                        <rect key="frame" x="30" y="151" width="20" height="20"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AFC-y7-Gzu">
+                        <rect key="frame" x="20" y="93" width="280" height="40"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="品牌" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vNf-yF-8lB">
+                                <rect key="frame" x="36" y="5" width="236" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="brand_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="qPp-v7-0Cy">
+                        <rect key="frame" x="30" y="103" width="20" height="20"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="saR-aS-eeF">
+                        <rect key="frame" x="20" y="45" width="280" height="40"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Product-name_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="yzA-Vv-YuY">
+                                <rect key="frame" x="8" y="10" width="20" height="20"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="单品名称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oVz-NH-c8C">
+                                <rect key="frame" x="36" y="5" width="236" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pkl-2a-DgY">
+                        <rect key="frame" x="282" y="3" width="35" height="35"/>
+                        <state key="normal" image="添加商品.png"/>
+                    </button>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addBtn" destination="Pkl-2a-DgY" id="9Po-nU-zZI"/>
+                <outlet property="textFil1" destination="oVz-NH-c8C" id="Ciz-DF-eF4"/>
+                <outlet property="textFil2" destination="vNf-yF-8lB" id="FCV-lI-GfS"/>
+                <outlet property="textFil3" destination="b0N-Mh-gvw" id="uUk-48-ftb"/>
+                <outlet property="view1" destination="saR-aS-eeF" id="Ijk-pI-iou"/>
+                <outlet property="view2" destination="Jg3-9q-F9p" id="FIM-EC-Xlz"/>
+                <outlet property="view3" destination="AFC-y7-Gzu" id="n8l-z1-CD0"/>
+            </connections>
+            <point key="canvasLocation" x="447" y="248.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Product-name_icon.png" width="24" height="24"/>
+        <image name="brand_icon.png" width="24" height="24"/>
+        <image name="model_icon.png" width="24" height="24"/>
+        <image name="添加商品.png" width="23" height="23"/>
+    </resources>
+</document>

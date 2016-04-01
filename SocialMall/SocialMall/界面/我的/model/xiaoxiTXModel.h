@@ -18,6 +18,7 @@
 @property(nonatomic,copy)NSString * content;
 @property(nonatomic,copy)NSString * message_type;
 
+@property(nonatomic,copy)NSString * event_id;
 
 
 @property(nonatomic,copy)NSString * total;

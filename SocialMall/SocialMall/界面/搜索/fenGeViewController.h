@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface fenGeViewController : BaseViewController
+@property(nonatomic,copy)NSString * sekyStr;
 
 @end

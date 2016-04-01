@@ -260,6 +260,73 @@
     
     
 }
+//编辑时调用的两个协议方法
+//一返回编辑状态
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([_keyStr isEqualToString:@"1"]) {
+        //这个方法默认返回删除状态
+        return UITableViewCellEditingStyleDelete;
+
+    }
+    return UITableViewCellEditingStyleNone;
+}
+//提交编辑操作
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([_keyStr isEqualToString:@"1"]) {
+        //这个方法默认返回删除状态
+        [self delMessage:indexPath];
+    }
+
+
+    
+}
+-(void)delMessage:(NSIndexPath*)indexPath{
+    faXianModel * model =   _dataArray[indexPath.row];
+    if (!model.id) {
+        return;
+    }
+
+    [self showLoading:YES AndText:nil];
+    NSDictionary * Parameterdic = @{
+                                    @"id":model.id
+                                  
+                                    
+                                    };
+
+    [self.requestManager requestWebWithParaWithURL:@"Msg/delMessage" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [self hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        
+        //删除的效果,tableView已经帮我们实现好了
+        //我们需要作的事是将数据源中的需要被删除的数据,移除掉
+        [_dataArray removeObjectAtIndex:indexPath.row];
+        //删除完成后,我们需要刷新一下表格视图
+        //a.可以刷新整个视图
+        //这种刷新方式不适用于刷单格,或少部分数据
+        //而是用在需要刷新整个视图时
+        //[_tableView reloadData];
+        
+        //b.针对删除的行,进行刷新
+        //第一个参数需要是一个数组,当前删除行的indexPath数组
+        [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectloadData2Notification" object:nil];
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [self hideHud];
+        [self showAllTextDialog:description];
+
+    }];
+    
+    
+    
+    
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

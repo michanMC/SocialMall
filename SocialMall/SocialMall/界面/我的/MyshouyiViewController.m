@@ -159,7 +159,7 @@
         ViewRadius(_headView.headBtn, 34);
         _headView.sexLbl.text = [_usermodel.sex isEqualToString:@"0"]? @"男":@"女";
         _headView.namelbl.text =  _usermodel.nickname;
-        _headView.qianmingLbl.text = [NSString stringWithFormat:@"个性签名:%@",_usermodel.autograph];
+        _headView.qianmingLbl.text = [NSString stringWithFormat:@"%@",_usermodel.autograph];
         _headView.zongshuoyiLbl.text = [NSString stringWithFormat:@"￥%@",_FinanceModel.history_money];
 //        MyshouyiBtn *segmentButton = [self.view viewWithTag:20000];
 //        segmentButton.titleSubLbl.text = _FinanceModel.history_money;

@@ -153,7 +153,7 @@ static NSInteger pagingButtonTag                 = 1000;
             [segmentButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateSelected];
             [segmentButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             segmentButton.titleLabel.font = AppFont;
-            [segmentButton setImage:[UIImage imageNamed:@"我的收益"] forState:UIControlStateSelected];
+            [segmentButton setImage:[UIImage imageNamed:@"我的收益2"] forState:UIControlStateSelected];
             [segmentButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
             if(i == 0) {
                 [segmentButton setSelected:YES];

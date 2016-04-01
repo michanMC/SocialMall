@@ -30,7 +30,7 @@
     NSInteger _sort;
     NSString *_seachStr;
 
-    
+    BOOL _isnoData;
 }
 
 @end
@@ -63,9 +63,15 @@
     
 }
 -(void)prepareUI{
-    
+    if (!_sekyStr)
     [self searchTagFG:YES];
     [self hasSearchView];
+    
+//    if (_sekyStr) {
+//        _headView.hidden = YES;
+//        [self searchsearch:YES Seachstr:_sekyStr];
+//
+//    }
 }
 -(void)hasSearchView{
     _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width , Main_Screen_Height - 64 - 44)];
@@ -78,6 +84,9 @@
     [_renduBtn setTitleColor:UIColorFromRGB(0x29477d) forState:UIControlStateSelected];
     ViewRadius(_renduBtn, 5);
     [_renduBtn setTitle:@"热度" forState:0];
+    [_renduBtn setImage:[UIImage imageNamed:@"热度_没选中"] forState:UIControlStateNormal];
+    [_renduBtn setImage:[UIImage imageNamed:@"热度_选中"] forState:UIControlStateSelected];
+    _renduBtn.selected = YES;
     _renduBtn.layer.borderColor = UIColorFromRGB(0x29477d).CGColor;
     _renduBtn.layer.borderWidth = .5;
     _renduBtn.titleLabel.font=  AppFont;
@@ -95,6 +104,8 @@
     [_timeBtn setTitleColor:UIColorFromRGB(0x29477d) forState:UIControlStateSelected];
     ViewRadius(_timeBtn, 5);
     [_timeBtn setTitle:@"时间" forState:0];
+    [_timeBtn setImage:[UIImage imageNamed:@"travels_icon_time"] forState:UIControlStateNormal];
+    [_timeBtn setImage:[UIImage imageNamed:@"时间_选中"] forState:UIControlStateSelected];
     _timeBtn.titleLabel.font=  AppFont;
     _timeBtn.backgroundColor = [UIColor whiteColor];//RGBCOLOR(239, 245, 255);
     [_bgView addSubview:_timeBtn];
@@ -208,6 +219,14 @@
             [_dataarray addObject:model];
             
         }
+        if (_dataarray.count==0 || !_dataarray) {
+            _isnoData = YES;
+        }
+        else
+        {
+            _isnoData = NO;
+ 
+        }
       [_collectionView reloadData ];
         
         [_collectionView.mj_footer endRefreshing];
@@ -221,7 +240,8 @@
         [self showAllTextDialog:description];
         [_collectionView.mj_footer endRefreshing];
         [_collectionView.mj_header endRefreshing];
-
+        _isnoData = YES;
+        [_collectionView reloadData ];
         NSLog(@"失败");
         
     }];
@@ -243,7 +263,7 @@
         [_headView addSubview:lbl];
         
         
-        _itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 30, self.view.frame.size.width , 100)];
+        _itemView = [[ItemView alloc] initWithFrame:CGRectMake(0, 30, self.view.frame.size.width , 100) Skeystr:@"1"];
     _itemView.seleColor = [UIColor whiteColor];
 
         _itemView.delegate = self;
@@ -270,10 +290,20 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    if (_isnoData) {
+        return 1;
+    }
+    else
     return _dataarray.count;
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (_isnoData) {
+         return CGSizeMake(Main_Screen_Width, Main_Screen_Height - 64 - 44 - 44);
+    }
+    else
+
     //item
     return CGSizeMake((Main_Screen_Width-10)/3, (Main_Screen_Width-10)/3);
 }
@@ -281,6 +311,23 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_isnoData) {
+        
+        faxianCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"mc" forIndexPath:indexPath];
+        if (!cell)
+        {
+            cell = [[faxianCollectionViewCell alloc]init];
+            
+        }
+
+            [cell prepareUI2];
+            
+    
+        return cell;
+  
+        
+    }
+    else{
     faxianCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"mc" forIndexPath:indexPath];
     if (!cell)
     {
@@ -294,9 +341,17 @@
 
     }
     return cell;
+    }
+    return [[UICollectionViewCell alloc]init];
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_isnoData) {
+        
+        return;
+        
+    }
+
     if (_dataarray.count > indexPath.row) {
         faXianModel * model = _dataarray[indexPath.row];
         //发送通知

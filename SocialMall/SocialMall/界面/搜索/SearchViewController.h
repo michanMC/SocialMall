@@ -10,5 +10,5 @@
 
 @interface SearchViewController : BaseViewController
 @property(nonatomic,strong)UIScrollView *mainScroll;
-
+@property(nonatomic,copy)NSString * sekyStr;
 @end

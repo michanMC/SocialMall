@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,21 +16,59 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2a-SR-dGb">
                         <rect key="frame" x="98" y="8" width="124" height="35"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <state key="normal" title="喜欢1234" image="favorite_icon_normal.png" backgroundImage="go_btn.png">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" title="喜欢1234" image="favorite_icon_pressed.png">
+                            <color key="titleColor" red="0.36078431370000003" green="0.60784313729999995" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                    </button>
+                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w3u-pc-fdV">
+                        <rect key="frame" x="177" y="7" width="105" height="34.5"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="弹出按钮框.png" translatesAutoresizingMaskIntoConstraints="NO" id="a03-mq-lbz">
+                                <rect key="frame" x="-7" y="4" width="112" height="27"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Efp-Mv-2ZP">
+                                <rect key="frame" x="49" y="12" width="1" height="15"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNd-sP-L8D">
+                                <rect key="frame" x="49" y="4" width="48" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="举报" image="report_icon1.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyo-Ob-yr8">
+                                <rect key="frame" x="0.0" y="4" width="48" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="转发" image="share_icon.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UXR-P8-PQ9">
+                        <rect key="frame" x="282" y="10" width="30" height="30"/>
+                        <state key="normal" image="更多.png"/>
                     </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="bgView" destination="w3u-pc-fdV" id="ScQ-ll-8Oa"/>
+                <outlet property="gendoubtn" destination="UXR-P8-PQ9" id="62i-TA-HhT"/>
+                <outlet property="jubaoBtn" destination="zNd-sP-L8D" id="dHO-is-9dJ"/>
                 <outlet property="xihuanBTn" destination="b2a-SR-dGb" id="HGc-C7-ObN"/>
+                <outlet property="zhuanfaBtn" destination="lyo-Ob-yr8" id="vZy-DS-cnb"/>
             </connections>
             <point key="canvasLocation" x="219" y="201"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="favorite_icon_normal.png" width="18" height="18"/>
-        <image name="go_btn.png" width="160" height="39"/>
+        <image name="favorite_icon_pressed.png" width="18" height="18"/>
+        <image name="report_icon1.png" width="18" height="18"/>
+        <image name="share_icon.png" width="18" height="18"/>
+        <image name="弹出按钮框.png" width="107" height="29"/>
+        <image name="更多.png" width="24" height="24"/>
     </resources>
 </document>

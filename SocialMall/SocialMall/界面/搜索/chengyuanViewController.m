@@ -10,7 +10,7 @@
 #import "FenGuanTableViewCell.h"
 #import "GerenViewController.h"
 #import "userDatamodel.h"
-
+#import "noDataTableViewCell.h"
 @interface chengyuanViewController ()<UITableViewDataSource,UITableViewDelegate>{
     
     
@@ -22,6 +22,8 @@
     NSInteger _page;
 
     NSString *_seachStr;
+    BOOL _isnoData;
+
 
 }
 
@@ -76,6 +78,15 @@
             [_dataarray addObject:model];
             
         }
+        if (_dataarray.count==0 || !_dataarray) {
+            _isnoData = YES;
+        }
+        else
+        {
+            _isnoData = NO;
+            
+        }
+
         [_tableView reloadData ];
         
         [_tableView.mj_footer endRefreshing];
@@ -86,9 +97,13 @@
         [self hideHud];
         [self showAllTextDialog:description];
         NSLog(@"失败");
+        
         [_tableView.mj_footer endRefreshing];
         [_tableView.mj_header endRefreshing];
+        _isnoData = YES;
+
         
+         [_tableView reloadData ];
         
     }];
     
@@ -122,11 +137,27 @@
     
     
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_isnoData) {
+        return Main_Screen_Height - 64 - 44;
+    }
+    else
+        
+        //item
+        return 44;
+    
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (_isnoData) {
+        return 1;
+    }
+    else
+
     return _dataarray.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -136,6 +167,21 @@
     return 0.01;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_isnoData) {
+       
+        noDataTableViewCell * cell =  [tableView dequeueReusableCellWithIdentifier:@"noDataTableViewCell"];
+
+        if (!cell) {
+            cell = [[noDataTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"noDataTableViewCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+        
+    }
+    else{
+
+    
+    
     FenGuanTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FenGuanTableViewCell"];
     if (!cell) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"FenGuanTableViewCell" owner:self options:nil]lastObject];
@@ -148,10 +194,21 @@
         
     }
     return cell;
+    }
+    return [[UITableViewCell alloc]init];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (_isnoData) {
+        
+        return;
+        
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
     if (_dataarray.count > indexPath.row) {
         userDatamodel * modle = _dataarray[indexPath.row];
         if (!modle.id)

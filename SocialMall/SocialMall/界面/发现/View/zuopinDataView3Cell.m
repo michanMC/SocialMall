@@ -28,7 +28,7 @@
         [view removeFromSuperview];
     }
     _likemodel = model;
-    NSArray * arr = model.like_list;
+    NSArray * arr = model.like_listArray;
     CGFloat offX = 9;
     CGFloat x = offX;
     CGFloat width = ((Main_Screen_Width - 40)-9 * 9) / 8;
@@ -36,7 +36,7 @@
 
     if (_isQX) {
        width = ((Main_Screen_Width )-11 * 9) / 10;
-        arr = model.like_list;
+        arr = model.like_listArray;
         MaxCount = 10;
         
     }

@@ -107,7 +107,7 @@
     
     if (indexPath.row == 0) {
         cell.imgView.image = [UIImage imageNamed:@"Product-name_icon"];
-        cell.textField.placeholder = @"商品名称";
+        cell.textField.placeholder = @"单品名称";
         cell.textField.tag = 900;
        // cell.textField.text = _phoneStr;
        // cell.textField.keyboardType = UIKeyboardTypeNumberPad;

@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface QX4TableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *sykeLbl;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgView1;
 @property (weak, nonatomic) IBOutlet UIImageView *imgView2;
+@property (weak, nonatomic) IBOutlet UIButton *seyBtn;
 @property (weak, nonatomic) IBOutlet UILabel *titleLbl;
 @end

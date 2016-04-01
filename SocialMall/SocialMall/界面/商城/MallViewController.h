@@ -11,5 +11,5 @@
 @interface MallViewController : BaseViewController
 @property(nonatomic,copy)NSString * menuagenturl;
 @property(nonatomic,assign)BOOL isNoAdd;
-
+@property (nonatomic,assign)BOOL isQXCtl;
 @end

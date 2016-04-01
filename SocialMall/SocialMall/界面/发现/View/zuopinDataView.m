@@ -8,6 +8,8 @@
 
 #import "zuopinDataView.h"
 #import "zuopinDataView1.h"
+#import "zuopinDataView5.h"
+
 #import "zuopinDataView2Cell.h"
 #import "zuopinDataView3Cell.h"
 #import "zuopinDataView4Cell.h"
@@ -20,6 +22,9 @@
     CGRect _viewFrame;
     jubao_View *shareView;
     faXianModel *_homeModel;
+    NSString * nickname;
+    NSString * headimgurl;
+
 }
 
 @end
@@ -39,6 +44,8 @@
 }
 -(void)prepareUI:(faXianModel*)model{
     _homeModel = model;
+    nickname = @"";
+    headimgurl = @"";
    self.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, _viewFrame.size.width, _viewFrame.size.height ) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor clearColor];
@@ -86,19 +93,20 @@
     static NSString *cellid2 = @"zuopinDataView2Cell";
     static NSString *cellid3 = @"zuopinDataView3Cell";
     static NSString *cellid4 = @"zuopinDataView4Cell";
+    static NSString *cellid5 = @"zuopinDataView5";
 
     if (indexPath.row == 0) {
-        zuopinDataView1 * cell = [tableView dequeueReusableCellWithIdentifier:cellid1];
+        zuopinDataView5 * cell = [tableView dequeueReusableCellWithIdentifier:cellid5];
         if (!cell) {
-            cell = [[[NSBundle mainBundle]loadNibNamed:cellid1 owner:self options:nil]lastObject];
+            cell = [[[NSBundle mainBundle]loadNibNamed:cellid5 owner:self options:nil]lastObject];
         }
-        cell.headImgBtn.tag = 90000;
-        ViewRadius(cell.headImgBtn, 20);
-        [cell.headImgBtn addTarget:self action:@selector(actionHeadbtn:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.headImgBtn sd_setImageWithURL:[NSURL URLWithString:_homeModel.headimgurl] forState:0 placeholderImage:[UIImage imageNamed:@"Avatar_76"]];
+        cell.headBtn.tag = 90000;
+        ViewRadius(cell.headBtn, 20);
+        [cell.headBtn addTarget:self action:@selector(actionHeadbtn:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.headBtn sd_setImageWithURL:[NSURL URLWithString:_homeModel.headimgurl] forState:0 placeholderImage:[UIImage imageNamed:@"Avatar_76"]];
         cell.nameLbl.text = _homeModel.nickname;
         cell.timeLbl.text = [CommonUtil daysAgoAgainst:[_homeModel.add_time longLongValue]];
-        cell.guanzhuBtn.hidden = YES;
+//        cell.guanzhuBtn.hidden = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -153,13 +161,19 @@
             }
         }
         if (iszan) {
-            [cell.zanBtn setImage:[UIImage imageNamed:@"favorite_icon_pressed"] forState:UIControlStateNormal];
+            [cell.zanBtn setImage:[UIImage imageNamed:@"喜欢_选中"] forState:UIControlStateNormal];
+            _homeModel.islike = YES;
+
+            
         }
         else
         {
-            [cell.zanBtn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:UIControlStateNormal];
+            [cell.zanBtn setImage:[UIImage imageNamed:@"喜欢_未选中"] forState:UIControlStateNormal];
+            _homeModel.islike = NO;
+
         }
         
+        [cell.zanBtn addTarget:self action:@selector(ActionDianzan) forControlEvents:UIControlEventTouchUpInside];
         
         
         return cell;
@@ -177,9 +191,99 @@
         }
     
 }
+#pragma mark-点赞
+-(void)actiondianzanBtn{
+    
+    
+    
+    
+    
+    
+    
+    
+}
+#pragma mark-点赞请求
+-(void)ActionDianzan{
+    if (!_homeModel.id &&!_homeModel.msg_id) {
+        return;
+    }
+//    if (!self.isgion) {
+//        [self showAllTextDialog:@"没登录"];
+//        return;
+//    }
+    
+    NSDictionary * Parameterdic = @{
+                                    @"msg_id":_homeModel.id ? _homeModel.id : _homeModel.msg_id
+                                    };
+    
+
+    [_delegate showLoading:YES AndText:nil];
+    
+    [_delegate.requestManager requestWebWithParaWithURL:@"Msg/messageLike" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
+        [_delegate hideHud];
+        NSLog(@"成功");
+        NSLog(@"返回==%@",resultDic);
+        //[self showAllTextDialog:@"点赞成功"];
+        if (_homeModel.islike) {
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            NSString * userid = [defaults objectForKey:@"userId"];
+            
+            for (like_list * modellist in _homeModel.like_listArray) {
+                if ([modellist.user_id isEqualToString:userid]) {
+                    nickname = modellist.nickname;
+                    headimgurl = modellist.headimgurl;
+
+                    [_homeModel.like_listArray removeObject:modellist];
+                }
+            }
+
+            
+        }
+        else{
+            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+            NSString * userid = [defaults objectForKey:@"userId"];
+            
+            if (!nickname.length) {
+                nickname = [defaults objectForKey:@"nickname"];
+            }
+            if (!headimgurl.length) {
+                headimgurl = [defaults objectForKey:@"headimgurl"];
+            }
+            NSDictionary *dic = @{
+                                  @"user_id":userid,
+                                  @"nickname":nickname,
+                                  @"headimgurl":headimgurl
+                                  };
+            
+            like_list * modellist2 = [like_list mj_objectWithKeyValues:dic];
+            
+            
+            [_homeModel.like_listArray addObject:modellist2];
+//            for (like_list * modellist in _homeModel.like_listArray) {
+//                if ([modellist.user_id isEqualToString:userid]) {
+//                    [_homeModel.like_listArray removeObject:modellist];
+//                }
+//            }
+
+            
+        }
+        [_tableView reloadData];
+        
+    } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {
+        [_delegate hideHud];
+        [_delegate showAllTextDialog:description];
+        
+        NSLog(@"失败");
+    }];
+    
+}
+
 #pragma mark-举报
 -(void)actionjubao{
+    UIView * view = (UIView *)[self viewWithTag:500];
+        view.hidden = YES;
     
+
      shareView= [jubao_View createViewFromNib];
     shareView.tag = 1200;
     ViewRadius(shareView.bgView2, 40);
@@ -220,7 +324,8 @@
 }
 #pragma mark-转发
 -(void)ActionAhuanfa{
-    
+    UIView * view = (UIView *)[self viewWithTag:500];
+    view.hidden = YES;
     CLAnimationView *animationView = [[CLAnimationView alloc]initWithTitleArray:@[@"朋友圈",@"微信好友"] picarray:@[@"share_friends",@"share_wechat"]];
     __weak BaseViewController *weakSelf = _delegate;
 

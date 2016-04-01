@@ -87,7 +87,13 @@
     [self addpinpai];
     [self addchengyuan];
 
-    
+    if (_sekyStr) {
+        
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectTextFieldObjNotification" object:_sekyStr];
+        //发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectFGObjNotification" object:_sekyStr];
+    }
     
 }
 -(void)addSegmentView{
@@ -132,7 +138,7 @@
     
 }
 -(void)addfenge{
-    _fengeCtl = [[fenGeViewController alloc]init];
+    _fengeCtl = [[fenGeViewController alloc]init];    _fengeCtl.sekyStr = _sekyStr;
     [self.mainScroll addSubview:_fengeCtl.view];
     
 }

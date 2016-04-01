@@ -21,6 +21,7 @@
 #import "MeViewController.h"
 #import "loginViewController.h"
 #import "CLAnimationView.h"
+#import "GuanzhuViewController.h"
 @interface MallViewController ()<UIWebViewDelegate,NJKWebViewProgressDelegate,UIScrollViewDelegate>{
     
     WebViewJavascriptBridge * _bridge;
@@ -514,11 +515,16 @@
     
     [self hiddenbarView];
     
-    
+    if (_isQXCtl) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+
+    }
     
     for (UIViewController *vc in self.navigationController.viewControllers) {
         if ([vc isKindOfClass:[MallViewController class]] ||[vc isKindOfClass:[MeViewController class]]
             ) {
+            
             //设置tabBarController的下标 0:首页
             vc.tabBarController.selectedIndex = 4;
             //跳转到订单列表

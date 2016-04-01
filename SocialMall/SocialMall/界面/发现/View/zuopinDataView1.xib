@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,29 +15,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="280" height="63.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOu-lV-A2Y">
-                        <rect key="frame" x="10" y="14" width="40" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="40" id="brL-yg-HiK"/>
-                            <constraint firstAttribute="height" constant="40" id="qcT-Kp-wbi"/>
-                        </constraints>
-                        <state key="normal" title="Button" image="Avatar_76.png"/>
-                    </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8分钟前" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PNQ-F1-rdU">
-                        <rect key="frame" x="60" y="38" width="133" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="133" id="90d-2P-3O2"/>
-                            <constraint firstAttribute="height" constant="21" id="HJA-Yv-OEK"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="michan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0t-H5-7Dp">
-                        <rect key="frame" x="60" y="14" width="160" height="21"/>
+                        <rect key="frame" x="60" y="12" width="150" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="160" id="J0l-RO-rly"/>
-                            <constraint firstAttribute="height" constant="21" id="gzJ-Sb-tCU"/>
+                            <constraint firstAttribute="width" constant="150" id="J0l-RO-rly"/>
+                            <constraint firstAttribute="height" constant="20" id="gzJ-Sb-tCU"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -54,17 +36,51 @@
                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8分钟前" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PNQ-F1-rdU">
+                        <rect key="frame" x="60" y="35" width="130" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="130" id="53y-5z-Hgu"/>
+                            <constraint firstAttribute="height" constant="20" id="TJO-PP-1V6"/>
+                            <constraint firstAttribute="height" constant="64" id="igp-WS-hGA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="igp-WS-hGA"/>
+                            </mask>
+                        </variation>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOu-lV-A2Y">
+                        <rect key="frame" x="8" y="15" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="brL-yg-HiK"/>
+                            <constraint firstAttribute="height" constant="40" id="qcT-Kp-wbi"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="Avatar_76.png"/>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="h0t-H5-7Dp" firstAttribute="top" secondItem="oOV-kW-L3f" secondAttribute="top" constant="14" id="31H-UO-vgv"/>
+                    <constraint firstItem="h0t-H5-7Dp" firstAttribute="top" secondItem="oOV-kW-L3f" secondAttribute="top" constant="12" id="31H-UO-vgv"/>
                     <constraint firstItem="PWI-4A-CQz" firstAttribute="trailing" secondItem="oOV-kW-L3f" secondAttribute="trailingMargin" id="8Gf-oC-djJ"/>
-                    <constraint firstItem="PNQ-F1-rdU" firstAttribute="leading" secondItem="mOu-lV-A2Y" secondAttribute="trailing" constant="10" id="8mf-sz-blC"/>
-                    <constraint firstItem="PNQ-F1-rdU" firstAttribute="top" secondItem="h0t-H5-7Dp" secondAttribute="bottom" constant="3" id="OST-io-hRY"/>
+                    <constraint firstAttribute="trailing" secondItem="PNQ-F1-rdU" secondAttribute="trailing" constant="20" symbolic="YES" id="I7s-cy-NZV"/>
+                    <constraint firstItem="PNQ-F1-rdU" firstAttribute="leading" secondItem="mOu-lV-A2Y" secondAttribute="trailing" constant="10" id="KHR-Zt-LQg"/>
+                    <constraint firstAttribute="bottom" secondItem="PNQ-F1-rdU" secondAttribute="bottom" constant="8.5" id="aar-qp-1Hd"/>
+                    <constraint firstItem="PNQ-F1-rdU" firstAttribute="top" secondItem="oOV-kW-L3f" secondAttribute="top" id="bVO-2t-R8q"/>
                     <constraint firstItem="mOu-lV-A2Y" firstAttribute="leading" secondItem="oOV-kW-L3f" secondAttribute="leading" constant="10" id="dYU-2B-o1O"/>
                     <constraint firstItem="PWI-4A-CQz" firstAttribute="top" secondItem="oOV-kW-L3f" secondAttribute="topMargin" constant="12" id="dof-Dk-Lzb"/>
                     <constraint firstItem="mOu-lV-A2Y" firstAttribute="top" secondItem="oOV-kW-L3f" secondAttribute="top" constant="14" id="jAh-KN-Rtt"/>
+                    <constraint firstItem="PNQ-F1-rdU" firstAttribute="leading" secondItem="h0t-H5-7Dp" secondAttribute="trailing" id="n6r-op-1HO"/>
                     <constraint firstItem="h0t-H5-7Dp" firstAttribute="leading" secondItem="mOu-lV-A2Y" secondAttribute="trailing" constant="10" id="pAa-pC-uP9"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="I7s-cy-NZV"/>
+                        <exclude reference="bVO-2t-R8q"/>
+                        <exclude reference="n6r-op-1HO"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="guanzhuBtn" destination="PWI-4A-CQz" id="AnR-Uy-986"/>

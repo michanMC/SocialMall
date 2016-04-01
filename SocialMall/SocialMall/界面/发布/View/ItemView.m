@@ -11,7 +11,11 @@
 
 #import "ItemView.h"
 
-@interface ItemView()
+@interface ItemView(){
+    
+    NSString *_skeystr;
+    
+}
 
 @property (nonatomic,assign) CGFloat viewHeight;/**< item的高度 >*/
 
@@ -24,11 +28,11 @@
 
 @implementation ItemView
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame Skeystr:(NSString*)skeystr{
     self = [super initWithFrame:frame];
     if (self) {
-        
-        
+    
+        _skeystr = skeystr;
         
     }
     return self;
@@ -46,17 +50,29 @@
         for (NSInteger i = 0; i < _itemArray.count; i ++) {
             UIButton *itemLabel = [[UIButton alloc] init];
            // itemLabel.textAlignment = NSTextAlignmentCenter;
-            [itemLabel setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [itemLabel setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-            itemLabel.backgroundColor = [UIColor whiteColor];
-            ViewRadius(itemLabel, 25/2);
+            if ([_skeystr isEqualToString:@"1"]) {
+                [itemLabel setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+                [itemLabel setTitleColor:UIColorFromRGB(0x29477d) forState:UIControlStateSelected];
+                itemLabel.backgroundColor = [UIColor whiteColor];
+                ViewRadius(itemLabel, 3);
+  
+            }
+            else
+            {
+                [itemLabel setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                [itemLabel setTitleColor:UIColorFromRGB(0x29477d) forState:UIControlStateSelected];
+                itemLabel.backgroundColor = [UIColor whiteColor];
+                ViewRadius(itemLabel, 3);
+                itemLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+                itemLabel.layer.borderWidth =0.5;
+  
+            }
            // itemLabel.textColor = [UIColor grayColor];
             //itemLabel.backgroundColor = [UIColor whiteColor];
             itemLabel.titleLabel.font = [UIFont systemFontOfSize:14];
             [itemLabel setTitle:_itemArray[i] forState:0];
             //itemLabel.text = _itemArray[i];
-            itemLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
-            itemLabel.layer.borderWidth =0.5;
+           
             itemLabel.tag = i + 700;
             [itemLabel addTarget:self action:@selector(actionBtn:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:itemLabel];
@@ -97,14 +113,21 @@
         UIButton * btn2 = (UIButton*)[self viewWithTag:700 + i];
         btn2.selected = NO;
         btn2.backgroundColor = [UIColor whiteColor];
+        btn2.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        btn2.layer.borderWidth =0.5;
+
     }
     btn.selected = YES;
+    btn.layer.borderColor = UIColorFromRGB(0x29477d).CGColor;
+    btn.layer.borderWidth =0.5;
+
     if (_seleColor) {
         btn.backgroundColor = _seleColor;
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
+
     }
     else
-    btn.backgroundColor = AppCOLOR;
+    btn.backgroundColor = [UIColor whiteColor];
     NSLog(@"%d",btn.tag - 700);
     if (_delegate) {
         [_delegate seleIndex:btn.tag - 700];

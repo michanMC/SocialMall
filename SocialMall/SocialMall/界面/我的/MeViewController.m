@@ -14,6 +14,7 @@
 #import "yonghuViewController.h"
 #import "MyshouyiViewController.h"
 #import "tixingViewController.h"
+#import "tixing2ViewController.h"
 #import "FenGuanViewController.h"
 #import "zhanshiViewController.h"
 #import "me4TableViewCell.h"
@@ -72,7 +73,7 @@
     
 
     _titleArray = @[@"我的收益",@"收货地址管理",@"消息提醒",@"我的收藏",@"我的订单"];
-    _imgArray = @[@"income_icon",@"mine_address_icon",@"mine_message_icon",@"mine_collect_icon",@"mine_order_icon"];
+    _imgArray = @[@"我的收益",@"收货地址管理",@"消息提醒",@"我的收藏",@"我的订单"];
     [self prepareUI];
     // Do any additional setup after loading the view.
 }
@@ -261,7 +262,7 @@
         NSString * userPhone =[defaults objectForKey:@"UserPhone"];
         cell.nameLbl.text = _usermodel.nickname ? _usermodel.nickname:userPhone;
         
-        cell.qianmingLbl.text = [NSString stringWithFormat:@"个性签名:%@",_usermodel.autograph];
+        cell.qianmingLbl.text = [NSString stringWithFormat:@"%@",_usermodel.autograph];
         
         cell.guanzhuLbl.text = _usermodel.follows;
         cell.fensiLbl.text = _usermodel.fans;
@@ -377,13 +378,17 @@
             //收货
             //[self showAllTextDialog:@"跳H5?"];
             MallViewController *mall = [[MallViewController alloc]init];
-            mall.menuagenturl = @"http://snsshop.111.xcrozz.com/Shop/Consignee/addressList";
+            mall.menuagenturl = [NSString stringWithFormat:@"%@Consignee/addressList",AppURL];
+            
+            
+            //@"http://snsshop.111.xcrozz.com/Shop/Consignee/addressList";
             [self pushNewViewController:mall];
 
         }
         if (indexPath.row == 2) {
             //提醒
-            tixingViewController * ctl = [[tixingViewController alloc]init];
+            //tixingViewController * ctl = [[tixingViewController alloc]init];
+              tixing2ViewController * ctl = [[tixing2ViewController alloc]init];
             ctl.dagteView = self;
             [self pushNewViewController:ctl];
         }
@@ -391,7 +396,7 @@
             //收藏
            // [self showAllTextDialog:@"跳H5?"];
             MallViewController *mall = [[MallViewController alloc]init];
-            mall.menuagenturl = @"http://snsshop.111.xcrozz.com/Shop/Goods/praiseList.html";
+            mall.menuagenturl = [NSString stringWithFormat:@"%@Goods/praiseList.html",AppURL];//@"http://snsshop.111.xcrozz.com/Shop/Goods/praiseList.html";
             [self pushNewViewController:mall];
 
         }
@@ -399,7 +404,7 @@
             //订单
            // [self showAllTextDialog:@"跳H5?"];
             MallViewController *mall = [[MallViewController alloc]init];
-            mall.menuagenturl = @"http://snsshop.111.xcrozz.com/Shop/Order/index.html";
+            mall.menuagenturl = [NSString stringWithFormat:@"%@Order/index.html",AppURL];//@"http://snsshop.111.xcrozz.com/Shop/Order/index.html";
             [self pushNewViewController:mall];
         }
         
@@ -526,7 +531,7 @@
 -(void)pushDingdan{
     
     MallViewController *mall = [[MallViewController alloc]init];
-    mall.menuagenturl = @"http://snsshop.111.xcrozz.com/Shop/Order/index.html";
+    mall.menuagenturl = [NSString stringWithFormat:@"%@Order/index.html",AppURL];//@"http://snsshop.111.xcrozz.com/Shop/Order/index.html";
     [self pushNewViewController:mall];
   
     

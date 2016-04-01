@@ -14,4 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *tixingimg;
 @property (weak, nonatomic) IBOutlet UIImageView *jiantouimg;
 
+
+
+
 @end
