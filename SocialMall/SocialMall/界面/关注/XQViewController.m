@@ -25,8 +25,10 @@
 #import "jubao_View.h"
 #import "UIView+TYAlertView.h"
 #import "MallViewController.h"
+#import "XMFDropBoxView.h"
+
 @interface XQViewController ()
-<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate,UITextViewDelegate,zuopinDataView3CellDelegate>
+<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate,UITextViewDelegate,zuopinDataView3CellDelegate,XMFDropBoxViewDataSource>
 {
     UIViewController *currentViewController;
     //系统自的下拉刷新控制器
@@ -48,7 +50,8 @@
     
     jubao_View *shareView;
 
-    
+    UIButton * sateBtn;
+    BOOL _isdanchu;
 }
 @property(nonatomic,strong) UITableView *firstViewTableView;
 @property(nonatomic,strong) UITableView *secondViewTableView;
@@ -73,7 +76,10 @@
     _MatchListArray = [NSMutableArray array];
 
     self.title = @"详情";
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"share_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(fenxiang)];
+    
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"share_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(actionBtn)];
+    sateBtn = [[UIButton alloc]initWithFrame:CGRectMake(Main_Screen_Width - 20 , 20, 40, 40)];
+    [self.view addSubview:sateBtn];
     pagenum = 0;
     [self prepareFirstView];
     [self prepareSecondView];
@@ -224,7 +230,9 @@
     
     
 }
-
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [XMFDropBoxView removeAllDropBox];
+}
  #pragma mark-实现滚动视图的didScroll这个协议方法，来判断是否在刷新数据
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -232,7 +240,9 @@
     //y轴的坐标变化来控制是否刷新的
     NSLog(@"---- %f ----",scrollView.contentOffset.y);
     NSLog(@"+++ %f +++++",scrollView.contentSize.height);
+    _isdanchu = NO;
 
+    [XMFDropBoxView removeAllDropBox];
     
     BOOL istiao = NO;
     if (scrollView == _firstViewTableView) {
@@ -820,14 +830,128 @@
              
          }
          
-         
-         
-         
-     }
+           }
+    
+    if(indexPath.section == 2){
+        if (indexPath.row == 0) {
+        }
+        else{
+        if (_CommentArray.count > indexPath.row-1) {
+            CommentModel * model = _CommentArray[indexPath.row-1];
+            GerenViewController *ctl = [[GerenViewController alloc]init];
+                            ctl.user_id = model.user_id;
+                
+                [self pushNewViewController:ctl];
+        
+            
+            
+            
+        
+        
+    }
+        }
+    }
     
     
+}
+#pragma mark-弹框
+-(void)actionBtn{
+    XMFDropBoxView *inputBox = [XMFDropBoxView dropBoxWithLocationView:sateBtn dataSource:self];
+    inputBox.backgroundColor = [UIColor blackColor];
+    __weak XQViewController *weakSelf = self;
+    [inputBox selectItemWithBlock:^(NSUInteger index) {
+      //  NSLog(@"%ld", index);
+        _isdanchu = NO;
+        if (index == 0) {
+            [weakSelf fenxiang];
+        }
+        else
+        {
+            [weakSelf actionjubao];
+        }
+        
+    }];
+    NSLog(@">>>>%ld",_isdanchu);
+    if (_isdanchu) {
+        _isdanchu = NO;
+        [inputBox dismissDropBox];
+    }
+    else
+    {
+        _isdanchu = YES;
+        [inputBox displayDropBox];
+    }
+
     
+
     
+}
+- (NSUInteger)numberOfItemInDropBoxView:(XMFDropBoxView *)dropBoxView {
+    return 2;
+}
+
+- (CGFloat)dropBoxView:(XMFDropBoxView *)dropBoxView heightForItemAtIndex:(NSUInteger)index {
+    return 35.f;
+}
+
+- (UIView *)dropBoxView:(XMFDropBoxView *)dropBoxView itemAtIndex:(NSUInteger)index {
+    
+//    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 35)];
+//    btn.enabled = NO;
+//    if (index == 0) {
+//        
+//    
+//    [btn setImage:[UIImage imageNamed:@"share_icon"] forState:0];
+//    [btn setTitle:@"分享" forState:0];
+//    }
+//    else
+//    {
+//        [btn setImage:[UIImage imageNamed:@"report_icon1"] forState:0];
+//        [btn setTitle:@"举报" forState:0];
+//   
+//    }
+//    btn.backgroundColor = [UIColor blackColor];
+//    [btn setTitleColor:[UIColor whiteColor] forState:0];
+//    btn.titleLabel.font =AppFont;
+//    return btn;
+//    
+    UIView * bgview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 35)];
+    bgview.backgroundColor = [UIColor blackColor];
+    UIImageView * imgview= [[UIImageView alloc]initWithFrame:CGRectMake(10, 7.5, 20, 20)];
+    
+    UILabel *titleLB = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 35)];
+    titleLB.backgroundColor = [UIColor blackColor];
+    titleLB.textAlignment = NSTextAlignmentCenter;
+    titleLB.font = [UIFont systemFontOfSize:14];
+    titleLB.text = @"测试";
+        if (index == 0) {
+            titleLB.text = @"分享";
+            imgview.image = [UIImage imageNamed:@"share_icon"];
+    
+//        [btn setImage:[UIImage imageNamed:@"share_icon"] forState:0];
+//        [btn setTitle:@"分享" forState:0];
+        }
+        else
+        {
+            imgview.image = [UIImage imageNamed:@"report_icon1"];
+
+            titleLB.text = @"举报";
+
+//            [btn setImage:[UIImage imageNamed:@"report_icon1"] forState:0];
+//            [btn setTitle:@"举报" forState:0];
+       
+        }
+
+    titleLB.textColor = [UIColor whiteColor];
+    [bgview addSubview:titleLB];
+    [bgview addSubview:imgview];
+
+
+    return bgview;
+}
+
+- (CGFloat)widthInDropBoxView:(XMFDropBoxView *)dropBoxView {
+    return 100.f;
 }
 #pragma mark-分享
 -(void)fenxiang{
@@ -838,10 +962,11 @@
     [animationView selectedWithIndex:^(NSInteger index) {
         NSLog(@"你选择的index ＝＝ %ld",(long)index);
         NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-        NSString * url = [NSString stringWithFormat:@"111"];
+        NSString * url = [NSString stringWithFormat:@"%@Msg/html5?id=%@",AppURL,_faxianModel.id ? _faxianModel.id : _faxianModel.msg_id];
+        
         [dic setObject:url forKey:@"url"];
         [dic setObject:_XQModel.content forKey:@"title"];
-        [dic setObject:@"分享详情" forKey:@"titlesub"];
+        [dic setObject:_XQModel.style_name forKey:@"titlesub"];
         
 
         if (index == 1) {

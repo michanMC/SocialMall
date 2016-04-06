@@ -138,7 +138,7 @@ updatingLocation:(BOOL)updatingLocation
     
     
     MallViewController *mall = [[MallViewController alloc]init];
-    [self setUpChildController:mall title:@"商城" imageName:@"mine_normal" selectedImageName:@"mine_pressed" Tag:90003];
+    [self setUpChildController:mall title:@"商店" imageName:@"mine_normal" selectedImageName:@"mine_pressed" Tag:90003];
 
     MeViewController *me = [[MeViewController alloc]init];
     

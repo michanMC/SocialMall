@@ -332,10 +332,13 @@
     [animationView selectedWithIndex:^(NSInteger index) {
         NSLog(@"你选择的index ＝＝ %ld",(long)index);
         NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-        NSString * url = [NSString stringWithFormat:@"111"];
+      //  NSString * url = [NSString stringWithFormat:@"111"];
+         NSString * url = [NSString stringWithFormat:@"%@Msg/html5?id=%@",AppURL,_homeModel.id ? _homeModel.id : _homeModel.msg_id];
+        
+        
         [dic setObject:url forKey:@"url"];
         [dic setObject:_homeModel.content forKey:@"title"];
-        [dic setObject:@"分享详情" forKey:@"titlesub"];
+        [dic setObject:_homeModel.style_name forKey:@"titlesub"];
         
         
         if (index == 1) {

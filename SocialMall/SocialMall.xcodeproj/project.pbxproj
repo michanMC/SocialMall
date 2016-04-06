@@ -96,6 +96,9 @@
 		4C3BA5EA1C2A8DAE00166ED4 /* wangjiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BA5E91C2A8DAE00166ED4 /* wangjiViewController.m */; };
 		4C3BA5EE1C2AA20800166ED4 /* MCNoMuiscView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BA5ED1C2AA20800166ED4 /* MCNoMuiscView.m */; };
 		4C3DA1151C8D7D010076830F /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3DA1141C8D7D010076830F /* CHTCollectionViewWaterfallLayout.m */; };
+		4C43F5F91CB49E85000CE61A /* icon_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C43F5F71CB49E85000CE61A /* icon_share@2x.png */; };
+		4C43F5FA1CB49E85000CE61A /* icon_share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C43F5F81CB49E85000CE61A /* icon_share@3x.png */; };
+		4C43F6021CB4BD60000CE61A /* XMFDropBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C43F6011CB4BD60000CE61A /* XMFDropBoxView.m */; };
 		4C44171A1C5F1BCA0003BA45 /* userDatamodel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4417191C5F1BCA0003BA45 /* userDatamodel.m */; };
 		4C44171D1C5F42950003BA45 /* zhanshiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C44171C1C5F42950003BA45 /* zhanshiModel.m */; };
 		4C4470DC1C9F87DA00C27009 /* zuopinDataView5.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4470DB1C9F87DA00C27009 /* zuopinDataView5.m */; };
@@ -712,6 +715,10 @@
 		4C3BA5ED1C2AA20800166ED4 /* MCNoMuiscView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCNoMuiscView.m; sourceTree = "<group>"; };
 		4C3DA1131C8D7D010076830F /* CHTCollectionViewWaterfallLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTCollectionViewWaterfallLayout.h; sourceTree = "<group>"; };
 		4C3DA1141C8D7D010076830F /* CHTCollectionViewWaterfallLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTCollectionViewWaterfallLayout.m; sourceTree = "<group>"; };
+		4C43F5F71CB49E85000CE61A /* icon_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_share@2x.png"; sourceTree = "<group>"; };
+		4C43F5F81CB49E85000CE61A /* icon_share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_share@3x.png"; sourceTree = "<group>"; };
+		4C43F6001CB4BD60000CE61A /* XMFDropBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMFDropBoxView.h; sourceTree = "<group>"; };
+		4C43F6011CB4BD60000CE61A /* XMFDropBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMFDropBoxView.m; sourceTree = "<group>"; };
 		4C4417181C5F1BC90003BA45 /* userDatamodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userDatamodel.h; sourceTree = "<group>"; };
 		4C4417191C5F1BCA0003BA45 /* userDatamodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userDatamodel.m; sourceTree = "<group>"; };
 		4C44171B1C5F42950003BA45 /* zhanshiModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhanshiModel.h; sourceTree = "<group>"; };
@@ -1581,6 +1588,15 @@
 			path = CHTCollectionViewWaterfallLayout;
 			sourceTree = "<group>";
 		};
+		4C43F5FF1CB4BD60000CE61A /* XMFDropBoxView */ = {
+			isa = PBXGroup;
+			children = (
+				4C43F6001CB4BD60000CE61A /* XMFDropBoxView.h */,
+				4C43F6011CB4BD60000CE61A /* XMFDropBoxView.m */,
+			);
+			path = XMFDropBoxView;
+			sourceTree = "<group>";
+		};
 		4C4470DF1C9FB2F500C27009 /* 【社交电商】UI_切图20160321 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1923,6 +1939,7 @@
 		4C9AFAE71C22F72A0096754F /* 第三方 */ = {
 			isa = PBXGroup;
 			children = (
+				4C43F5FF1CB4BD60000CE61A /* XMFDropBoxView */,
 				4C2FFEC21C87E53A008D0249 /* ShareSDK */,
 				4C52BFB01C7EA24A00948424 /* 高德 */,
 				4C5147851C2AD3D300C8FB87 /* YBImgPicker */,
@@ -2790,6 +2807,8 @@
 				4CBC61AD1C58BEFE005BBA6D /* arrow_pull-down@3x.png */,
 				4CBC61951C58A90C005BBA6D /* iphone */,
 				4CBC618B1C5859B5005BBA6D /* Default-568h@2x.png */,
+				4C43F5F71CB49E85000CE61A /* icon_share@2x.png */,
+				4C43F5F81CB49E85000CE61A /* icon_share@3x.png */,
 				4C809FA71C299C9E00777BA6 /* 【社交电商】UI_切图20151221 */,
 			);
 			path = image;
@@ -3088,6 +3107,7 @@
 				4C80A06B1C299C9E00777BA6 /* focus_pressed@2x.png in Resources */,
 				4C4471111C9FB2F500C27009 /* 我的收藏@3x.png in Resources */,
 				4C52BFB61C7EA27100948424 /* AMap.bundle in Resources */,
+				4C43F5F91CB49E85000CE61A /* icon_share@2x.png in Resources */,
 				4C44711C1C9FB2F500C27009 /* 热度_没选中@2x.png in Resources */,
 				4C80A0B61C299C9E00777BA6 /* style_bg_selected@2x.png in Resources */,
 				4C80A0861C299C9E00777BA6 /* brand_icon@3x.png in Resources */,
@@ -3223,6 +3243,7 @@
 				4C80A10E1C299C9E00777BA6 /* login_btn_bg@3x.png in Resources */,
 				4CA81C551C337FFF0054E516 /* shouyiTableViewCell.xib in Resources */,
 				4CBC619E1C58A90C005BBA6D /* ios-template-114.png in Resources */,
+				4C43F5FA1CB49E85000CE61A /* icon_share@3x.png in Resources */,
 				4C80A0E31C299C9E00777BA6 /* capital_icon@3x.png in Resources */,
 				4C80A0F61C299C9E00777BA6 /* mine_income_icon@2x.png in Resources */,
 				4C92A5701C32BED500AC5F55 /* headView.xib in Resources */,
@@ -3481,6 +3502,7 @@
 				4C9AFC2E1C22FC440096754F /* MJExtensionConst.m in Sources */,
 				4C9AFC441C22FC440096754F /* MJRefreshNormalHeader.m in Sources */,
 				4C3BA5EA1C2A8DAE00166ED4 /* wangjiViewController.m in Sources */,
+				4C43F6021CB4BD60000CE61A /* XMFDropBoxView.m in Sources */,
 				4C9AFBC31C22F72A0096754F /* UIImage+GIF.m in Sources */,
 				4C9AFC3E1C22FC440096754F /* MJRefreshAutoNormalFooter.m in Sources */,
 				4C08370A1C7709EF005801AA /* NSURLRequest+ForSSL.m in Sources */,
@@ -3735,7 +3757,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SocialMall/PrefixHeader.pch";
 				INFOPLIST_FILE = SocialMall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3764,7 +3786,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/SocialMall/PrefixHeader.pch";
 				INFOPLIST_FILE = SocialMall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
