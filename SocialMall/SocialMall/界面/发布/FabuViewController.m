@@ -10,7 +10,9 @@
 #import "YBImgPickerViewController.h"
 #import "Fabu2ViewController.h"
 #import "loginViewController.h"
-@interface FabuViewController ()<YBImgPickerViewControllerDelegate>
+#import "RSKImageCropper.h"
+
+@interface FabuViewController ()<YBImgPickerViewControllerDelegate,RSKImageCropViewControllerDelegate>
 
 @end
 
@@ -93,11 +95,43 @@
 - (void)YBImagePickerDidFinishWithImages:(NSArray *)imageArray {
    
     if (imageArray.count) {
-        Fabu2ViewController * ctl = [[Fabu2ViewController alloc]init];
-        ctl.image = imageArray[0];
-        [self.navigationController pushViewController:ctl animated:NO];
+        UIImage *photo = imageArray[0];//[UIImage imageNamed:@"photo"];
+        RSKImageCropViewController *imageCropVC = [[RSKImageCropViewController alloc] initWithImage:photo];
+        imageCropVC.delegate = self;
+        [self.navigationController pushViewController:imageCropVC animated:NO];
+        
+        
 
     }
+}
+#pragma mark - RSKImageCropViewControllerDelegate
+
+- (void)imageCropViewControllerDidCancelCrop:(RSKImageCropViewController *)controller
+{
+   [self.navigationController popViewControllerAnimated:NO];
+    if (self.isgion) {
+        
+        
+        YBImgPickerViewController * next = [[YBImgPickerViewController alloc]init];
+        [next showInViewContrller:self choosenNum:0 delegate:self];
+    }
+    else
+    {
+        
+        loginViewController * ctl = [[loginViewController alloc]init];
+        ctl.isMeCtl = YES;
+        [self pushNewViewController:ctl];
+        
+    }
+
+}
+
+- (void)imageCropViewController:(RSKImageCropViewController *)controller didCropImage:(UIImage *)croppedImage
+{
+            Fabu2ViewController * ctl = [[Fabu2ViewController alloc]init];
+        ctl.image = croppedImage;//imageArray[0];
+            [self.navigationController pushViewController:ctl animated:NO];
+
 }
 
 - (void)didReceiveMemoryWarning {

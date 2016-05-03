@@ -58,7 +58,7 @@
     
     
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(actionTap:)];
-    //[self addGestureRecognizer:tap];
+   // [self addGestureRecognizer:tap];
     _btn = [[UIButton alloc]initWithFrame:CGRectMake(60, 64 + 100 * 174 / 152 + 20 + 20 + 10 + 20 + 20, Main_Screen_Width - 120, 40)];
     [_btn setBackgroundImage:[UIImage imageNamed:@"login_btn_bg"] forState:0];
     [_btn setTitle:@"前进发现" forState:0];

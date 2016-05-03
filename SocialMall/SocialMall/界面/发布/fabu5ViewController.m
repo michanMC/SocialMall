@@ -76,7 +76,7 @@
         [self showAllTextDialog:@"请选择风格"];return;
     }
     if (!_addMesArray.count && !_goodsArray.count) {
-        [self showAllTextDialog:@"请添加商品"];return;
+        //[self showAllTextDialog:@"请添加商品"];return;
     }
     else
     {

@@ -230,7 +230,7 @@
   //  self.automaticallyAdjustsScrollViewInsets = NO;
     
     
-    self.title = @"商城";
+    self.title = @"商店";
     
     _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 20, Main_Screen_Width, Main_Screen_Height - 20)];
     _webView.scrollView.bounces = NO;

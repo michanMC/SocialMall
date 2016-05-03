@@ -13,6 +13,8 @@
 #import "remenViewController.h"
 #import "zuixinViewController.h"
 #import "XQViewController.h"
+#import "MCXQViewController.h"
+
 #import "SearchViewController.h"
 #import "oadMessageModel.h"
 #import "userDatamodel.h"
@@ -299,7 +301,7 @@
 -(void)didSelectFXXQObj:(NSNotification*)Notification{
     
     if ([Notification.object isKindOfClass:[faXianModel class]]) {
-        XQViewController * ctl = [[XQViewController alloc]init];
+        MCXQViewController * ctl = [[MCXQViewController alloc]init];
         ctl.faxianModel = Notification.object;
         [self pushNewViewController:ctl];
 

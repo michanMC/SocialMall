@@ -11,6 +11,7 @@
 
 #import "zhizuoText2TableViewCell.h"
 #import "UIPlaceHolderTextView.h"
+
 @interface Fabu2ViewController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 {
     UITableView * _tableView;
@@ -24,13 +25,19 @@
 @end
 
 @implementation Fabu2ViewController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"发布";
     _countTextStr = @"0/150";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_icon_back"] style:UIBarButtonItemStylePlain target:self action:@selector(ActionBack)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"添加商品" style:UIBarButtonItemStylePlain target:self action:@selector(Actionadd)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"填写搭配" style:UIBarButtonItemStylePlain target:self action:@selector(Actionadd)];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,64 , Main_Screen_Width, Main_Screen_Height - 64)];
     [self.view addSubview:_tableView];
@@ -41,6 +48,8 @@
     // Do any additional setup after loading the view.
 }
 -(UIView*)headView{
+    
+    
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Width)];
     UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Width)];
     imgView.image = _image;
@@ -63,6 +72,10 @@
 //    imgView.contentMode = UIViewContentModeScaleAspectFill;
 //    imgView.clipsToBounds = YES; // 裁剪边缘
 
+    
+    
+    
+    
     return view;
     
 }

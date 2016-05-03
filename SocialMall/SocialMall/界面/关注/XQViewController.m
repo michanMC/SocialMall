@@ -52,6 +52,7 @@
 
     UIButton * sateBtn;
     BOOL _isdanchu;
+    XMFDropBoxView *inputBox;
 }
 @property(nonatomic,strong) UITableView *firstViewTableView;
 @property(nonatomic,strong) UITableView *secondViewTableView;
@@ -69,7 +70,13 @@
 @end
 
 @implementation XQViewController
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    _isdanchu = NO;
+    
+    [inputBox dismissDropBox];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _CommentArray = [NSMutableArray array];
@@ -124,7 +131,28 @@
     _firstViewTableView.tableFooterView = _firstViewPullview;
     [_firstViewController.view addSubview:_firstViewTableView];
     [self.view addSubview:self.firstViewController.view];
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(actionTap:)];
+    [self.view addGestureRecognizer:tap];
+
     [self load_Data:YES];
+    
+}
+-(void)actionTap:(UITapGestureRecognizer*)tap{
+    _isdanchu = NO;
+
+    [inputBox dismissDropBox];
+
+//    if (_isdanchu) {
+//        _isdanchu = NO;
+//        [inputBox dismissDropBox];
+//    }
+//    else
+//    {
+//        _isdanchu = YES;
+//        [inputBox displayDropBox];
+//    }
+
+    
     
 }
 #pragma mark-第2个
@@ -624,7 +652,7 @@
                 cell = [[[NSBundle mainBundle]loadNibNamed:cellid4 owner:self options:nil]lastObject];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            NSString * str = [NSString stringWithFormat:@"喜欢%@",_XQModel.like];
+            NSString * str = [NSString stringWithFormat:@"喜欢%@",_XQModel.like?_XQModel.like:@""];
             cell.xihuanBTn.layer.borderWidth = 1;
             cell.xihuanBTn.layer.borderColor = UIColorFromRGB(0x29477d).CGColor;
             [cell.xihuanBTn setTitleColor:UIColorFromRGB(0x29477d) forState:0];
@@ -701,7 +729,7 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;                cell.titleLbl.text = @"搭配详情";
                 cell.imgView2.hidden = YES;
                 cell.imgView1.hidden = NO;
-                cell.sykeLbl.text = _XQModel.style_name;
+                cell.sykeLbl.text = _XQModel.style_name?_XQModel.style_name:@"";
                 ViewRadius(cell.sykeLbl, 5);
                 cell.sykeLbl.textColor = AppCOLOR;
                 cell.sykeLbl.layer.borderColor= UIColorFromRGB(0x29477d).CGColor;
@@ -856,7 +884,7 @@
 }
 #pragma mark-弹框
 -(void)actionBtn{
-    XMFDropBoxView *inputBox = [XMFDropBoxView dropBoxWithLocationView:sateBtn dataSource:self];
+    inputBox = [XMFDropBoxView dropBoxWithLocationView:sateBtn dataSource:self];
     inputBox.backgroundColor = [UIColor blackColor];
     __weak XQViewController *weakSelf = self;
     [inputBox selectItemWithBlock:^(NSUInteger index) {
@@ -872,6 +900,7 @@
         
     }];
     NSLog(@">>>>%ld",_isdanchu);
+    
     if (_isdanchu) {
         _isdanchu = NO;
         [inputBox dismissDropBox];

@@ -190,7 +190,7 @@
     
     if (![_goodsArray count] && !_fengeArray.count) {
         
-         [self showAllTextDialog:@"请选择或添加商品"];return;
+        // [self showAllTextDialog:@"请选择或添加商品"];return;
     }
     
 
