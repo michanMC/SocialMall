@@ -171,6 +171,7 @@
         [self hideHud];
         NSLog(@"成功");
         NSLog(@"返回==%@",resultDic);
+        
         NSArray *  messageList = resultDic[@"data"][@"keyword"];
         for (NSDictionary * dic in messageList) {
             KeywordModel * model = [KeywordModel mj_objectWithKeyValues:dic];
@@ -193,7 +194,7 @@
     
 }
 #pragma mark-获取数据
--(void)searchsearch:(BOOL)Refresh Seachstr:(NSString*)seachstr{
+-(void)searchsearch:(BOOL)Refresh Seachstr:(NSString*)seachstr {
     _seachStr = seachstr;
 
     NSDictionary * Parameterdic = @{

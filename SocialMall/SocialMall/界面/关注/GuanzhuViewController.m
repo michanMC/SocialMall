@@ -12,7 +12,7 @@
 #import "GerenViewController.h"
 #import "zuopinDataView.h"
 #import "FenGuanViewController.h"
-#import "XQViewController.h"
+#import "MCXQViewController.h"
 #import "faXianModel.h"
 @interface GuanzhuViewController ()<UIScrollViewDelegate>
 {
@@ -165,10 +165,17 @@
 #pragma mark-监听跳详情
 -(void)didSelectXQObj:(NSNotification*)Notification{
     if (Notification.object) {
-        
-        faXianModel * model = Notification.object;
-    XQViewController * ctl = [[XQViewController alloc]init];
+//        NSDictionary * dic =@{
+//                              @"view":view,
+//                              @"homeModel":_homeModel
+//                              };
+
+        NSDictionary * dic = Notification.object;
+        faXianModel * model = dic[@"homeModel"];
+    MCXQViewController * ctl = [[MCXQViewController alloc]init];
+        ctl.DataView = (zuopinDataView*)dic[@"view"];
         ctl.faxianModel = model;
+        
     NSLog(@"跳第%ld",(long)_index);
     [self pushNewViewController:ctl];
 

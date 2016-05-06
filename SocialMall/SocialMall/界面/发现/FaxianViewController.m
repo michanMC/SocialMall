@@ -12,7 +12,6 @@
 #import "tuijianViewController.h"
 #import "remenViewController.h"
 #import "zuixinViewController.h"
-#import "XQViewController.h"
 #import "MCXQViewController.h"
 
 #import "SearchViewController.h"

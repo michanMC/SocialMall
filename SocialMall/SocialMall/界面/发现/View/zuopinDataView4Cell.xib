@@ -11,29 +11,25 @@
             <rect key="frame" x="0.0" y="0.0" width="280" height="35"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yCy-kz-zr0" id="VBW-IH-IjT">
-                <rect key="frame" x="0.0" y="0.0" width="280" height="34.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="280" height="35"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Adw-de-4kx">
-                        <rect key="frame" x="10" y="3" width="30" height="30"/>
+                        <rect key="frame" x="8" y="3" width="30" height="30"/>
                         <state key="normal" image="favorite_icon_normal.png"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5FR-uD-MbE">
-                        <rect key="frame" x="36" y="7" width="42" height="21"/>
+                        <rect key="frame" x="37" y="7" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BCM-wh-yy8">
-                        <rect key="frame" x="59" y="6" width="24" height="24"/>
-                        <state key="normal" backgroundImage="comment_icon_normal.png"/>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHK-BZ-8dj">
                         <rect key="frame" x="247" y="3" width="30" height="30"/>
                         <state key="normal" image="更多.png"/>
                     </button>
                     <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gwM-nZ-UQc">
-                        <rect key="frame" x="141" y="0.0" width="105" height="34.5"/>
+                        <rect key="frame" x="141" y="0.0" width="105" height="35"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="弹出按钮框.png" translatesAutoresizingMaskIntoConstraints="NO" id="MgJ-Fk-dOl">
                                 <rect key="frame" x="-7" y="4" width="112" height="27"/>
@@ -59,11 +55,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBG-7x-FFL">
-                        <rect key="frame" x="84" y="7" width="42" height="21"/>
+                        <rect key="frame" x="76" y="7" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BCM-wh-yy8">
+                        <rect key="frame" x="46" y="1" width="33" height="33"/>
+                        <state key="normal" image="comment_icon_normal.png"/>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>

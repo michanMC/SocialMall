@@ -16,7 +16,7 @@
 #import "FaxianViewController.h"
 #import "MallViewController.h"
 #import "MeViewController.h"
-
+#import "shangjiaViewController.h"
 @interface settgViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 {
     
@@ -34,7 +34,7 @@
     self.title = @"设置";
     _array = @[
   @[@"账号管理",@"信息设置",@"意见反馈"],
-  @[@"用户协议",@"关于我们",@"清除缓存"],
+  @[@"关于我们",@"清除缓存"],
   @[@"退出"],
   ];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, Main_Screen_Width, Main_Screen_Height - 64) style:UITableViewStyleGrouped];
@@ -48,7 +48,7 @@
         return 3;
     }
     if (section == 1) {
-        return 3;
+        return 2;
     }
     if (section == 2) {
         return 1;
@@ -104,7 +104,14 @@
         // ctl.isMy = YES;
         [self pushNewViewController:ctl];
     }
-    if (indexPath.section == 1 && indexPath.row == 2) {
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        
+        shangjiaViewController * ctl = [[shangjiaViewController alloc]init];
+        ctl.menuagenturl = [NSString stringWithFormat:@"%@Msg/about",AppURL];
+        [self pushNewViewController:ctl];
+
+    }
+    if (indexPath.section == 1 && indexPath.row == 1) {
         [self showLoading:YES AndText:nil];
         dispatch_async(
                        dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

@@ -9,7 +9,7 @@
 #import "zhanshiViewController.h"
 #import "zhanshiTableViewCell.h"
 #import "faXianModel.h"
-#import "XQViewController.h"
+#import "MCXQViewController.h"
 #import "CLAnimationView.h"
 @interface zhanshiViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -214,7 +214,7 @@
     if (_dataArray.count > indexPath.row) {
 
     faXianModel * model = _dataArray [indexPath.row];
-    XQViewController * ctl = [[XQViewController alloc]init];
+    MCXQViewController * ctl = [[MCXQViewController alloc]init];
     ctl.faxianModel = model;
     [self pushNewViewController:ctl];
     }
@@ -224,7 +224,7 @@
      faXianModel * model = _dataArray [btn.tag - 1000000];
     
     CLAnimationView *animationView = [[CLAnimationView alloc]initWithTitleArray:@[@"朋友圈",@"微信好友"] picarray:@[@"share_friends",@"share_wechat"]];
-    __weak XQViewController *weakSelf = self;
+    __weak MCXQViewController *weakSelf = self;
     
     [animationView selectedWithIndex:^(NSInteger index) {
         NSLog(@"你选择的index ＝＝ %ld",(long)index);

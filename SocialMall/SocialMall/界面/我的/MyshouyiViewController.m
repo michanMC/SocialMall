@@ -16,6 +16,8 @@
 #import "MyshouyiBtn.h"
 #import "UserFinanceModel.h"
 #import "userDatamodel.h"
+#import "RKAlertView.h"
+
 @interface MyshouyiViewController ()<UITextFieldDelegate>
 {
     HHHorizontalPagingView *pagingView;
@@ -283,24 +285,37 @@
     
     
 }
--(void)actionTX{
-    [_tixianText resignFirstResponder];
-    if (!_tixianText.text.length) {
-        [self showAllTextDialog:@"请输入提现金额"];
-        return;
-    }
-    if (!ali_account.length) {
-        [self showAllTextDialog:@"你还没设置支付宝账号"];
-        return;
-    }
+
+-(void)dankuangView{
+    
+    
+    
+    //带输入框的提示框
+    [RKAlertView showAlertPlainTextWithTitle:@"请填写你的支付宝账号" message:@"输入支付宝账号" cancelTitle:@"取消" confirmTitle:@"确认" alertViewStyle:UIAlertViewStylePlainTextInput confrimBlock:^(UIAlertView *alertView) {
+        
+        NSLog(@"确认了输入：%@",[alertView textFieldAtIndex:0].text);
+        if ([[alertView textFieldAtIndex:0].text length]) {
+            [self actionTX:[alertView textFieldAtIndex:0].text];
+        }
+        
+        
+        
+    } cancelBlock:^{
+        NSLog(@"取消了");
+    }];
+ 
+    
+}
+-(void)actionTX:(NSString*)zhanghaostr{
+    
     [self showLoading:YES AndText:nil];
     
     NSDictionary * Parameterdic = @{
                                     @"money":_tixianText.text,
-                                    @"ali_account":ali_account,
+                                    @"ali_account":zhanghaostr,
                                     };
     
-
+    
     
     [self.requestManager requestWebWithParaWithURL:@"User/withdrawing" Parameter:Parameterdic IsLogin:YES Finish:^(NSDictionary *resultDic) {
         [self hideHud];
@@ -313,7 +328,27 @@
         
     }];
     
+    
 
+    
+}
+-(void)actionTX{
+    [_tixianText resignFirstResponder];
+    if (!_tixianText.text.length) {
+        [self showAllTextDialog:@"请输入提现金额"];
+        return;
+    }
+    
+    
+    if (!ali_account.length) {
+        [self dankuangView];
+//        [self showAllTextDialog:@"你还没设置支付宝账号"];
+        return;
+    }
+    
+    [self actionTX:ali_account];
+    
+    
     
     
 }

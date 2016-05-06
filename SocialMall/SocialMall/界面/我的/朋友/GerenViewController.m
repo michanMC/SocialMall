@@ -15,7 +15,7 @@
 #import "HHContentCollectionView.h"
 #import "FenGuanViewController.h"
 #import "zhanshiViewController.h"
-#import "XQViewController.h"
+#import "MCXQViewController.h"
 #import "ShoudaozanViewController.h"
 @interface GerenViewController ()
 {
@@ -43,7 +43,7 @@
         NSLog(@"11111111");
         
         faXianModel * model = Notification.object;
-        XQViewController * ctl = [[XQViewController alloc]init];
+        MCXQViewController * ctl = [[MCXQViewController alloc]init];
         ctl.faxianModel = model;
         [self pushNewViewController:ctl];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

@@ -21,7 +21,6 @@
 @interface zuopinDataView ()<UITableViewDataSource,UITableViewDelegate,zuopinDataView3CellDelegate>{
     CGRect _viewFrame;
     jubao_View *shareView;
-    faXianModel *_homeModel;
     NSString * nickname;
     NSString * headimgurl;
 
@@ -49,7 +48,7 @@
    self.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, _viewFrame.size.width, _viewFrame.size.height ) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor clearColor];
-    
+    _tableView.bounces = NO;
     _tableView.delegate= self;
     _tableView.dataSource = self;
     _tableView.showsHorizontalScrollIndicator = NO;
@@ -151,7 +150,7 @@
         cell.bgView.tag = 500;
         
         cell.pinlunLbl.text = _homeModel.comments;
-        cell.zanLbl.text = _homeModel.like;
+        cell.zanLbl.text = [NSString stringWithFormat:@"%zd",_homeModel.like_listArray.count];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         NSString * userid = [defaults objectForKey:@"userId"];
         BOOL iszan = NO;
@@ -168,7 +167,7 @@
         }
         else
         {
-            [cell.zanBtn setImage:[UIImage imageNamed:@"喜欢_未选中"] forState:UIControlStateNormal];
+            [cell.zanBtn setImage:[UIImage imageNamed:@"favorite_icon_normal"] forState:UIControlStateNormal];
             _homeModel.islike = NO;
 
         }
@@ -185,9 +184,15 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 1 || indexPath.row == 2)
         if (_homeModel) {
+            zuopinDataView * view = self;
+            view.tag = 88888;
+            NSDictionary * dic =@{
+                                 @"view":view,
+                                 @"homeModel":_homeModel
+                                 };
             
     //发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectXQObjNotification" object:_homeModel];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectXQObjNotification" object:dic];
         }
     
 }
@@ -267,6 +272,8 @@
 
             
         }
+        
+        
         [_tableView reloadData];
         
     } Error:^(AFHTTPRequestOperation *operation, NSError *error, NSString *description) {

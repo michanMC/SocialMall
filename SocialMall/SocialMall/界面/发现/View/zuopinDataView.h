@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "faXianModel.h"
 @interface zuopinDataView : UIView
+@property(nonatomic,strong) faXianModel *homeModel;
+
 @property(nonatomic,strong)UITableView*tableView;
 @property (nonatomic,weak)BaseViewController *delegate;
 -(void)prepareUI:(faXianModel*)model;
+-(void)ActionDianzan;
+
 @end

@@ -129,7 +129,7 @@
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             MCUser * mc = [MCUser sharedInstance];
-            self.navigationController.tabBarController.selectedIndex = mc.tabIndex;
+            self.navigationController.tabBarController.selectedIndex = 1;//mc.tabIndex;
             
         });
 

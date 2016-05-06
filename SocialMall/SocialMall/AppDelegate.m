@@ -42,6 +42,7 @@
      *  在此事件中写入连接代码。第四个参数则为配置本地社交平台时触发，根据返回的平台类型来配置平台信息。
      *  如果您使用的时服务端托管平台信息时，第二、四项参数可以传入nil，第三项参数则根据服务端托管平台来决定要连接的社交SDK。
      */
+    //127b916247fc9
     [ShareSDK registerApp:@"100179c96a3c3"
           activePlatforms:@[
                             
@@ -69,7 +70,7 @@
               {
                                     case SSDKPlatformTypeWechat:
                       [appInfo SSDKSetupWeChatByAppId:@"wx7c46794efc9f160f"
-                                            appSecret:@"2e825a2b73a181dcc3ab9ff9d20de095"];
+                                            appSecret:@"087d653f478597fb1975fcdc0ea5cb39"];
                       break;
                   default:
                       break;

@@ -8,8 +8,9 @@
 
 #import "BaseViewController.h"
 #import "faXianModel.h"
-
+#import "zuopinDataView.h"
 @interface MCXQViewController : BaseViewController
 @property (nonatomic,strong)faXianModel *faxianModel;
+@property (nonatomic,weak)zuopinDataView *DataView;
 
 @end

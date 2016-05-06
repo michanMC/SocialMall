@@ -55,7 +55,7 @@
 //
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.title = @"关于我们";
     _dataDic = [NSMutableDictionary dictionary];
     self.view.backgroundColor =[UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -134,11 +134,11 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
     if([webView isKindOfClass:[UIWebView class]] == YES){
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backpop)];
+       // self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backpop)];
        // self.navigationItem.leftBarButtonItem.style =
         if (IOS8) {
            // self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"navigationLeftBtnBack_Black_nor_"] style:UIBarButtonItemStylePlain target:self action:@selector(backpop)];
-            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backpop)];
+            //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backpop)];
 
  
         }
@@ -166,10 +166,10 @@
 - (void)webViewDidFinishLoad:(id )webView
 {//当网页视图结束加载一个请求之后，得到通知。
     //获取当前页面的title
-    self.title =  [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    if (!self.title) {
-        self.title = @"点购商城";
-    }
+    //self.title =  [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+//    if (!self.title) {
+//        self.title = @"点购商城";
+//    }
     [webView evaluateJavaScript:@"typeof TFB == 'object'" completionHandler:^(id value, NSError *error) {
         
         if ([value integerValue] == 0) {

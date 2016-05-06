@@ -13,7 +13,7 @@
 #import "pinpaiViewController.h"
 #import "chengyuanViewController.h"
 #import "MCplaceholderText.h"
-#import "XQViewController.h"
+#import "MCXQViewController.h"
 #import "GerenViewController.h"
 @interface SearchViewController ()<UIScrollViewDelegate,UITextFieldDelegate>{
     HMSegmentedControl *titleSegment;
@@ -227,7 +227,7 @@
 #pragma mark-跳详情
 -(void)didSelecsearchtFXXQObj:(NSNotification*)Notification{
     
-    XQViewController * ctl = [[XQViewController alloc]init];
+    MCXQViewController * ctl = [[MCXQViewController alloc]init];
     ctl.faxianModel = Notification.object;
     [self pushNewViewController:ctl];
 

@@ -11,7 +11,7 @@
 @interface KeywordModel : NSObject
 @property(nonatomic,copy)NSString * add_time;
 @property(nonatomic,copy)NSString * id;
-@property(nonatomic,copy)NSString * searchtype;
+@property(nonatomic,copy)NSString * search_type;
 @property(nonatomic,copy)NSString * tag;
 @property(nonatomic,copy)NSString * name;
 

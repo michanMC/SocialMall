@@ -9,7 +9,7 @@
 #import "HHContentCollectionView.h"
 #import "HHCollectionViewCell.h"
 #import "faXianModel.h"
-#import "XQViewController.h"
+#import "MCXQViewController.h"
 @interface HHContentCollectionView () <UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
     
